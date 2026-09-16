@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>TechLink â€” Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…</title>
+<title>TechLink — لوحة التحكم</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -27,7 +27,7 @@ window.addEventListener('load', function(){
     DB=firebase.firestore();
     AUTH=firebase.auth();
     FB_READY=true;
-    document.getElementById('fb-status').textContent='ðŸŸ¢ Ù…ØªØµÙ„';
+    document.getElementById('fb-status').textContent='🟢 متصل';
     AUTH.onAuthStateChanged(function(user){
       if(user){
         DB.collection('admins').doc(user.uid).get().then(function(doc){
@@ -35,17 +35,17 @@ window.addEventListener('load', function(){
             bootAdmin();
           } else {
             AUTH.signOut();
-            showLoginError('Ù‡Ø°Ø§ Ø§Ù„Ø­Ø³Ø§Ø¨ Ù„Ø§ ÙŠÙ…Ù„Ùƒ ØµÙ„Ø§Ø­ÙŠØ© Ø§Ù„ÙˆØµÙˆÙ„ Ù„Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…');
+            showLoginError('هذا الحساب لا يملك صلاحية الوصول للوحة التحكم');
           }
         }).catch(function(){
           AUTH.signOut();
-          showLoginError('ØªØ¹Ø°Ø± Ø§Ù„ØªØ­Ù‚Ù‚ Ù…Ù† Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ©ØŒ Ø­Ø§ÙˆÙ„ Ù…Ø±Ø© Ø£Ø®Ø±Ù‰');
+          showLoginError('تعذر التحقق من الصلاحية، حاول مرة أخرى');
         });
       }
       else { showScreen('auth'); }
     });
   }catch(e){
-    document.getElementById('fb-status').textContent='ðŸ”´ Ø®Ø·Ø£';
+    document.getElementById('fb-status').textContent='🔴 خطأ';
     showScreen('auth');
   }
 });
@@ -112,7 +112,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 .chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:var(--mono)}
 .chip-gold{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--gold)}
 
-/* â”€â”€ ØªØ¨Ø¯ÙŠÙ„ Ø§Ù„Ù…Ø¸Ù‡Ø± ÙˆØ§Ù„Ù„ØºØ© â”€â”€ */
+/* ── تبديل المظهر واللغة ── */
 .lang-toggle{
   min-width:34px;height:26px;padding:0 9px;border-radius:14px;
   background:var(--s2);border:1px solid var(--bd);
@@ -304,14 +304,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <div class="screen on" id="auth" style="position:fixed;inset:0;background:var(--bg);align-items:center;justify-content:center;z-index:9999;flex-direction:column">
   <div class="auth-card">
     <div class="auth-logo">
-      <div class="auth-logo-ic">ðŸ”§</div>
+      <div class="auth-logo-ic">🔧</div>
       <div class="auth-logo-txt">Tech<span>Link</span></div>
     </div>
-    <div class="auth-title" data-i18n="authTitle">Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…</div>
-    <div class="auth-sub" data-i18n="authSub">Ø³Ø¬Ù‘Ù„ Ø¯Ø®ÙˆÙ„Ùƒ Ù„Ù„Ù…ØªØ§Ø¨Ø¹Ø©</div>
-    <div class="fr"><label class="lbl" data-i18n="emailLbl">Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</label><input class="inp" id="a-email" type="email" placeholder="admin@techlink.com"></div>
-    <div class="fr"><label class="lbl" data-i18n="passLbl">ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±</label><input class="inp" id="a-pass" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <button class="auth-btn" id="a-btn" onclick="doLogin()" data-i18n="loginBtn">Ø¯Ø®ÙˆÙ„</button>
+    <div class="auth-title" data-i18n="authTitle">لوحة التحكم</div>
+    <div class="auth-sub" data-i18n="authSub">سجّل دخولك للمتابعة</div>
+    <div class="fr"><label class="lbl" data-i18n="emailLbl">البريد الإلكتروني</label><input class="inp" id="a-email" type="email" placeholder="admin@techlink.com"></div>
+    <div class="fr"><label class="lbl" data-i18n="passLbl">كلمة المرور</label><input class="inp" id="a-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="auth-btn" id="a-btn" onclick="doLogin()" data-i18n="loginBtn">دخول</button>
     <div class="auth-err" id="a-err"></div>
   </div>
 </div>
@@ -319,29 +319,29 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar" style="display:none">
   <div class="logo">
-    <div class="logo-ic">ðŸ”§</div>
+    <div class="logo-ic">🔧</div>
     <div class="logo-txt">Tech<span>Link</span></div>
     <div class="logo-badge">ADMIN</div>
   </div>
-  <div class="nav-sec" data-i18n="dispatch">Ø§Ù„Ø¥ÙŠÙØ§Ø¯</div>
-  <div class="nav-item on" onclick="go('dash',this)"><span class="nav-ic">ðŸ“Š</span> <span data-i18n="dashboard">Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…</span></div>
-  <div class="nav-item" onclick="go('orders',this)"><span class="nav-ic">ðŸ“‹</span> <span data-i18n="ordersNav">Ø§Ù„Ø·Ù„Ø¨Ø§Øª</span> <span class="nav-badge" id="nb-pend">0</span></div>
-  <div class="nav-item" onclick="go('map-page',this)"><span class="nav-ic">ðŸ—ºï¸</span> <span data-i18n="mapNav">Ø§Ù„Ø®Ø±ÙŠØ·Ø©</span></div>
-  <div class="nav-item" onclick="go('alerts',this)"><span class="nav-ic">ðŸ””</span> <span data-i18n="alertsNav">Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§Øª</span> <span class="nav-badge blue" id="nb-alert">0</span></div>
-  <div class="nav-sec" data-i18n="management">Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©</div>
-  <div class="nav-item" onclick="go('techs',this)"><span class="nav-ic">ðŸ‘·</span> <span data-i18n="techsNav">Ø§Ù„ÙÙ†ÙŠÙˆÙ†</span> <span class="nav-badge green" id="nb-tech">0</span></div>
-  <div class="nav-item" onclick="go('customers',this)"><span class="nav-ic">ðŸ‘¤</span> <span data-i18n="custsNav">Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†</span></div>
-  <div class="nav-item" onclick="go('finance',this)"><span class="nav-ic">ðŸ’°</span> <span data-i18n="financeNav">Ø§Ù„Ù…Ø§Ù„ÙŠØ©</span></div>
-  <div class="nav-item" onclick="go('reports',this)"><span class="nav-ic">ðŸ“Š</span> <span data-i18n="reportsNav">Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</span></div>
-  <div class="nav-item" onclick="go('chats',this)"><span class="nav-ic">ðŸ’¬</span> <span data-i18n="chatsNav">Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª</span></div>
-  <div class="nav-item" onclick="go('settings',this)"><span class="nav-ic">âš™ï¸</span> <span data-i18n="settingsNav">Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</span></div>
-  <div class="nav-item" onclick="go('control',this)"><span class="nav-ic">ðŸŽ›ï¸</span> <span data-i18n="controlNav">Ù…Ø±ÙƒØ² Ø§Ù„ØªØ­ÙƒÙ…</span></div>
-  <div class="nav-item" onclick="go('ratings',this)"><span class="nav-ic">â­</span> <span data-i18n="ratingsNav">Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª</span></div>
-  <div class="nav-item" onclick="go('transactions',this)"><span class="nav-ic">ðŸ”„</span> <span data-i18n="txNav">Ø§Ù„Ù…Ù†Ø§Ù‚Ù„Ø§Øª</span></div>
+  <div class="nav-sec" data-i18n="dispatch">الإيفاد</div>
+  <div class="nav-item on" onclick="go('dash',this)"><span class="nav-ic">📊</span> <span data-i18n="dashboard">لوحة التحكم</span></div>
+  <div class="nav-item" onclick="go('orders',this)"><span class="nav-ic">📋</span> <span data-i18n="ordersNav">الطلبات</span> <span class="nav-badge" id="nb-pend">0</span></div>
+  <div class="nav-item" onclick="go('map-page',this)"><span class="nav-ic">🗺️</span> <span data-i18n="mapNav">الخريطة</span></div>
+  <div class="nav-item" onclick="go('alerts',this)"><span class="nav-ic">🔔</span> <span data-i18n="alertsNav">التنبيهات</span> <span class="nav-badge blue" id="nb-alert">0</span></div>
+  <div class="nav-sec" data-i18n="management">الإدارة</div>
+  <div class="nav-item" onclick="go('techs',this)"><span class="nav-ic">👷</span> <span data-i18n="techsNav">الفنيون</span> <span class="nav-badge green" id="nb-tech">0</span></div>
+  <div class="nav-item" onclick="go('customers',this)"><span class="nav-ic">👤</span> <span data-i18n="custsNav">الزبائن</span></div>
+  <div class="nav-item" onclick="go('finance',this)"><span class="nav-ic">💰</span> <span data-i18n="financeNav">المالية</span></div>
+  <div class="nav-item" onclick="go('reports',this)"><span class="nav-ic">📊</span> <span data-i18n="reportsNav">التقارير</span></div>
+  <div class="nav-item" onclick="go('chats',this)"><span class="nav-ic">💬</span> <span data-i18n="chatsNav">المحادثات</span></div>
+  <div class="nav-item" onclick="go('settings',this)"><span class="nav-ic">⚙️</span> <span data-i18n="settingsNav">الإعدادات</span></div>
+  <div class="nav-item" onclick="go('control',this)"><span class="nav-ic">🎛️</span> <span data-i18n="controlNav">مركز التحكم</span></div>
+  <div class="nav-item" onclick="go('ratings',this)"><span class="nav-ic">⭐</span> <span data-i18n="ratingsNav">التقييمات</span></div>
+  <div class="nav-item" onclick="go('transactions',this)"><span class="nav-ic">🔄</span> <span data-i18n="txNav">المناقلات</span></div>
   <div class="sidebar-foot">
     <div class="user-av" id="user-av">A</div>
-    <div><div class="user-name" id="user-name">Ù…Ø¯ÙŠØ±</div></div>
-    <button class="lout-btn" onclick="doLogout()" data-i18n="logoutBtn">Ø®Ø±ÙˆØ¬</button>
+    <div><div class="user-name" id="user-name">مدير</div></div>
+    <button class="lout-btn" onclick="doLogout()" data-i18n="logoutBtn">خروج</button>
   </div>
 </div>
 <div id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
@@ -350,14 +350,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <div id="main" style="display:none">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">â˜°</button>
-      <div class="topbar-title">TechLink <small id="page-title">Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…</small></div>
+      <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-title">TechLink <small id="page-title">لوحة التحكم</small></div>
     </div>
     <div class="topbar-right">
-      <div class="chip chip-green" id="fb-status">ðŸŸ¡ Ø¬Ø§Ø±ÙŠ...</div>
+      <div class="chip chip-green" id="fb-status">🟡 جاري...</div>
       <div class="chip chip-gold" id="top-date"></div>
       <div class="lang-toggle" onclick="toggleLang()" id="lang-btn">EN</div>
-      <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-knob" id="theme-knob">ðŸŒ™</div></div>
+      <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-knob" id="theme-knob">🌙</div></div>
     </div>
   </div>
   <div class="content">
@@ -365,17 +365,17 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
     <!-- DASH -->
     <div class="page on" id="p-dash">
       <div class="dash-grid">
-        <div class="sc"><div class="sc-lbl" data-i18n="totalOrdersLbl">ðŸ“‹ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø·Ù„Ø¨Ø§Øª</div><div class="sc-val gold" id="st-total">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="pendingLbl">â³ Ø§Ù†ØªØ¸Ø§Ø±</div><div class="sc-val blue" id="st-pend">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="revenueLbl">ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª</div><div class="sc-val green" id="st-rev">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="techsLbl">ðŸ‘· Ø§Ù„ÙÙ†ÙŠÙˆÙ†</div><div class="sc-val" id="st-techs">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="totalOrdersLbl">📋 إجمالي الطلبات</div><div class="sc-val gold" id="st-total">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="pendingLbl">⏳ انتظار</div><div class="sc-val blue" id="st-pend">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="revenueLbl">💰 الإيرادات</div><div class="sc-val green" id="st-rev">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="techsLbl">👷 الفنيون</div><div class="sc-val" id="st-techs">0</div></div>
       </div>
       <div class="dash-live-head">
-        <span style="font-size:13px;font-weight:700" data-i18n="liveOrdersHead">âš¡ Ø§Ù„Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ø­ÙŠØ©</span>
-        <button class="fbtn fbtn-gold" onclick="openNewOrderModal()" data-i18n="newOrderBtn">+ Ø·Ù„Ø¨ Ø¬Ø¯ÙŠØ¯</button>
+        <span style="font-size:13px;font-weight:700" data-i18n="liveOrdersHead">⚡ الطلبات الحية</span>
+        <button class="fbtn fbtn-gold" onclick="openNewOrderModal()" data-i18n="newOrderBtn">+ طلب جديد</button>
       </div>
       <div class="dash-split">
-        <div class="dash-list" id="dash-list"><div class="empty"><div class="empty-ic">ðŸ“‹</div>Ù„Ø§ ØªÙˆØ¬Ø¯ Ø·Ù„Ø¨Ø§Øª</div></div>
+        <div class="dash-list" id="dash-list"><div class="empty"><div class="empty-ic">📋</div>لا توجد طلبات</div></div>
         <div class="dash-map-w"><div id="dash-map"></div></div>
       </div>
     </div>
@@ -383,38 +383,38 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
     <!-- ORDERS -->
     <div class="page" id="p-orders">
       <div class="fbar">
-        <div class="fg"><label class="flbl" data-i18n="statusLbl">Ø§Ù„Ø­Ø§Ù„Ø©</label>
+        <div class="fg"><label class="flbl" data-i18n="statusLbl">الحالة</label>
           <select class="fs" id="f-status" onchange="renderOrders()" style="width:110px">
-            <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-            <option value="pending" data-i18n="pendingOpt">Ø§Ù†ØªØ¸Ø§Ø±</option>
-            <option value="inprogress" data-i18n="inprogressOpt">Ø¬Ø§Ø±Ù</option>
-            <option value="done" data-i18n="doneOpt">Ù…ÙƒØªÙ…Ù„</option>
-            <option value="cancelled" data-i18n="cancelledOpt">Ù…Ù„ØºÙŠ</option>
+            <option value="" data-i18n="allOpt">الكل</option>
+            <option value="pending" data-i18n="pendingOpt">انتظار</option>
+            <option value="inprogress" data-i18n="inprogressOpt">جارٍ</option>
+            <option value="done" data-i18n="doneOpt">مكتمل</option>
+            <option value="cancelled" data-i18n="cancelledOpt">ملغي</option>
           </select>
         </div>
-        <div class="fg"><label class="flbl" data-i18n="typeLbl">Ø§Ù„Ù†ÙˆØ¹</label>
+        <div class="fg"><label class="flbl" data-i18n="typeLbl">النوع</label>
           <select class="fs" id="f-type" onchange="renderOrders()" style="width:110px">
-            <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-            <option value="now" data-i18n="nowOpt">Ø·Ù„Ø¨ Ø¢Ù†ÙŠ</option>
-            <option value="book" data-i18n="bookOpt">Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚</option>
+            <option value="" data-i18n="allOpt">الكل</option>
+            <option value="now" data-i18n="nowOpt">طلب آني</option>
+            <option value="book" data-i18n="bookOpt">حجز مسبق</option>
           </select>
         </div>
-        <div class="fg"><label class="flbl" data-i18n="fromLbl">Ù…Ù†</label><input class="fi" type="date" id="f-from" onchange="renderOrders()"></div>
-        <div class="fg"><label class="flbl" data-i18n="toLbl">Ø¥Ù„Ù‰</label><input class="fi" type="date" id="f-to" onchange="renderOrders()"></div>
-        <div class="fg"><label class="flbl" data-i18n="searchLbl">Ø¨Ø­Ø«</label><input class="fi" id="f-q" placeholder="Ø²Ø¨ÙˆÙ† / Ø·Ù„Ø¨ / ÙÙ†ÙŠ..." oninput="renderOrders()" style="width:160px"></div>
-        <button class="fbtn fbtn-out" onclick="clearF()" style="align-self:flex-end" data-i18n="clearBtn">Ù…Ø³Ø­</button>
-        <button class="fbtn fbtn-gold" onclick="openNewOrderModal()" style="align-self:flex-end;margin-right:auto" data-i18n="newOrderBtn">+ Ø·Ù„Ø¨ Ø¬Ø¯ÙŠØ¯</button>
+        <div class="fg"><label class="flbl" data-i18n="fromLbl">من</label><input class="fi" type="date" id="f-from" onchange="renderOrders()"></div>
+        <div class="fg"><label class="flbl" data-i18n="toLbl">إلى</label><input class="fi" type="date" id="f-to" onchange="renderOrders()"></div>
+        <div class="fg"><label class="flbl" data-i18n="searchLbl">بحث</label><input class="fi" id="f-q" placeholder="زبون / طلب / فني..." oninput="renderOrders()" style="width:160px"></div>
+        <button class="fbtn fbtn-out" onclick="clearF()" style="align-self:flex-end" data-i18n="clearBtn">مسح</button>
+        <button class="fbtn fbtn-gold" onclick="openNewOrderModal()" style="align-self:flex-end;margin-right:auto" data-i18n="newOrderBtn">+ طلب جديد</button>
       </div>
       <div class="split">
         <div class="list-panel">
           <div class="list-head">
-            <span class="list-count" id="orders-count">0 Ø·Ù„Ø¨</span>
-            <span class="chip chip-green" style="font-size:10px" id="pend-count">0 Ø§Ù†ØªØ¸Ø§Ø±</span>
+            <span class="list-count" id="orders-count">0 طلب</span>
+            <span class="chip chip-green" style="font-size:10px" id="pend-count">0 انتظار</span>
           </div>
           <div class="list-body" id="orders-list"></div>
         </div>
         <div class="detail" id="order-detail">
-          <div class="detail-empty"><div class="detail-empty-ic">ðŸ“‹</div><div style="font-size:13px">Ø§Ø®ØªØ± Ø·Ù„Ø¨Ø§Ù‹</div></div>
+          <div class="detail-empty"><div class="detail-empty-ic">📋</div><div style="font-size:13px">اختر طلباً</div></div>
         </div>
       </div>
     </div>
@@ -426,22 +426,22 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 
     <!-- ALERTS -->
     <div class="page" id="p-alerts">
-      <div style="padding:14px"><div id="alerts-list"><div class="empty"><div class="empty-ic">ðŸ””</div>Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙ†Ø¨ÙŠÙ‡Ø§Øª</div></div></div>
+      <div style="padding:14px"><div id="alerts-list"><div class="empty"><div class="empty-ic">🔔</div>لا توجد تنبيهات</div></div></div>
     </div>
 
     <!-- TECHS -->
     <div class="page" id="p-techs">
       <div class="fbar">
-        <div class="fg"><label class="flbl" data-i18n="searchLbl">Ø¨Ø­Ø«</label><input class="fi" id="tech-q" placeholder="Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø§Ù„ØªØ®ØµØµ..." oninput="renderTechs()" style="width:180px"></div>
-        <div class="fg"><label class="flbl" data-i18n="statusLbl">Ø§Ù„Ø­Ø§Ù„Ø©</label>
+        <div class="fg"><label class="flbl" data-i18n="searchLbl">بحث</label><input class="fi" id="tech-q" placeholder="الاسم أو التخصص..." oninput="renderTechs()" style="width:180px"></div>
+        <div class="fg"><label class="flbl" data-i18n="statusLbl">الحالة</label>
           <select class="fs" id="tech-sf" onchange="renderTechs()">
-            <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-            <option value="active" data-i18n="activeOpt">Ù…ÙØ¹Ù‘Ù„</option>
-            <option value="pending" data-i18n="pendingOpt">Ø§Ù†ØªØ¸Ø§Ø±</option>
-            <option value="blocked" data-i18n="blockedOpt">Ù…ÙˆÙ‚ÙˆÙ</option>
+            <option value="" data-i18n="allOpt">الكل</option>
+            <option value="active" data-i18n="activeOpt">مفعّل</option>
+            <option value="pending" data-i18n="pendingOpt">انتظار</option>
+            <option value="blocked" data-i18n="blockedOpt">موقوف</option>
           </select>
         </div>
-        <button class="fbtn fbtn-gold" onclick="openAddTechModal()" style="align-self:flex-end;margin-right:auto" data-i18n="addTechNavBtn">+ ÙÙ†ÙŠ Ø¬Ø¯ÙŠØ¯</button>
+        <button class="fbtn fbtn-gold" onclick="openAddTechModal()" style="align-self:flex-end;margin-right:auto" data-i18n="addTechNavBtn">+ فني جديد</button>
       </div>
       <div style="overflow-y:auto;flex:1"><div class="techs-grid" id="techs-body"></div></div>
     </div>
@@ -449,7 +449,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
     <!-- CUSTOMERS -->
     <div class="page" id="p-customers">
       <div class="fbar">
-        <div class="fg"><label class="flbl" data-i18n="searchLbl">Ø¨Ø­Ø«</label><input class="fi" id="cust-q" placeholder="Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø§Ù„Ø¬ÙˆØ§Ù„..." oninput="renderCustomers()" style="width:200px"></div>
+        <div class="fg"><label class="flbl" data-i18n="searchLbl">بحث</label><input class="fi" id="cust-q" placeholder="الاسم أو الجوال..." oninput="renderCustomers()" style="width:200px"></div>
       </div>
       <div style="padding:14px;overflow-y:auto;flex:1"><div id="custs-body"></div></div>
     </div>
@@ -458,18 +458,18 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
     <div class="page" id="p-finance">
       <div style="padding:14px">
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
-          <div class="sc"><div class="sc-lbl" data-i18n="finRevLbl">ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª</div><div class="sc-val green" id="fin-rev">0</div></div>
-          <div class="sc"><div class="sc-lbl" data-i18n="finCommLbl">ðŸ“Š Ø§Ù„Ø¹Ù…ÙˆÙ„Ø§Øª</div><div class="sc-val gold" id="fin-comm">0</div></div>
-          <div class="sc"><div class="sc-lbl" data-i18n="finDoneLbl">âœ… Ù…ÙƒØªÙ…Ù„Ø©</div><div class="sc-val blue" id="fin-done">0</div></div>
+          <div class="sc"><div class="sc-lbl" data-i18n="finRevLbl">💰 الإيرادات</div><div class="sc-val green" id="fin-rev">0</div></div>
+          <div class="sc"><div class="sc-lbl" data-i18n="finCommLbl">📊 العمولات</div><div class="sc-val gold" id="fin-comm">0</div></div>
+          <div class="sc"><div class="sc-lbl" data-i18n="finDoneLbl">✅ مكتملة</div><div class="sc-val blue" id="fin-done">0</div></div>
         </div>
-        <div class="sec-title" data-i18n="financeSectionTitle">Ø§Ø³ØªÙ‚Ø·Ø§Ø¹ Ù…Ù† Ù…Ø­ÙØ¸Ø© ÙÙ†ÙŠ</div>
+        <div class="sec-title" data-i18n="financeSectionTitle">استقطاع من محفظة فني</div>
         <div style="background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px;max-width:400px">
-          <div class="fr"><label class="flbl" data-i18n="techLbl">Ø§Ù„ÙÙ†ÙŠ</label><select class="fs" id="fin-tech"></select></div>
+          <div class="fr"><label class="flbl" data-i18n="techLbl">الفني</label><select class="fs" id="fin-tech"></select></div>
           <div class="frow">
-            <div class="fr"><label class="flbl" data-i18n="amountLbl">Ø§Ù„Ù…Ø¨Ù„Øº (Ø¯.Ø¹)</label><input class="fi" type="number" id="fin-amt" placeholder="0"></div>
-            <div class="fr"><label class="flbl" data-i18n="reasonLbl">Ø§Ù„Ø³Ø¨Ø¨</label><input class="fi" id="fin-reason" placeholder="Ø³Ø¨Ø¨ Ø§Ù„Ø§Ø³ØªÙ‚Ø·Ø§Ø¹"></div>
+            <div class="fr"><label class="flbl" data-i18n="amountLbl">المبلغ (د.ع)</label><input class="fi" type="number" id="fin-amt" placeholder="0"></div>
+            <div class="fr"><label class="flbl" data-i18n="reasonLbl">السبب</label><input class="fi" id="fin-reason" placeholder="سبب الاستقطاع"></div>
           </div>
-          <button class="fbtn fbtn-gold" style="width:100%;justify-content:center" onclick="deductWallet()" data-i18n="deductBtn">Ø§Ø³ØªÙ‚Ø·Ø§Ø¹</button>
+          <button class="fbtn fbtn-gold" style="width:100%;justify-content:center" onclick="deductWallet()" data-i18n="deductBtn">استقطاع</button>
         </div>
       </div>
     </div>
@@ -478,25 +478,25 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <div class="page" id="p-reports">
     <div style="padding:14px">
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-        <div class="sc"><div class="sc-lbl" data-i18n="rTodayLbl">ðŸ“… Ø§Ù„ÙŠÙˆÙ…</div><div class="sc-val gold" id="r-today">0</div><div style="font-size:11px;color:var(--muted)">Ø·Ù„Ø¨</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="rWeekLbl">ðŸ“… Ù‡Ø°Ø§ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹</div><div class="sc-val blue" id="r-week">0</div><div style="font-size:11px;color:var(--muted)">Ø·Ù„Ø¨</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="rMonthLbl">ðŸ“… Ù‡Ø°Ø§ Ø§Ù„Ø´Ù‡Ø±</div><div class="sc-val green" id="r-month">0</div><div style="font-size:11px;color:var(--muted)">Ø·Ù„Ø¨</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="rRatingLbl">â­ Ù…ØªÙˆØ³Ø· Ø§Ù„ØªÙ‚ÙŠÙŠÙ…</div><div class="sc-val" id="r-rating" style="color:var(--gold)">0.0</div><div style="font-size:11px;color:var(--muted)">Ù…Ù† 5</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="rTodayLbl">📅 اليوم</div><div class="sc-val gold" id="r-today">0</div><div style="font-size:11px;color:var(--muted)">طلب</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="rWeekLbl">📅 هذا الأسبوع</div><div class="sc-val blue" id="r-week">0</div><div style="font-size:11px;color:var(--muted)">طلب</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="rMonthLbl">📅 هذا الشهر</div><div class="sc-val green" id="r-month">0</div><div style="font-size:11px;color:var(--muted)">طلب</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="rRatingLbl">⭐ متوسط التقييم</div><div class="sc-val" id="r-rating" style="color:var(--gold)">0.0</div><div style="font-size:11px;color:var(--muted)">من 5</div></div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px">
-          <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="topTechsTitle">ðŸ† Ø£ÙØ¶Ù„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="topTechsTitle">🏆 أفضل الفنيين</div>
           <div id="top-techs"></div>
         </div>
         <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px">
-          <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="topServicesTitle">ðŸ”§ Ø£ÙƒØ«Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø·Ù„Ø¨Ø§Ù‹</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="topServicesTitle">🔧 أكثر الخدمات طلباً</div>
           <div id="top-services"></div>
         </div>
       </div>
 
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-top:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="dailyRevTitle">ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª Ø§Ù„ÙŠÙˆÙ…ÙŠØ© (Ø¢Ø®Ø± 7 Ø£ÙŠØ§Ù…)</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px" data-i18n="dailyRevTitle">💰 الإيرادات اليومية (آخر 7 أيام)</div>
         <div id="daily-revenue" style="display:flex;align-items:flex-end;gap:8px;height:100px"></div>
       </div>
     </div>
@@ -506,13 +506,13 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <div class="page" id="p-chats">
     <div style="display:flex;height:100%;overflow:hidden">
       <div style="width:280px;border-left:1px solid var(--bd);overflow-y:auto;flex-shrink:0">
-        <div style="padding:10px 12px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700" data-i18n="activeChatsTitle">Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª Ø§Ù„Ù†Ø´Ø·Ø©</div>
+        <div style="padding:10px 12px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700" data-i18n="activeChatsTitle">المحادثات النشطة</div>
         <div id="chat-orders-list"></div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;background:var(--bg)" id="admin-chat-panel">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);gap:8px">
-          <div style="font-size:36px;opacity:.2">ðŸ’¬</div>
-          <div style="font-size:13px" data-i18n="selectChatMsg">Ø§Ø®ØªØ± Ù…Ø­Ø§Ø¯Ø«Ø©</div>
+          <div style="font-size:36px;opacity:.2">💬</div>
+          <div style="font-size:13px" data-i18n="selectChatMsg">اختر محادثة</div>
         </div>
       </div>
     </div>
@@ -521,26 +521,26 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <!-- RATINGS PAGE -->
   <div class="page" id="p-ratings">
     <div class="fbar">
-      <div class="fg"><label class="flbl" data-i18n="fromDateLbl">Ù…Ù† ØªØ§Ø±ÙŠØ®</label><input class="fi" type="date" id="rt-from" onchange="renderRatingsPage()"></div>
-      <div class="fg"><label class="flbl" data-i18n="toDateLbl">Ø¥Ù„Ù‰ ØªØ§Ø±ÙŠØ®</label><input class="fi" type="date" id="rt-to" onchange="renderRatingsPage()"></div>
-      <div class="fg"><label class="flbl" data-i18n="techLbl">Ø§Ù„ÙÙ†ÙŠ</label><input class="fi" id="rt-tech" placeholder="Ø§Ø¨Ø­Ø« Ø¹Ù† ÙÙ†ÙŠ..." oninput="renderRatingsPage()" style="width:160px"></div>
-      <div class="fg"><label class="flbl" data-i18n="starsLbl">Ø§Ù„Ù†Ø¬ÙˆÙ…</label>
+      <div class="fg"><label class="flbl" data-i18n="fromDateLbl">من تاريخ</label><input class="fi" type="date" id="rt-from" onchange="renderRatingsPage()"></div>
+      <div class="fg"><label class="flbl" data-i18n="toDateLbl">إلى تاريخ</label><input class="fi" type="date" id="rt-to" onchange="renderRatingsPage()"></div>
+      <div class="fg"><label class="flbl" data-i18n="techLbl">الفني</label><input class="fi" id="rt-tech" placeholder="ابحث عن فني..." oninput="renderRatingsPage()" style="width:160px"></div>
+      <div class="fg"><label class="flbl" data-i18n="starsLbl">النجوم</label>
         <select class="fs" id="rt-stars" onchange="renderRatingsPage()">
-          <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-          <option value="5">â­â­â­â­â­ ÙÙ‚Ø·</option>
-          <option value="4">â­â­â­â­ ÙÙ‚Ø·</option>
-          <option value="3">â­â­â­ ÙÙ‚Ø·</option>
-          <option value="2">â­â­ ÙÙ‚Ø·</option>
-          <option value="1">â­ ÙÙ‚Ø·</option>
+          <option value="" data-i18n="allOpt">الكل</option>
+          <option value="5">⭐⭐⭐⭐⭐ فقط</option>
+          <option value="4">⭐⭐⭐⭐ فقط</option>
+          <option value="3">⭐⭐⭐ فقط</option>
+          <option value="2">⭐⭐ فقط</option>
+          <option value="1">⭐ فقط</option>
         </select>
       </div>
-      <button class="fbtn fbtn-out" onclick="clearRatingsFilter()" data-i18n="clearFiltersBtn">Ù…Ø³Ø­ Ø§Ù„ÙÙ„Ø§ØªØ±</button>
+      <button class="fbtn fbtn-out" onclick="clearRatingsFilter()" data-i18n="clearFiltersBtn">مسح الفلاتر</button>
     </div>
     <div style="padding:14px;overflow-y:auto;flex:1">
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
-        <div class="sc"><div class="sc-lbl" data-i18n="rRatingLbl">â­ Ù…ØªÙˆØ³Ø· Ø§Ù„ØªÙ‚ÙŠÙŠÙ…</div><div class="sc-val gold" id="rt-avg">0.0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="ratingsCountLbl">ðŸ“ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª</div><div class="sc-val blue" id="rt-count">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="ratingsCommentedLbl">ðŸ’¬ Ù…Ø¹ ØªØ¹Ù„ÙŠÙ‚</div><div class="sc-val green" id="rt-commented">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="rRatingLbl">⭐ متوسط التقييم</div><div class="sc-val gold" id="rt-avg">0.0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="ratingsCountLbl">📝 إجمالي التقييمات</div><div class="sc-val blue" id="rt-count">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="ratingsCommentedLbl">💬 مع تعليق</div><div class="sc-val green" id="rt-commented">0</div></div>
       </div>
       <div id="ratings-list"></div>
     </div>
@@ -549,33 +549,33 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <!-- TRANSACTIONS PAGE -->
   <div class="page" id="p-transactions">
     <div class="fbar">
-      <div class="fg"><label class="flbl" data-i18n="typeLbl">Ø§Ù„Ù†ÙˆØ¹</label>
+      <div class="fg"><label class="flbl" data-i18n="typeLbl">النوع</label>
         <select class="fs" id="tx-who" onchange="renderTransactions()" style="width:120px">
-          <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-          <option value="customer" data-i18n="custOnlyOpt">Ø§Ù„Ø²Ø¨Ø§Ø¦Ù† ÙÙ‚Ø·</option>
-          <option value="tech" data-i18n="techOnlyOpt">Ø§Ù„ÙÙ†ÙŠÙŠÙ† ÙÙ‚Ø·</option>
+          <option value="" data-i18n="allOpt">الكل</option>
+          <option value="customer" data-i18n="custOnlyOpt">الزبائن فقط</option>
+          <option value="tech" data-i18n="techOnlyOpt">الفنيين فقط</option>
         </select>
       </div>
-      <div class="fg"><label class="flbl" data-i18n="opTypeLbl">Ù†ÙˆØ¹ Ø§Ù„Ø¹Ù…Ù„ÙŠØ©</label>
+      <div class="fg"><label class="flbl" data-i18n="opTypeLbl">نوع العملية</label>
         <select class="fs" id="tx-type" onchange="renderTransactions()" style="width:120px">
-          <option value="" data-i18n="allOpt">Ø§Ù„ÙƒÙ„</option>
-          <option value="charge" data-i18n="chargeOpt">Ø´Ø­Ù†</option>
-          <option value="withdraw" data-i18n="withdrawOpt">Ø³Ø­Ø¨</option>
-          <option value="deduct" data-i18n="deductOpt">Ø§Ø³ØªÙ‚Ø·Ø§Ø¹</option>
+          <option value="" data-i18n="allOpt">الكل</option>
+          <option value="charge" data-i18n="chargeOpt">شحن</option>
+          <option value="withdraw" data-i18n="withdrawOpt">سحب</option>
+          <option value="deduct" data-i18n="deductOpt">استقطاع</option>
         </select>
       </div>
-      <div class="fg"><label class="flbl" data-i18n="fromDateLbl">Ù…Ù† ØªØ§Ø±ÙŠØ®</label><input class="fi" type="date" id="tx-from" onchange="renderTransactions()"></div>
-      <div class="fg"><label class="flbl" data-i18n="toDateLbl">Ø¥Ù„Ù‰ ØªØ§Ø±ÙŠØ®</label><input class="fi" type="date" id="tx-to" onchange="renderTransactions()"></div>
-      <div class="fg"><label class="flbl" data-i18n="nameLbl">Ø§Ù„Ø§Ø³Ù…</label><input class="fi" id="tx-name" placeholder="Ø§Ø³Ù… Ø§Ù„Ø²Ø¨ÙˆÙ† Ø£Ùˆ Ø§Ù„ÙÙ†ÙŠ..." oninput="renderTransactions()" style="width:150px"></div>
-      <div class="fg"><label class="flbl" data-i18n="phoneLbl">Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ</label><input class="fi" id="tx-phone" placeholder="07xxxxxxxxx" oninput="renderTransactions()" style="width:130px"></div>
-      <button class="fbtn fbtn-out" onclick="clearTxFilter()" data-i18n="clearFiltersBtn">Ù…Ø³Ø­ Ø§Ù„ÙÙ„Ø§ØªØ±</button>
+      <div class="fg"><label class="flbl" data-i18n="fromDateLbl">من تاريخ</label><input class="fi" type="date" id="tx-from" onchange="renderTransactions()"></div>
+      <div class="fg"><label class="flbl" data-i18n="toDateLbl">إلى تاريخ</label><input class="fi" type="date" id="tx-to" onchange="renderTransactions()"></div>
+      <div class="fg"><label class="flbl" data-i18n="nameLbl">الاسم</label><input class="fi" id="tx-name" placeholder="اسم الزبون أو الفني..." oninput="renderTransactions()" style="width:150px"></div>
+      <div class="fg"><label class="flbl" data-i18n="phoneLbl">رقم الهاتف</label><input class="fi" id="tx-phone" placeholder="07xxxxxxxxx" oninput="renderTransactions()" style="width:130px"></div>
+      <button class="fbtn fbtn-out" onclick="clearTxFilter()" data-i18n="clearFiltersBtn">مسح الفلاتر</button>
     </div>
     <div style="padding:14px;overflow-y:auto;flex:1">
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-        <div class="sc"><div class="sc-lbl" data-i18n="txCountLbl">ðŸ“Š Ø¹Ø¯Ø¯ Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª</div><div class="sc-val" id="tx-count">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="txChargeLbl">ðŸ’° Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø´Ø­Ù†</div><div class="sc-val green" id="tx-total-charge">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="txWithdrawLbl">âž– Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø³Ø­Ø¨</div><div class="sc-val" style="color:var(--orange)" id="tx-total-withdraw">0</div></div>
-        <div class="sc"><div class="sc-lbl" data-i18n="txDeductLbl">ðŸ”» Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø§Ø³ØªÙ‚Ø·Ø§Ø¹</div><div class="sc-val red" id="tx-total-deduct">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="txCountLbl">📊 عدد العمليات</div><div class="sc-val" id="tx-count">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="txChargeLbl">💰 إجمالي الشحن</div><div class="sc-val green" id="tx-total-charge">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="txWithdrawLbl">➖ إجمالي السحب</div><div class="sc-val" style="color:var(--orange)" id="tx-total-withdraw">0</div></div>
+        <div class="sc"><div class="sc-lbl" data-i18n="txDeductLbl">🔻 إجمالي الاستقطاع</div><div class="sc-val red" id="tx-total-deduct">0</div></div>
       </div>
       <div id="transactions-list"></div>
     </div>
@@ -585,55 +585,55 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <div class="page" id="p-settings">
     <div style="padding:16px;max-width:600px">
 
-      <div class="sec-title" data-i18n="commissionSectionTitle">ðŸ’° Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø©</div>
+      <div class="sec-title" data-i18n="commissionSectionTitle">💰 نسبة العمولة</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px">
         <div class="fr">
-          <label class="flbl" data-i18n="commissionPctLbl">Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø© Ù…Ù† ÙƒÙ„ Ø·Ù„Ø¨ (%)</label>
+          <label class="flbl" data-i18n="commissionPctLbl">نسبة العمولة من كل طلب (%)</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input class="fi" type="number" id="s-commission" value="10" min="0" max="50" style="width:120px">
-            <span style="font-size:13px;color:var(--muted)">% Ù…Ù† Ù‚ÙŠÙ…Ø© Ø§Ù„Ø·Ù„Ø¨</span>
+            <span style="font-size:13px;color:var(--muted)">% من قيمة الطلب</span>
           </div>
         </div>
-        <button class="fbtn fbtn-gold" onclick="saveCommission()" data-i18n="saveCommissionBtn">Ø­ÙØ¸ Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø©</button>
+        <button class="fbtn fbtn-gold" onclick="saveCommission()" data-i18n="saveCommissionBtn">حفظ نسبة العمولة</button>
       </div>
 
-      <div class="sec-title" data-i18n="pricesSectionTitle">ðŸ› ï¸ Ø£Ø³Ø¹Ø§Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©</div>
+      <div class="sec-title" data-i18n="pricesSectionTitle">🛠️ أسعار الخدمات الافتراضية</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div class="fr"><label class="flbl">âš¡ ÙƒÙ‡Ø±Ø¨Ø§Ø¡ (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-electric" placeholder="15000"></div>
-          <div class="fr"><label class="flbl">ðŸ”§ Ø³Ø¨Ø§ÙƒØ© (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-plumb" placeholder="12000"></div>
-          <div class="fr"><label class="flbl">â„ï¸ ØªÙƒÙŠÙŠÙ (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-ac" placeholder="20000"></div>
-          <div class="fr"><label class="flbl">ðŸŽ¨ Ø¯Ù‡Ø§Ù† (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-paint" placeholder="25000"></div>
-          <div class="fr"><label class="flbl">ðŸªš Ù†Ø¬Ø§Ø±Ø© (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-carp" placeholder="18000"></div>
-          <div class="fr"><label class="flbl">ðŸ§¹ ØªÙ†Ø¸ÙŠÙ (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-clean" placeholder="10000"></div>
-          <div class="fr"><label class="flbl">ðŸªŸ Ø¨Ù„Ø§Ø· (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-tile" placeholder="22000"></div>
-          <div class="fr"><label class="flbl">ðŸ”¨ Ø£Ø®Ø±Ù‰ (Ø¯.Ø¹)</label><input class="fi" type="number" id="p-other" placeholder="10000"></div>
+          <div class="fr"><label class="flbl">⚡ كهرباء (د.ع)</label><input class="fi" type="number" id="p-electric" placeholder="15000"></div>
+          <div class="fr"><label class="flbl">🔧 سباكة (د.ع)</label><input class="fi" type="number" id="p-plumb" placeholder="12000"></div>
+          <div class="fr"><label class="flbl">❄️ تكييف (د.ع)</label><input class="fi" type="number" id="p-ac" placeholder="20000"></div>
+          <div class="fr"><label class="flbl">🎨 دهان (د.ع)</label><input class="fi" type="number" id="p-paint" placeholder="25000"></div>
+          <div class="fr"><label class="flbl">🪚 نجارة (د.ع)</label><input class="fi" type="number" id="p-carp" placeholder="18000"></div>
+          <div class="fr"><label class="flbl">🧹 تنظيف (د.ع)</label><input class="fi" type="number" id="p-clean" placeholder="10000"></div>
+          <div class="fr"><label class="flbl">🪟 بلاط (د.ع)</label><input class="fi" type="number" id="p-tile" placeholder="22000"></div>
+          <div class="fr"><label class="flbl">🔨 أخرى (د.ع)</label><input class="fi" type="number" id="p-other" placeholder="10000"></div>
         </div>
-        <button class="fbtn fbtn-gold" style="margin-top:8px" onclick="savePrices()" data-i18n="savePricesBtn">Ø­ÙØ¸ Ø§Ù„Ø£Ø³Ø¹Ø§Ø±</button>
+        <button class="fbtn fbtn-gold" style="margin-top:8px" onclick="savePrices()" data-i18n="savePricesBtn">حفظ الأسعار</button>
       </div>
 
-      <div class="sec-title" data-i18n="paymentSectionTitle">ðŸ’³ Ù†Ø¸Ø§Ù… Ø§Ù„Ø¯ÙØ¹ (API)</div>
+      <div class="sec-title" data-i18n="paymentSectionTitle">💳 نظام الدفع (API)</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px">
 
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px;background:var(--s2);border-radius:8px">
           <span id="api-status-dot" style="width:8px;height:8px;border-radius:50%;background:var(--muted)"></span>
-          <span style="font-size:12px" id="api-status-txt">Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø±Ø¨Ø· Ø¨Ø¹Ø¯</span>
+          <span style="font-size:12px" id="api-status-txt">لم يتم الربط بعد</span>
         </div>
 
         <div class="fr">
-          <label class="flbl" data-i18n="providerLbl">Ù…Ø²ÙˆÙ‘Ø¯ Ø§Ù„Ø¯ÙØ¹ Ø§Ù„Ù†Ø´Ø·</label>
+          <label class="flbl" data-i18n="providerLbl">مزوّد الدفع النشط</label>
           <select class="fs" id="s-provider" style="width:100%" onchange="toggleProviderFields()">
-            <option value="none">â€” Ø¨Ø¯ÙˆÙ† (Ù†Ù‚Ø¯Ø§Ù‹ ÙÙ‚Ø·) â€”</option>
+            <option value="none">— بدون (نقداً فقط) —</option>
             <option value="zaincash">ZainCash</option>
             <option value="fastpay">FastPay</option>
-            <option value="both">ÙƒÙ„Ø§Ù‡Ù…Ø§</option>
+            <option value="both">كلاهما</option>
           </select>
         </div>
 
         <div id="zaincash-fields">
           <div class="fr"><label class="flbl">ZainCash Merchant ID</label><input class="fi" id="s-zc-merchant" placeholder="Merchant ID" style="width:100%"></div>
           <div class="fr"><label class="flbl">ZainCash Secret Key</label><input class="fi" id="s-zaincash" type="password" placeholder="Secret Key" style="width:100%"></div>
-          <div class="fr"><label class="flbl">ZainCash MSISDN (Ø±Ù‚Ù… Ø§Ù„ØªØ§Ø¬Ø±)</label><input class="fi" id="s-zc-msisdn" placeholder="9647xxxxxxxx" style="width:100%"></div>
+          <div class="fr"><label class="flbl">ZainCash MSISDN (رقم التاجر)</label><input class="fi" id="s-zc-msisdn" placeholder="9647xxxxxxxx" style="width:100%"></div>
         </div>
 
         <div id="fastpay-fields">
@@ -641,22 +641,22 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
           <div class="fr"><label class="flbl">FastPay Merchant Code</label><input class="fi" id="s-fp-code" placeholder="Merchant Code" style="width:100%"></div>
         </div>
 
-        <div class="fr"><label class="flbl">Ø±Ù‚Ù… Ø§Ù„Ù…Ø­ÙØ¸Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ© (Ù„Ø§Ø³ØªÙ„Ø§Ù… Ø§Ù„Ø£Ø±Ø¨Ø§Ø­)</label><input class="fi" id="s-wallet-num" placeholder="07xxxxxxxxx" style="width:100%"></div>
+        <div class="fr"><label class="flbl">رقم المحفظة الرئيسية (لاستلام الأرباح)</label><input class="fi" id="s-wallet-num" placeholder="07xxxxxxxxx" style="width:100%"></div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <button class="fbtn fbtn-out" onclick="testPaymentConnection()" data-i18n="testConnBtn">ðŸ”Œ Ø§Ø®ØªØ¨Ø§Ø± Ø§Ù„Ø§ØªØµØ§Ù„</button>
-          <button class="fbtn fbtn-gold" onclick="savePayment()" data-i18n="savePaymentBtn">ðŸ’¾ Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø¯ÙØ¹</button>
+          <button class="fbtn fbtn-out" onclick="testPaymentConnection()" data-i18n="testConnBtn">🔌 اختبار الاتصال</button>
+          <button class="fbtn fbtn-gold" onclick="savePayment()" data-i18n="savePaymentBtn">💾 حفظ إعدادات الدفع</button>
         </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:8px">ðŸ’¡ Ø¨Ø¹Ø¯ Ø§Ù„Ø­ÙØ¸ØŒ Ø³ÙŠØ¸Ù‡Ø± Ø®ÙŠØ§Ø± Ø§Ù„Ø¯ÙØ¹ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ ØªÙ„Ù‚Ø§Ø¦ÙŠØ§Ù‹ ÙÙŠ ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ø²Ø¨ÙˆÙ†</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">💡 بعد الحفظ، سيظهر خيار الدفع الإلكتروني تلقائياً في تطبيق الزبون</div>
       </div>
 
-      <div class="sec-title" data-i18n="generalSectionTitle">âš™ï¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø¹Ø§Ù…Ø©</div>
+      <div class="sec-title" data-i18n="generalSectionTitle">⚙️ إعدادات عامة</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px">
-        <div class="fr"><label class="flbl" data-i18n="platformNameLbl">Ø§Ø³Ù… Ø§Ù„Ù…Ù†ØµØ©</label><input class="fi" id="s-name" value="TechLink"></div>
-        <div class="fr"><label class="flbl" data-i18n="defaultCityLbl">Ø§Ù„Ù…Ø¯ÙŠÙ†Ø© Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©</label><input class="fi" id="s-city" value="Ø¨ØºØ¯Ø§Ø¯"></div>
-        <div class="fr"><label class="flbl" data-i18n="supportPhoneLbl">Ø±Ù‚Ù… Ø§Ù„Ø¯Ø¹Ù…</label><input class="fi" id="s-support" placeholder="07xxxxxxxxx"></div>
-        <div class="fr"><label class="flbl" data-i18n="minWalletLbl">Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ø¯Ù†Ù‰ Ù„Ù„Ù…Ø­ÙØ¸Ø© (Ø¯.Ø¹)</label><input class="fi" type="number" id="s-min-wallet" value="5000"></div>
-        <button class="fbtn fbtn-gold" onclick="saveSettings()" data-i18n="saveSettingsBtn">Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</button>
+        <div class="fr"><label class="flbl" data-i18n="platformNameLbl">اسم المنصة</label><input class="fi" id="s-name" value="TechLink"></div>
+        <div class="fr"><label class="flbl" data-i18n="defaultCityLbl">المدينة الافتراضية</label><input class="fi" id="s-city" value="بغداد"></div>
+        <div class="fr"><label class="flbl" data-i18n="supportPhoneLbl">رقم الدعم</label><input class="fi" id="s-support" placeholder="07xxxxxxxxx"></div>
+        <div class="fr"><label class="flbl" data-i18n="minWalletLbl">الحد الأدنى للمحفظة (د.ع)</label><input class="fi" type="number" id="s-min-wallet" value="5000"></div>
+        <button class="fbtn fbtn-gold" onclick="saveSettings()" data-i18n="saveSettingsBtn">حفظ الإعدادات</button>
       </div>
 
     </div>
@@ -666,125 +666,125 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
   <div class="page" id="p-control">
     <div style="padding:14px;overflow-y:auto">
 
-      <!-- ØªØ­ÙƒÙ… Ø³Ø±ÙŠØ¹ -->
-      <div class="sec-title" data-i18n="quickControlTitle">âš¡ ØªØ­ÙƒÙ… Ø³Ø±ÙŠØ¹</div>
+      <!-- تحكم سريع -->
+      <div class="sec-title" data-i18n="quickControlTitle">⚡ تحكم سريع</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('orders')">
-          <div class="sc-lbl">ðŸ“‹ Ø§Ø³ØªÙ‚Ø¨Ø§Ù„ Ø§Ù„Ø·Ù„Ø¨Ø§Øª</div>
-          <div id="ctrl-orders" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-orders-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">📋 استقبال الطلبات</div>
+          <div id="ctrl-orders" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-orders-lbl">مفعّل</div>
         </div>
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('reg')">
-          <div class="sc-lbl">ðŸ‘· ØªØ³Ø¬ÙŠÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</div>
-          <div id="ctrl-reg" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-reg-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">👷 تسجيل الفنيين</div>
+          <div id="ctrl-reg" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-reg-lbl">مفعّل</div>
         </div>
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('cust')">
-          <div class="sc-lbl">ðŸ‘¤ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†</div>
-          <div id="ctrl-cust" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-cust-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">👤 تسجيل الزبائن</div>
+          <div id="ctrl-cust" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-cust-lbl">مفعّل</div>
         </div>
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('chat')">
-          <div class="sc-lbl">ðŸ’¬ Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª</div>
-          <div id="ctrl-chat" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-chat-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">💬 المحادثات</div>
+          <div id="ctrl-chat" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-chat-lbl">مفعّل</div>
         </div>
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('rating')">
-          <div class="sc-lbl">â­ Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª</div>
-          <div id="ctrl-rating" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-rating-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">⭐ التقييمات</div>
+          <div id="ctrl-rating" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-rating-lbl">مفعّل</div>
         </div>
         <div class="sc" style="cursor:pointer" onclick="toggleSystem('wallet')">
-          <div class="sc-lbl">ðŸ’³ Ø§Ù„Ù…Ø­ÙØ¸Ø©</div>
-          <div id="ctrl-wallet" style="font-size:22px;margin:8px 0">ðŸŸ¢</div>
-          <div style="font-size:11px;color:var(--muted)" id="ctrl-wallet-lbl">Ù…ÙØ¹Ù‘Ù„</div>
+          <div class="sc-lbl">💳 المحفظة</div>
+          <div id="ctrl-wallet" style="font-size:22px;margin:8px 0">🟢</div>
+          <div style="font-size:11px;color:var(--muted)" id="ctrl-wallet-lbl">مفعّل</div>
         </div>
       </div>
 
-      <!-- Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ÙÙ†ÙŠÙŠÙ† Ø§Ù„Ø¬Ù…Ø§Ø¹ÙŠØ© -->
-      <div class="sec-title" data-i18n="bulkTechMgmtTitle">ðŸ‘· Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ÙÙ†ÙŠÙŠÙ† Ø§Ù„Ø¬Ù…Ø§Ø¹ÙŠØ©</div>
+      <!-- إدارة الفنيين الجماعية -->
+      <div class="sec-title" data-i18n="bulkTechMgmtTitle">👷 إدارة الفنيين الجماعية</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-          <button class="fbtn fbtn-gold" onclick="bulkTechs('active')" data-i18n="activateAllBtn">âœ… ØªÙØ¹ÙŠÙ„ ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</button>
-          <button class="fbtn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--red)" onclick="bulkTechs('blocked')" data-i18n="deactivateAllBtn">ðŸ”’ ØªØ¹Ø·ÙŠÙ„ ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</button>
+          <button class="fbtn fbtn-gold" onclick="bulkTechs('active')" data-i18n="activateAllBtn">✅ تفعيل كل الفنيين</button>
+          <button class="fbtn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--red)" onclick="bulkTechs('blocked')" data-i18n="deactivateAllBtn">🔒 تعطيل كل الفنيين</button>
         </div>
-        <div class="fr"><label class="flbl" data-i18n="bulkChargeLbl">Ø´Ø­Ù† Ù…Ø­ÙØ¸Ø© ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</label>
+        <div class="fr"><label class="flbl" data-i18n="bulkChargeLbl">شحن محفظة كل الفنيين</label>
           <div style="display:flex;gap:8px">
-            <input class="fi" type="number" id="bulk-charge" placeholder="Ø§Ù„Ù…Ø¨Ù„Øº (Ø¯.Ø¹)" style="flex:1">
-            <button class="fbtn fbtn-gold" onclick="bulkCharge()" data-i18n="bulkChargeBtn">Ø´Ø­Ù† Ø§Ù„ÙƒÙ„</button>
+            <input class="fi" type="number" id="bulk-charge" placeholder="المبلغ (د.ع)" style="flex:1">
+            <button class="fbtn fbtn-gold" onclick="bulkCharge()" data-i18n="bulkChargeBtn">شحن الكل</button>
           </div>
         </div>
-        <div class="fr"><label class="flbl" data-i18n="bulkMsgLbl">Ø±Ø³Ø§Ù„Ø© Ù„ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†</label>
+        <div class="fr"><label class="flbl" data-i18n="bulkMsgLbl">رسالة لكل الفنيين</label>
           <div style="display:flex;gap:8px">
-            <input class="fi" id="bulk-msg" placeholder="Ù†Øµ Ø§Ù„Ø±Ø³Ø§Ù„Ø©..." style="flex:1">
-            <button class="fbtn fbtn-gold" onclick="sendBulkMsg('techs')" data-i18n="sendBtn">Ø¥Ø±Ø³Ø§Ù„</button>
+            <input class="fi" id="bulk-msg" placeholder="نص الرسالة..." style="flex:1">
+            <button class="fbtn fbtn-gold" onclick="sendBulkMsg('techs')" data-i18n="sendBtn">إرسال</button>
           </div>
         </div>
       </div>
 
-      <!-- Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ø¬Ù…Ø§Ø¹ÙŠØ© -->
-      <div class="sec-title" data-i18n="bulkOrdersTitle">ðŸ“‹ Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø·Ù„Ø¨Ø§Øª</div>
+      <!-- إدارة الطلبات الجماعية -->
+      <div class="sec-title" data-i18n="bulkOrdersTitle">📋 إدارة الطلبات</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-          <button class="fbtn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--red)" onclick="bulkOrders('cancelled')" data-i18n="cancelPendingBtn">âœ• Ø¥Ù„ØºØ§Ø¡ Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø±</button>
-          <button class="fbtn fbtn-gold" onclick="autoAssignOrders()" data-i18n="autoAssignBtn">ðŸ¤– ØªÙˆØ²ÙŠØ¹ ØªÙ„Ù‚Ø§Ø¦ÙŠ Ù„Ù„Ø·Ù„Ø¨Ø§Øª</button>
+          <button class="fbtn" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--red)" onclick="bulkOrders('cancelled')" data-i18n="cancelPendingBtn">✕ إلغاء طلبات الانتظار</button>
+          <button class="fbtn fbtn-gold" onclick="autoAssignOrders()" data-i18n="autoAssignBtn">🤖 توزيع تلقائي للطلبات</button>
         </div>
-        <div style="font-size:11px;color:var(--muted)">Ø§Ù„ØªÙˆØ²ÙŠØ¹ Ø§Ù„ØªÙ„Ù‚Ø§Ø¦ÙŠ ÙŠØ¹ÙŠÙ‘Ù† Ø§Ù„ÙÙ†ÙŠ Ø§Ù„Ù…ØªØ§Ø­ Ø§Ù„Ø£Ù‚Ø±Ø¨ Ù„ÙƒÙ„ Ø·Ù„Ø¨ Ù…Ø¹Ù„Ù‚</div>
+        <div style="font-size:11px;color:var(--muted)">التوزيع التلقائي يعيّن الفني المتاح الأقرب لكل طلب معلق</div>
       </div>
 
-      <!-- Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø² Ø§Ù„Ù…Ø³Ø¨Ù‚ -->
-      <div class="sec-title" data-i18n="bookingSettingsTitle">ðŸ“… Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø² Ø§Ù„Ù…Ø³Ø¨Ù‚</div>
+      <!-- إعدادات الحجز المسبق -->
+      <div class="sec-title" data-i18n="bookingSettingsTitle">📅 إعدادات الحجز المسبق</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
         <div class="frow">
-          <div class="fr"><label class="flbl" data-i18n="maxDaysLbl">Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ Ù„Ù„Ø­Ø¬Ø² (Ø£ÙŠØ§Ù…)</label><input class="fi" type="number" id="s-max-days" value="30" style="width:100%"></div>
-          <div class="fr"><label class="flbl" data-i18n="minHoursLbl">Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ø¯Ù†Ù‰ Ù‚Ø¨Ù„ Ø§Ù„Ù…ÙˆØ¹Ø¯ (Ø³Ø§Ø¹Ø§Øª)</label><input class="fi" type="number" id="s-min-hours" value="2" style="width:100%"></div>
+          <div class="fr"><label class="flbl" data-i18n="maxDaysLbl">الحد الأقصى للحجز (أيام)</label><input class="fi" type="number" id="s-max-days" value="30" style="width:100%"></div>
+          <div class="fr"><label class="flbl" data-i18n="minHoursLbl">الحد الأدنى قبل الموعد (ساعات)</label><input class="fi" type="number" id="s-min-hours" value="2" style="width:100%"></div>
         </div>
-        <button class="fbtn fbtn-gold" onclick="saveBookingSettings()" data-i18n="saveBookingBtn">Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø²</button>
+        <button class="fbtn fbtn-gold" onclick="saveBookingSettings()" data-i18n="saveBookingBtn">حفظ إعدادات الحجز</button>
       </div>
 
-      <!-- Ø¨Ø§Ù‚Ø§Øª Ø§Ù„Ø®Ø¯Ù…Ø© -->
-      <div class="sec-title" data-i18n="packagesTitle">ðŸ“¦ Ø¨Ø§Ù‚Ø§Øª Ø§Ù„Ø®Ø¯Ù…Ø©</div>
+      <!-- باقات الخدمة -->
+      <div class="sec-title" data-i18n="packagesTitle">📦 باقات الخدمة</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
         <div id="packages-list" style="margin-bottom:12px"></div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
-          <input class="fi" id="pkg-name" placeholder="Ø§Ø³Ù… Ø§Ù„Ø¨Ø§Ù‚Ø©">
-          <input class="fi" type="number" id="pkg-price" placeholder="Ø§Ù„Ø³Ø¹Ø± (Ø¯.Ø¹)">
-          <input class="fi" id="pkg-desc" placeholder="Ø§Ù„ÙˆØµÙ">
+          <input class="fi" id="pkg-name" placeholder="اسم الباقة">
+          <input class="fi" type="number" id="pkg-price" placeholder="السعر (د.ع)">
+          <input class="fi" id="pkg-desc" placeholder="الوصف">
         </div>
-        <button class="fbtn fbtn-gold" onclick="addPackage()" data-i18n="addPackageBtn">+ Ø¥Ø¶Ø§ÙØ© Ø¨Ø§Ù‚Ø©</button>
+        <button class="fbtn fbtn-gold" onclick="addPackage()" data-i18n="addPackageBtn">+ إضافة باقة</button>
       </div>
 
-      <!-- ÙƒÙˆØ¯Ø§Øª Ø§Ù„Ø®ØµÙ… -->
-      <div class="sec-title" data-i18n="couponsTitle">ðŸŽŸï¸ ÙƒÙˆØ¯Ø§Øª Ø§Ù„Ø®ØµÙ…</div>
+      <!-- كودات الخصم -->
+      <div class="sec-title" data-i18n="couponsTitle">🎟️ كودات الخصم</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
         <div id="coupons-list" style="margin-bottom:12px"></div>
         <div class="frow">
-          <div class="fr"><label class="flbl" data-i18n="couponCodeLbl">ÙƒÙˆØ¯ Ø§Ù„Ø®ØµÙ…</label><input class="fi" id="coup-code" placeholder="Ù…Ø«Ø§Ù„: SAVE20" style="width:100%;text-transform:uppercase"></div>
-          <div class="fr"><label class="flbl" data-i18n="discountPctLbl">Ù†Ø³Ø¨Ø© Ø§Ù„Ø®ØµÙ… (%)</label><input class="fi" type="number" id="coup-pct" placeholder="20" style="width:100%"></div>
+          <div class="fr"><label class="flbl" data-i18n="couponCodeLbl">كود الخصم</label><input class="fi" id="coup-code" placeholder="مثال: SAVE20" style="width:100%;text-transform:uppercase"></div>
+          <div class="fr"><label class="flbl" data-i18n="discountPctLbl">نسبة الخصم (%)</label><input class="fi" type="number" id="coup-pct" placeholder="20" style="width:100%"></div>
         </div>
         <div class="frow">
-          <div class="fr"><label class="flbl" data-i18n="maxUseLbl">Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ Ù„Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…</label><input class="fi" type="number" id="coup-max" placeholder="100" style="width:100%"></div>
-          <div class="fr"><label class="flbl" data-i18n="expiryLbl">ØªØ§Ø±ÙŠØ® Ø§Ù„Ø§Ù†ØªÙ‡Ø§Ø¡</label><input class="fi" type="date" id="coup-exp" style="width:100%"></div>
+          <div class="fr"><label class="flbl" data-i18n="maxUseLbl">الحد الأقصى للاستخدام</label><input class="fi" type="number" id="coup-max" placeholder="100" style="width:100%"></div>
+          <div class="fr"><label class="flbl" data-i18n="expiryLbl">تاريخ الانتهاء</label><input class="fi" type="date" id="coup-exp" style="width:100%"></div>
         </div>
-        <button class="fbtn fbtn-gold" onclick="addCoupon()" data-i18n="addCouponBtn">+ Ø¥Ø¶Ø§ÙØ© ÙƒÙˆØ¯ Ø®ØµÙ…</button>
+        <button class="fbtn fbtn-gold" onclick="addCoupon()" data-i18n="addCouponBtn">+ إضافة كود خصم</button>
       </div>
 
-      <!-- Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø¬Ù…Ø§Ø¹ÙŠØ© -->
-      <div class="sec-title" data-i18n="notifSectionTitle">ðŸ“¢ Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø¬Ù…Ø§Ø¹ÙŠØ©</div>
+      <!-- إشعارات جماعية -->
+      <div class="sec-title" data-i18n="notifSectionTitle">📢 إشعارات جماعية</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px">
-        <div class="fr"><label class="flbl" data-i18n="notifTitleLbl">Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±</label><input class="fi" id="notif-title" placeholder="Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±" style="width:100%"></div>
-        <div class="fr"><label class="flbl" data-i18n="notifBodyLbl">Ù†Øµ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±</label><textarea class="fi" id="notif-body" rows="2" placeholder="Ù†Øµ Ø§Ù„Ø±Ø³Ø§Ù„Ø©..." style="resize:none;width:100%"></textarea></div>
+        <div class="fr"><label class="flbl" data-i18n="notifTitleLbl">عنوان الإشعار</label><input class="fi" id="notif-title" placeholder="عنوان الإشعار" style="width:100%"></div>
+        <div class="fr"><label class="flbl" data-i18n="notifBodyLbl">نص الإشعار</label><textarea class="fi" id="notif-body" rows="2" placeholder="نص الرسالة..." style="resize:none;width:100%"></textarea></div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-          <button class="fbtn fbtn-gold" onclick="sendNotif('all')" data-i18n="sendAllBtn">ðŸ“¢ Ù„Ù„Ø¬Ù…ÙŠØ¹</button>
-          <button class="fbtn fbtn-out" onclick="sendNotif('techs')" data-i18n="sendTechsBtn">ðŸ‘· Ù„Ù„ÙÙ†ÙŠÙŠÙ†</button>
-          <button class="fbtn fbtn-out" onclick="sendNotif('custs')" data-i18n="sendCustsBtn">ðŸ‘¤ Ù„Ù„Ø²Ø¨Ø§Ø¦Ù†</button>
+          <button class="fbtn fbtn-gold" onclick="sendNotif('all')" data-i18n="sendAllBtn">📢 للجميع</button>
+          <button class="fbtn fbtn-out" onclick="sendNotif('techs')" data-i18n="sendTechsBtn">👷 للفنيين</button>
+          <button class="fbtn fbtn-out" onclick="sendNotif('custs')" data-i18n="sendCustsBtn">👤 للزبائن</button>
         </div>
       </div>
 
-      <!-- Ø³Ø¬Ù„ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª -->
-      <div class="sec-title" data-i18n="notifHistoryTitle">ðŸ“‹ Ø³Ø¬Ù„ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø§Ù„Ù…ÙØ±Ø³Ù„Ø©</div>
+      <!-- سجل الإشعارات -->
+      <div class="sec-title" data-i18n="notifHistoryTitle">📋 سجل الإشعارات المُرسلة</div>
       <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px;max-height:300px;overflow-y:auto">
-        <div id="notif-history-list"><div style="color:var(--muted);font-size:12px;text-align:center;padding:14px">Ø¬Ø§Ø±Ù Ø§Ù„ØªØ­Ù…ÙŠÙ„...</div></div>
+        <div id="notif-history-list"><div style="color:var(--muted);font-size:12px;text-align:center;padding:14px">جارِ التحميل...</div></div>
       </div>
 
     </div>
@@ -797,63 +797,63 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <div class="modal-bg" id="new-order-modal">
   <div class="modal">
     <div class="modal-title">
-      <span data-i18n="newOrderModalTitle">Ø·Ù„Ø¨ Ø¬Ø¯ÙŠØ¯</span>
-      <button class="modal-close" onclick="closeModal('new-order-modal')">âœ•</button>
+      <span data-i18n="newOrderModalTitle">طلب جديد</span>
+      <button class="modal-close" onclick="closeModal('new-order-modal')">✕</button>
     </div>
-    <!-- Ù†ÙˆØ¹ Ø§Ù„Ø·Ù„Ø¨ -->
+    <!-- نوع الطلب -->
     <div class="fr">
-      <label class="flbl" data-i18n="orderTypeLbl">Ù†ÙˆØ¹ Ø§Ù„Ø·Ù„Ø¨</label>
+      <label class="flbl" data-i18n="orderTypeLbl">نوع الطلب</label>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div id="no-type-now" onclick="setNoType('now')" style="background:rgba(239,68,68,.15);border:2px solid var(--red);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-weight:700;font-size:13px;color:var(--red)" data-i18n="nowOpt">âš¡ Ø·Ù„Ø¨ Ø¢Ù†ÙŠ</div>
-        <div id="no-type-book" onclick="setNoType('book')" style="background:var(--s2);border:2px solid var(--bd);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-weight:700;font-size:13px;color:var(--muted)" data-i18n="bookOpt">ðŸ“… Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚</div>
+        <div id="no-type-now" onclick="setNoType('now')" style="background:rgba(239,68,68,.15);border:2px solid var(--red);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-weight:700;font-size:13px;color:var(--red)" data-i18n="nowOpt">⚡ طلب آني</div>
+        <div id="no-type-book" onclick="setNoType('book')" style="background:var(--s2);border:2px solid var(--bd);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-weight:700;font-size:13px;color:var(--muted)" data-i18n="bookOpt">📅 حجز مسبق</div>
       </div>
     </div>
-    <div class="fr" id="no-dt-row" style="display:none"><label class="flbl" data-i18n="apptDatetimeLbl">ØªØ§Ø±ÙŠØ® ÙˆÙˆÙ‚Øª Ø§Ù„Ù…ÙˆØ¹Ø¯</label><input class="fi" type="datetime-local" id="no-datetime" style="width:100%"></div>
+    <div class="fr" id="no-dt-row" style="display:none"><label class="flbl" data-i18n="apptDatetimeLbl">تاريخ ووقت الموعد</label><input class="fi" type="datetime-local" id="no-datetime" style="width:100%"></div>
     <div class="fr" style="position:relative">
-      <label class="flbl" data-i18n="custLbl">Ø§Ù„Ø²Ø¨ÙˆÙ†</label>
-      <input class="fi" id="no-cust" placeholder="Ø§Ø¨Ø­Ø« Ø¨Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø§Ù„Ø±Ù‚Ù…..." oninput="filterNoCust()" autocomplete="off" style="width:100%">
+      <label class="flbl" data-i18n="custLbl">الزبون</label>
+      <input class="fi" id="no-cust" placeholder="ابحث بالاسم أو الرقم..." oninput="filterNoCust()" autocomplete="off" style="width:100%">
       <div id="no-cust-dd" style="display:none;position:absolute;top:100%;right:0;left:0;background:var(--s2);border:1px solid var(--bd);border-radius:6px;z-index:200;max-height:140px;overflow-y:auto;margin-top:2px"></div>
     </div>
 
     <div class="fr">
-      <label class="flbl" data-i18n="custLocLbl">ðŸ“ Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø²Ø¨ÙˆÙ†</label>
-      <input class="fi" id="no-loc-search" placeholder="Ø§Ø¨Ø­Ø« Ø¹Ù† Ù…Ù†Ø·Ù‚Ø© Ø£Ùˆ Ø¹Ù†ÙˆØ§Ù†..." oninput="searchLocation(this.value)" autocomplete="off" style="width:100%">
+      <label class="flbl" data-i18n="custLocLbl">📍 موقع الزبون</label>
+      <input class="fi" id="no-loc-search" placeholder="ابحث عن منطقة أو عنوان..." oninput="searchLocation(this.value)" autocomplete="off" style="width:100%">
     </div>
     <div id="no-loc-dd" style="display:none;background:var(--s2);border:1px solid var(--bd);border-radius:6px;max-height:160px;overflow-y:auto;margin-bottom:12px"></div>
     <div id="no-map-box" style="border-radius:10px;border:1px solid var(--bd);height:200px;margin-bottom:12px;overflow:hidden">
       <div id="no-order-map" style="height:100%;width:100%"></div>
     </div>
-    <div id="no-loc-status" style="font-size:11px;color:var(--muted);margin-bottom:12px">Ø§Ø¶ØºØ· Ø¹Ù„Ù‰ Ø§Ù„Ø®Ø±ÙŠØ·Ø© Ø£Ùˆ Ø§Ø¨Ø­Ø« Ù„ØªØ­Ø¯ÙŠØ¯ Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø²Ø¨ÙˆÙ†</div>
+    <div id="no-loc-status" style="font-size:11px;color:var(--muted);margin-bottom:12px">اضغط على الخريطة أو ابحث لتحديد موقع الزبون</div>
     <div class="frow">
-      <div class="fr"><label class="flbl" data-i18n="serviceLbl">Ø§Ù„Ø®Ø¯Ù…Ø©</label>
+      <div class="fr"><label class="flbl" data-i18n="serviceLbl">الخدمة</label>
         <select class="fs" id="no-service" style="width:100%">
-          <option value="electric">âš¡ ÙƒÙ‡Ø±Ø¨Ø§Ø¡</option>
-          <option value="plumb">ðŸ”§ Ø³Ø¨Ø§ÙƒØ©</option>
-          <option value="ac">â„ï¸ ØªÙƒÙŠÙŠÙ</option>
-          <option value="paint">ðŸŽ¨ Ø¯Ù‡Ø§Ù†</option>
-          <option value="carp">ðŸªš Ù†Ø¬Ø§Ø±Ø©</option>
-          <option value="clean">ðŸ§¹ ØªÙ†Ø¸ÙŠÙ</option>
-          <option value="tile">ðŸªŸ Ø¨Ù„Ø§Ø·</option>
-          <option value="other">ðŸ”¨ Ø£Ø®Ø±Ù‰</option>
+          <option value="electric">⚡ كهرباء</option>
+          <option value="plumb">🔧 سباكة</option>
+          <option value="ac">❄️ تكييف</option>
+          <option value="paint">🎨 دهان</option>
+          <option value="carp">🪚 نجارة</option>
+          <option value="clean">🧹 تنظيف</option>
+          <option value="tile">🪟 بلاط</option>
+          <option value="other">🔨 أخرى</option>
         </select>
       </div>
-      <div class="fr"><label class="flbl" data-i18n="assignedTechLbl">Ø§Ù„ÙÙ†ÙŠ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</label>
-        <select class="fs" id="no-tech" style="width:100%"><option value="">â€” Ø¨Ø¯ÙˆÙ† ØªØ¹ÙŠÙŠÙ† â€”</option></select>
+      <div class="fr"><label class="flbl" data-i18n="assignedTechLbl">الفني (اختياري)</label>
+        <select class="fs" id="no-tech" style="width:100%"><option value="">— بدون تعيين —</option></select>
       </div>
     </div>
     <div class="frow">
-      <div class="fr"><label class="flbl" data-i18n="amountValLbl">Ø§Ù„Ù‚ÙŠÙ…Ø© (Ø¯.Ø¹)</label><input class="fi" type="number" id="no-amount" placeholder="0" style="width:100%"></div>
-      <div class="fr"><label class="flbl" data-i18n="paymentLbl">Ø§Ù„Ø¯ÙØ¹</label>
+      <div class="fr"><label class="flbl" data-i18n="amountValLbl">القيمة (د.ع)</label><input class="fi" type="number" id="no-amount" placeholder="0" style="width:100%"></div>
+      <div class="fr"><label class="flbl" data-i18n="paymentLbl">الدفع</label>
         <select class="fs" id="no-pay" style="width:100%">
-          <option value="cash">ðŸ’µ Ù†Ù‚Ø¯Ø§Ù‹</option>
-          <option value="wallet">ðŸ’³ Ù…Ø­ÙØ¸Ø©</option>
+          <option value="cash">💵 نقداً</option>
+          <option value="wallet">💳 محفظة</option>
         </select>
       </div>
     </div>
-    <div class="fr"><label class="flbl" data-i18n="notesLbl">Ù…Ù„Ø§Ø­Ø¸Ø§Øª</label><input class="fi" id="no-desc" placeholder="ÙˆØµÙ Ø§Ù„Ø·Ù„Ø¨..." style="width:100%"></div>
+    <div class="fr"><label class="flbl" data-i18n="notesLbl">ملاحظات</label><input class="fi" id="no-desc" placeholder="وصف الطلب..." style="width:100%"></div>
     <div class="m-acts">
-      <button class="dact fbtn-out" style="flex:1;border:1px solid var(--bd)" onclick="closeModal('new-order-modal')" data-i18n="cancelBtn">Ø¥Ù„ØºØ§Ø¡</button>
-      <button class="dact dact-gold" style="flex:1" onclick="createOrder()" data-i18n="createOrderBtn">Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø·Ù„Ø¨</button>
+      <button class="dact fbtn-out" style="flex:1;border:1px solid var(--bd)" onclick="closeModal('new-order-modal')" data-i18n="cancelBtn">إلغاء</button>
+      <button class="dact dact-gold" style="flex:1" onclick="createOrder()" data-i18n="createOrderBtn">إنشاء الطلب</button>
     </div>
   </div>
 </div>
@@ -861,30 +861,30 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <!-- ADD TECH MODAL -->
 <div class="modal-bg" id="add-tech-modal">
   <div class="modal">
-    <div class="modal-title"><span data-i18n="addTechModalTitle">Ø¥Ø¶Ø§ÙØ© ÙÙ†ÙŠ</span><button class="modal-close" onclick="closeModal('add-tech-modal')">âœ•</button></div>
+    <div class="modal-title"><span data-i18n="addTechModalTitle">إضافة فني</span><button class="modal-close" onclick="closeModal('add-tech-modal')">✕</button></div>
     <div class="frow">
-      <div class="fr"><label class="flbl" data-i18n="nameLbl">Ø§Ù„Ø§Ø³Ù…</label><input class="fi" id="at-name" placeholder="Ø§Ø³Ù… Ø§Ù„ÙÙ†ÙŠ" style="width:100%"></div>
-      <div class="fr"><label class="flbl" data-i18n="phoneLbl">Ø§Ù„Ø¬ÙˆØ§Ù„</label><input class="fi" id="at-phone" placeholder="07xxxxxxxxx" style="width:100%"></div>
+      <div class="fr"><label class="flbl" data-i18n="nameLbl">الاسم</label><input class="fi" id="at-name" placeholder="اسم الفني" style="width:100%"></div>
+      <div class="fr"><label class="flbl" data-i18n="phoneLbl">الجوال</label><input class="fi" id="at-phone" placeholder="07xxxxxxxxx" style="width:100%"></div>
     </div>
     <div class="frow">
-      <div class="fr"><label class="flbl" data-i18n="techSpecLbl">Ø§Ù„ØªØ®ØµØµ</label>
+      <div class="fr"><label class="flbl" data-i18n="techSpecLbl">التخصص</label>
         <select class="fs" id="at-spec" style="width:100%">
-          <option value="electric">âš¡ ÙƒÙ‡Ø±Ø¨Ø§Ø¡</option>
-          <option value="plumb">ðŸ”§ Ø³Ø¨Ø§ÙƒØ©</option>
-          <option value="ac">â„ï¸ ØªÙƒÙŠÙŠÙ</option>
-          <option value="paint">ðŸŽ¨ Ø¯Ù‡Ø§Ù†</option>
-          <option value="carp">ðŸªš Ù†Ø¬Ø§Ø±Ø©</option>
-          <option value="clean">ðŸ§¹ ØªÙ†Ø¸ÙŠÙ</option>
-          <option value="tile">ðŸªŸ Ø¨Ù„Ø§Ø·</option>
-          <option value="other">ðŸ”¨ Ù…ØªØ¹Ø¯Ø¯</option>
+          <option value="electric">⚡ كهرباء</option>
+          <option value="plumb">🔧 سباكة</option>
+          <option value="ac">❄️ تكييف</option>
+          <option value="paint">🎨 دهان</option>
+          <option value="carp">🪚 نجارة</option>
+          <option value="clean">🧹 تنظيف</option>
+          <option value="tile">🪟 بلاط</option>
+          <option value="other">🔨 متعدد</option>
         </select>
       </div>
-      <div class="fr"><label class="flbl" data-i18n="techCityLbl">Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©</label><input class="fi" id="at-city" placeholder="Ø¨ØºØ¯Ø§Ø¯" style="width:100%"></div>
+      <div class="fr"><label class="flbl" data-i18n="techCityLbl">المدينة</label><input class="fi" id="at-city" placeholder="بغداد" style="width:100%"></div>
     </div>
-    <div class="fr"><label class="flbl" data-i18n="techWalletLbl">Ø±ØµÙŠØ¯ Ø§Ù„Ù…Ø­ÙØ¸Ø© (Ø¯.Ø¹)</label><input class="fi" type="number" id="at-wallet" value="0" style="width:100%"></div>
+    <div class="fr"><label class="flbl" data-i18n="techWalletLbl">رصيد المحفظة (د.ع)</label><input class="fi" type="number" id="at-wallet" value="0" style="width:100%"></div>
     <div class="m-acts">
-      <button class="dact fbtn-out" style="flex:1;border:1px solid var(--bd)" onclick="closeModal('add-tech-modal')" data-i18n="cancelBtn">Ø¥Ù„ØºØ§Ø¡</button>
-      <button class="dact dact-gold" style="flex:1" onclick="addTech()" data-i18n="addBtn">Ø¥Ø¶Ø§ÙØ©</button>
+      <button class="dact fbtn-out" style="flex:1;border:1px solid var(--bd)" onclick="closeModal('add-tech-modal')" data-i18n="cancelBtn">إلغاء</button>
+      <button class="dact dact-gold" style="flex:1" onclick="addTech()" data-i18n="addBtn">إضافة</button>
     </div>
   </div>
 </div>
@@ -894,9 +894,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);displ
 <script>
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// THEME (Ø§Ù„Ù…Ø¸Ù‡Ø±: ÙØ§ØªØ­/Ø¯Ø§ÙƒÙ†) â€” Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠ Ù‡Ù†Ø§ Ø¯Ø§ÙƒÙ†
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
+// THEME (المظهر: فاتح/داكن) — الافتراضي هنا داكن
+// ══════════════════════════════════════
 (function initTheme(){
   var saved = localStorage.getItem('tl_admin_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
@@ -908,184 +908,184 @@ function toggleTheme(){
   var next = isDark ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('tl_admin_theme', next);
-  document.getElementById('theme-knob').textContent = next === 'dark' ? 'ðŸŒ™' : 'â˜€ï¸';
+  document.getElementById('theme-knob').textContent = next === 'dark' ? '🌙' : '☀️';
 }
 setTimeout(function(){
   var knob = document.getElementById('theme-knob');
-  if(knob) knob.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'ðŸŒ™' : 'â˜€ï¸';
+  if(knob) knob.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
 }, 0);
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// LANGUAGE (Ø§Ù„Ù„ØºØ©: Ø¹Ø±Ø¨ÙŠ/Ø¥Ù†ÙƒÙ„ÙŠØ²ÙŠ)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
+// LANGUAGE (اللغة: عربي/إنكليزي)
+// ══════════════════════════════════════
 var currentLang = localStorage.getItem('tl_admin_lang') || 'ar';
 
 var I18N_FULL = {
-  dispatch:     { ar:'Ø§Ù„Ø¥ÙŠÙØ§Ø¯',              en:'Dispatch' },
-  dashboard:    { ar:'ðŸ“Š Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…',        en:'ðŸ“Š Dashboard' },
-  ordersNav:    { ar:'ðŸ“‹ Ø§Ù„Ø·Ù„Ø¨Ø§Øª',            en:'ðŸ“‹ Orders' },
-  mapNav:       { ar:'ðŸ—ºï¸ Ø§Ù„Ø®Ø±ÙŠØ·Ø©',           en:'ðŸ—ºï¸ Map' },
-  alertsNav:    { ar:'ðŸ”” Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§Øª',          en:'ðŸ”” Alerts' },
-  management:   { ar:'Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©',              en:'Management' },
-  techsNav:     { ar:'ðŸ‘· Ø§Ù„ÙÙ†ÙŠÙˆÙ†',            en:'ðŸ‘· Technicians' },
-  custsNav:     { ar:'ðŸ‘¤ Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†',            en:'ðŸ‘¤ Customers' },
-  txNav:        { ar:'ðŸ”„ Ø§Ù„Ù…Ù†Ø§Ù‚Ù„Ø§Øª',          en:'ðŸ”„ Transactions' },
-  ratingsNav:   { ar:'â­ Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª',          en:'â­ Ratings' },
-  financeNav:   { ar:'ðŸ’° Ø§Ù„Ù…Ø§Ù„ÙŠØ©',            en:'ðŸ’° Finance' },
-  reportsNav:   { ar:'ðŸ“Š Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±',           en:'ðŸ“Š Reports' },
-  chatsNav:     { ar:'ðŸ’¬ Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª',          en:'ðŸ’¬ Chats' },
-  settingsNav:  { ar:'âš™ï¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª',          en:'âš™ï¸ Settings' },
-  controlNav:   { ar:'ðŸŽ›ï¸ Ù…Ø±ÙƒØ² Ø§Ù„ØªØ­ÙƒÙ…',       en:'ðŸŽ›ï¸ Control Center' },
-  totalOrdersLbl:{ ar:'ðŸ“‹ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø·Ù„Ø¨Ø§Øª',    en:'ðŸ“‹ Total Orders' },
-  pendingLbl:   { ar:'â³ Ø§Ù†ØªØ¸Ø§Ø±',              en:'â³ Pending' },
-  revenueLbl:   { ar:'ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª',           en:'ðŸ’° Revenue' },
-  techsLbl:     { ar:'ðŸ‘· Ø§Ù„ÙÙ†ÙŠÙˆÙ†',             en:'ðŸ‘· Technicians' },
-  liveOrdersHead:{ ar:'âš¡ Ø§Ù„Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ø­ÙŠØ©',      en:'âš¡ Live Orders' },
-  newOrderBtn:  { ar:'+ Ø·Ù„Ø¨ Ø¬Ø¯ÙŠØ¯',            en:'+ New Order' },
+  dispatch:     { ar:'الإيفاد',              en:'Dispatch' },
+  dashboard:    { ar:'📊 لوحة التحكم',        en:'📊 Dashboard' },
+  ordersNav:    { ar:'📋 الطلبات',            en:'📋 Orders' },
+  mapNav:       { ar:'🗺️ الخريطة',           en:'🗺️ Map' },
+  alertsNav:    { ar:'🔔 التنبيهات',          en:'🔔 Alerts' },
+  management:   { ar:'الإدارة',              en:'Management' },
+  techsNav:     { ar:'👷 الفنيون',            en:'👷 Technicians' },
+  custsNav:     { ar:'👤 الزبائن',            en:'👤 Customers' },
+  txNav:        { ar:'🔄 المناقلات',          en:'🔄 Transactions' },
+  ratingsNav:   { ar:'⭐ التقييمات',          en:'⭐ Ratings' },
+  financeNav:   { ar:'💰 المالية',            en:'💰 Finance' },
+  reportsNav:   { ar:'📊 التقارير',           en:'📊 Reports' },
+  chatsNav:     { ar:'💬 المحادثات',          en:'💬 Chats' },
+  settingsNav:  { ar:'⚙️ الإعدادات',          en:'⚙️ Settings' },
+  controlNav:   { ar:'🎛️ مركز التحكم',       en:'🎛️ Control Center' },
+  totalOrdersLbl:{ ar:'📋 إجمالي الطلبات',    en:'📋 Total Orders' },
+  pendingLbl:   { ar:'⏳ انتظار',              en:'⏳ Pending' },
+  revenueLbl:   { ar:'💰 الإيرادات',           en:'💰 Revenue' },
+  techsLbl:     { ar:'👷 الفنيون',             en:'👷 Technicians' },
+  liveOrdersHead:{ ar:'⚡ الطلبات الحية',      en:'⚡ Live Orders' },
+  newOrderBtn:  { ar:'+ طلب جديد',            en:'+ New Order' },
 
-  // â”€â”€ Ø¹Ø§Ù…: Ù…ØµØ§Ø¯Ù‚Ø© â”€â”€
-  authTitle:    { ar:'Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…',           en:'Control Panel' },
-  authSub:      { ar:'Ø³Ø¬Ù‘Ù„ Ø¯Ø®ÙˆÙ„Ùƒ Ù„Ù„Ù…ØªØ§Ø¨Ø¹Ø©',    en:'Sign in to continue' },
-  emailLbl:     { ar:'Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ',      en:'Email' },
-  passLbl:      { ar:'ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±',           en:'Password' },
-  loginBtn:     { ar:'Ø¯Ø®ÙˆÙ„',                 en:'Login' },
-  logoutBtn:    { ar:'Ø®Ø±ÙˆØ¬',                 en:'Logout' },
+  // ── عام: مصادقة ──
+  authTitle:    { ar:'لوحة التحكم',           en:'Control Panel' },
+  authSub:      { ar:'سجّل دخولك للمتابعة',    en:'Sign in to continue' },
+  emailLbl:     { ar:'البريد الإلكتروني',      en:'Email' },
+  passLbl:      { ar:'كلمة المرور',           en:'Password' },
+  loginBtn:     { ar:'دخول',                 en:'Login' },
+  logoutBtn:    { ar:'خروج',                 en:'Logout' },
 
-  // â”€â”€ Ø£Ø²Ø±Ø§Ø± ÙˆØ­Ù‚ÙˆÙ„ Ø¹Ø§Ù…Ø© ÙŠØªÙƒØ±Ø± Ø§Ø³ØªØ®Ø¯Ø§Ù…Ù‡Ø§ â”€â”€
-  saveBtn:      { ar:'Ø­ÙØ¸',                  en:'Save' },
-  cancelBtn:    { ar:'Ø¥Ù„ØºØ§Ø¡',                en:'Cancel' },
-  deleteBtn:    { ar:'Ø­Ø°Ù',                  en:'Delete' },
-  editBtn:      { ar:'ØªØ¹Ø¯ÙŠÙ„',                en:'Edit' },
-  addBtn:       { ar:'Ø¥Ø¶Ø§ÙØ©',                en:'Add' },
-  searchLbl:    { ar:'Ø¨Ø­Ø«',                  en:'Search' },
-  clearBtn:     { ar:'Ù…Ø³Ø­',                  en:'Clear' },
-  clearFiltersBtn:{ ar:'Ù…Ø³Ø­ Ø§Ù„ÙÙ„Ø§ØªØ±',         en:'Clear Filters' },
-  allOpt:       { ar:'Ø§Ù„ÙƒÙ„',                 en:'All' },
-  statusLbl:    { ar:'Ø§Ù„Ø­Ø§Ù„Ø©',                en:'Status' },
-  typeLbl:      { ar:'Ø§Ù„Ù†ÙˆØ¹',                 en:'Type' },
-  fromLbl:      { ar:'Ù…Ù†',                   en:'From' },
-  toLbl:        { ar:'Ø¥Ù„Ù‰',                  en:'To' },
-  fromDateLbl:  { ar:'Ù…Ù† ØªØ§Ø±ÙŠØ®',              en:'From Date' },
-  toDateLbl:    { ar:'Ø¥Ù„Ù‰ ØªØ§Ø±ÙŠØ®',             en:'To Date' },
-  nameLbl:      { ar:'Ø§Ù„Ø§Ø³Ù…',                 en:'Name' },
-  phoneLbl:     { ar:'Ø§Ù„Ø¬ÙˆØ§Ù„',                en:'Phone' },
-  pendingOpt:   { ar:'Ø§Ù†ØªØ¸Ø§Ø±',                en:'Pending' },
-  inprogressOpt:{ ar:'Ø¬Ø§Ø±Ù',                  en:'In Progress' },
-  doneOpt:      { ar:'Ù…ÙƒØªÙ…Ù„',                 en:'Done' },
-  cancelledOpt: { ar:'Ù…Ù„ØºÙŠ',                  en:'Cancelled' },
-  activeOpt:    { ar:'Ù…ÙØ¹Ù‘Ù„',                 en:'Active' },
-  blockedOpt:   { ar:'Ù…ÙˆÙ‚ÙˆÙ',                 en:'Blocked' },
-  nowOpt:       { ar:'Ø·Ù„Ø¨ Ø¢Ù†ÙŠ',               en:'Instant Order' },
-  bookOpt:      { ar:'Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚',              en:'Booking' },
-  sendBtn:      { ar:'Ø¥Ø±Ø³Ø§Ù„',                 en:'Send' },
+  // ── أزرار وحقول عامة يتكرر استخدامها ──
+  saveBtn:      { ar:'حفظ',                  en:'Save' },
+  cancelBtn:    { ar:'إلغاء',                en:'Cancel' },
+  deleteBtn:    { ar:'حذف',                  en:'Delete' },
+  editBtn:      { ar:'تعديل',                en:'Edit' },
+  addBtn:       { ar:'إضافة',                en:'Add' },
+  searchLbl:    { ar:'بحث',                  en:'Search' },
+  clearBtn:     { ar:'مسح',                  en:'Clear' },
+  clearFiltersBtn:{ ar:'مسح الفلاتر',         en:'Clear Filters' },
+  allOpt:       { ar:'الكل',                 en:'All' },
+  statusLbl:    { ar:'الحالة',                en:'Status' },
+  typeLbl:      { ar:'النوع',                 en:'Type' },
+  fromLbl:      { ar:'من',                   en:'From' },
+  toLbl:        { ar:'إلى',                  en:'To' },
+  fromDateLbl:  { ar:'من تاريخ',              en:'From Date' },
+  toDateLbl:    { ar:'إلى تاريخ',             en:'To Date' },
+  nameLbl:      { ar:'الاسم',                 en:'Name' },
+  phoneLbl:     { ar:'الجوال',                en:'Phone' },
+  pendingOpt:   { ar:'انتظار',                en:'Pending' },
+  inprogressOpt:{ ar:'جارٍ',                  en:'In Progress' },
+  doneOpt:      { ar:'مكتمل',                 en:'Done' },
+  cancelledOpt: { ar:'ملغي',                  en:'Cancelled' },
+  activeOpt:    { ar:'مفعّل',                 en:'Active' },
+  blockedOpt:   { ar:'موقوف',                 en:'Blocked' },
+  nowOpt:       { ar:'طلب آني',               en:'Instant Order' },
+  bookOpt:      { ar:'حجز مسبق',              en:'Booking' },
+  sendBtn:      { ar:'إرسال',                 en:'Send' },
 
-  // â”€â”€ Ø§Ù„ÙÙ†ÙŠÙˆÙ† â”€â”€
-  addTechNavBtn:{ ar:'+ ÙÙ†ÙŠ Ø¬Ø¯ÙŠØ¯',            en:'+ New Technician' },
+  // ── الفنيون ──
+  addTechNavBtn:{ ar:'+ فني جديد',            en:'+ New Technician' },
 
-  // â”€â”€ Ø§Ù„Ù…Ø§Ù„ÙŠØ© â”€â”€
-  financeSectionTitle:{ ar:'Ø§Ø³ØªÙ‚Ø·Ø§Ø¹ Ù…Ù† Ù…Ø­ÙØ¸Ø© ÙÙ†ÙŠ', en:'Deduct from Technician Wallet' },
-  techLbl:      { ar:'Ø§Ù„ÙÙ†ÙŠ',                 en:'Technician' },
-  amountLbl:    { ar:'Ø§Ù„Ù…Ø¨Ù„Øº (Ø¯.Ø¹)',          en:'Amount (IQD)' },
-  reasonLbl:    { ar:'Ø§Ù„Ø³Ø¨Ø¨',                 en:'Reason' },
-  deductBtn:    { ar:'Ø§Ø³ØªÙ‚Ø·Ø§Ø¹',               en:'Deduct' },
-  finRevLbl:    { ar:'ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª',           en:'ðŸ’° Revenue' },
-  finCommLbl:   { ar:'ðŸ“Š Ø§Ù„Ø¹Ù…ÙˆÙ„Ø§Øª',            en:'ðŸ“Š Commissions' },
-  finDoneLbl:   { ar:'âœ… Ù…ÙƒØªÙ…Ù„Ø©',              en:'âœ… Completed' },
+  // ── المالية ──
+  financeSectionTitle:{ ar:'استقطاع من محفظة فني', en:'Deduct from Technician Wallet' },
+  techLbl:      { ar:'الفني',                 en:'Technician' },
+  amountLbl:    { ar:'المبلغ (د.ع)',          en:'Amount (IQD)' },
+  reasonLbl:    { ar:'السبب',                 en:'Reason' },
+  deductBtn:    { ar:'استقطاع',               en:'Deduct' },
+  finRevLbl:    { ar:'💰 الإيرادات',           en:'💰 Revenue' },
+  finCommLbl:   { ar:'📊 العمولات',            en:'📊 Commissions' },
+  finDoneLbl:   { ar:'✅ مكتملة',              en:'✅ Completed' },
 
-  // â”€â”€ Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ± â”€â”€
-  rTodayLbl:    { ar:'ðŸ“… Ø§Ù„ÙŠÙˆÙ…',               en:'ðŸ“… Today' },
-  rWeekLbl:     { ar:'ðŸ“… Ù‡Ø°Ø§ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹',         en:'ðŸ“… This Week' },
-  rMonthLbl:    { ar:'ðŸ“… Ù‡Ø°Ø§ Ø§Ù„Ø´Ù‡Ø±',           en:'ðŸ“… This Month' },
-  rRatingLbl:   { ar:'â­ Ù…ØªÙˆØ³Ø· Ø§Ù„ØªÙ‚ÙŠÙŠÙ…',        en:'â­ Average Rating' },
-  topTechsTitle:{ ar:'ðŸ† Ø£ÙØ¶Ù„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',         en:'ðŸ† Top Technicians' },
-  topServicesTitle:{ ar:'ðŸ”§ Ø£ÙƒØ«Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø·Ù„Ø¨Ø§Ù‹', en:'ðŸ”§ Most Requested Services' },
-  dailyRevTitle:{ ar:'ðŸ’° Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª Ø§Ù„ÙŠÙˆÙ…ÙŠØ© (Ø¢Ø®Ø± 7 Ø£ÙŠØ§Ù…)', en:'ðŸ’° Daily Revenue (Last 7 Days)' },
+  // ── التقارير ──
+  rTodayLbl:    { ar:'📅 اليوم',               en:'📅 Today' },
+  rWeekLbl:     { ar:'📅 هذا الأسبوع',         en:'📅 This Week' },
+  rMonthLbl:    { ar:'📅 هذا الشهر',           en:'📅 This Month' },
+  rRatingLbl:   { ar:'⭐ متوسط التقييم',        en:'⭐ Average Rating' },
+  topTechsTitle:{ ar:'🏆 أفضل الفنيين',         en:'🏆 Top Technicians' },
+  topServicesTitle:{ ar:'🔧 أكثر الخدمات طلباً', en:'🔧 Most Requested Services' },
+  dailyRevTitle:{ ar:'💰 الإيرادات اليومية (آخر 7 أيام)', en:'💰 Daily Revenue (Last 7 Days)' },
 
-  // â”€â”€ Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª â”€â”€
-  activeChatsTitle:{ ar:'Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª Ø§Ù„Ù†Ø´Ø·Ø©',    en:'Active Chats' },
-  selectChatMsg:{ ar:'Ø§Ø®ØªØ± Ù…Ø­Ø§Ø¯Ø«Ø©',            en:'Select a chat' },
+  // ── المحادثات ──
+  activeChatsTitle:{ ar:'المحادثات النشطة',    en:'Active Chats' },
+  selectChatMsg:{ ar:'اختر محادثة',            en:'Select a chat' },
 
-  // â”€â”€ Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª â”€â”€
-  ratingsCountLbl:{ ar:'ðŸ“ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª',  en:'ðŸ“ Total Ratings' },
-  ratingsCommentedLbl:{ ar:'ðŸ’¬ Ù…Ø¹ ØªØ¹Ù„ÙŠÙ‚',       en:'ðŸ’¬ With Comment' },
-  starsLbl:     { ar:'Ø§Ù„Ù†Ø¬ÙˆÙ…',                en:'Stars' },
+  // ── التقييمات ──
+  ratingsCountLbl:{ ar:'📝 إجمالي التقييمات',  en:'📝 Total Ratings' },
+  ratingsCommentedLbl:{ ar:'💬 مع تعليق',       en:'💬 With Comment' },
+  starsLbl:     { ar:'النجوم',                en:'Stars' },
 
-  // â”€â”€ Ø§Ù„Ù…Ù†Ø§Ù‚Ù„Ø§Øª â”€â”€
-  txCountLbl:   { ar:'ðŸ“Š Ø¹Ø¯Ø¯ Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª',         en:'ðŸ“Š Transaction Count' },
-  txChargeLbl:  { ar:'ðŸ’° Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø´Ø­Ù†',         en:'ðŸ’° Total Charged' },
-  txWithdrawLbl:{ ar:'âž– Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø³Ø­Ø¨',         en:'âž– Total Withdrawn' },
-  txDeductLbl:  { ar:'ðŸ”» Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø§Ø³ØªÙ‚Ø·Ø§Ø¹',     en:'ðŸ”» Total Deducted' },
-  opTypeLbl:    { ar:'Ù†ÙˆØ¹ Ø§Ù„Ø¹Ù…Ù„ÙŠØ©',            en:'Operation Type' },
-  custOnlyOpt:  { ar:'Ø§Ù„Ø²Ø¨Ø§Ø¦Ù† ÙÙ‚Ø·',            en:'Customers Only' },
-  techOnlyOpt:  { ar:'Ø§Ù„ÙÙ†ÙŠÙŠÙ† ÙÙ‚Ø·',            en:'Technicians Only' },
-  chargeOpt:    { ar:'Ø´Ø­Ù†',                   en:'Charge' },
-  withdrawOpt:  { ar:'Ø³Ø­Ø¨',                   en:'Withdraw' },
-  deductOpt:    { ar:'Ø§Ø³ØªÙ‚Ø·Ø§Ø¹',               en:'Deduct' },
+  // ── المناقلات ──
+  txCountLbl:   { ar:'📊 عدد العمليات',         en:'📊 Transaction Count' },
+  txChargeLbl:  { ar:'💰 إجمالي الشحن',         en:'💰 Total Charged' },
+  txWithdrawLbl:{ ar:'➖ إجمالي السحب',         en:'➖ Total Withdrawn' },
+  txDeductLbl:  { ar:'🔻 إجمالي الاستقطاع',     en:'🔻 Total Deducted' },
+  opTypeLbl:    { ar:'نوع العملية',            en:'Operation Type' },
+  custOnlyOpt:  { ar:'الزبائن فقط',            en:'Customers Only' },
+  techOnlyOpt:  { ar:'الفنيين فقط',            en:'Technicians Only' },
+  chargeOpt:    { ar:'شحن',                   en:'Charge' },
+  withdrawOpt:  { ar:'سحب',                   en:'Withdraw' },
+  deductOpt:    { ar:'استقطاع',               en:'Deduct' },
 
-  // â”€â”€ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª â”€â”€
-  commissionSectionTitle:{ ar:'ðŸ’° Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø©', en:'ðŸ’° Commission Rate' },
-  commissionPctLbl:{ ar:'Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø© Ù…Ù† ÙƒÙ„ Ø·Ù„Ø¨ (%)', en:'Commission per Order (%)' },
-  saveCommissionBtn:{ ar:'Ø­ÙØ¸ Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø©',   en:'Save Commission Rate' },
-  pricesSectionTitle:{ ar:'ðŸ› ï¸ Ø£Ø³Ø¹Ø§Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©', en:'ðŸ› ï¸ Default Service Prices' },
-  savePricesBtn:{ ar:'Ø­ÙØ¸ Ø§Ù„Ø£Ø³Ø¹Ø§Ø±',            en:'Save Prices' },
-  paymentSectionTitle:{ ar:'ðŸ’³ Ù†Ø¸Ø§Ù… Ø§Ù„Ø¯ÙØ¹ (API)', en:'ðŸ’³ Payment System (API)' },
-  providerLbl:  { ar:'Ù…Ø²ÙˆÙ‘Ø¯ Ø§Ù„Ø¯ÙØ¹ Ø§Ù„Ù†Ø´Ø·',       en:'Active Payment Provider' },
-  testConnBtn:  { ar:'ðŸ”Œ Ø§Ø®ØªØ¨Ø§Ø± Ø§Ù„Ø§ØªØµØ§Ù„',       en:'ðŸ”Œ Test Connection' },
-  savePaymentBtn:{ ar:'ðŸ’¾ Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø¯ÙØ¹',   en:'ðŸ’¾ Save Payment Settings' },
-  generalSectionTitle:{ ar:'âš™ï¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø¹Ø§Ù…Ø©',   en:'âš™ï¸ General Settings' },
-  platformNameLbl:{ ar:'Ø§Ø³Ù… Ø§Ù„Ù…Ù†ØµØ©',           en:'Platform Name' },
-  defaultCityLbl:{ ar:'Ø§Ù„Ù…Ø¯ÙŠÙ†Ø© Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©',    en:'Default City' },
-  supportPhoneLbl:{ ar:'Ø±Ù‚Ù… Ø§Ù„Ø¯Ø¹Ù…',            en:'Support Number' },
-  minWalletLbl: { ar:'Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ø¯Ù†Ù‰ Ù„Ù„Ù…Ø­ÙØ¸Ø© (Ø¯.Ø¹)', en:'Minimum Wallet Balance (IQD)' },
-  saveSettingsBtn:{ ar:'Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª',         en:'Save Settings' },
+  // ── الإعدادات ──
+  commissionSectionTitle:{ ar:'💰 نسبة العمولة', en:'💰 Commission Rate' },
+  commissionPctLbl:{ ar:'نسبة العمولة من كل طلب (%)', en:'Commission per Order (%)' },
+  saveCommissionBtn:{ ar:'حفظ نسبة العمولة',   en:'Save Commission Rate' },
+  pricesSectionTitle:{ ar:'🛠️ أسعار الخدمات الافتراضية', en:'🛠️ Default Service Prices' },
+  savePricesBtn:{ ar:'حفظ الأسعار',            en:'Save Prices' },
+  paymentSectionTitle:{ ar:'💳 نظام الدفع (API)', en:'💳 Payment System (API)' },
+  providerLbl:  { ar:'مزوّد الدفع النشط',       en:'Active Payment Provider' },
+  testConnBtn:  { ar:'🔌 اختبار الاتصال',       en:'🔌 Test Connection' },
+  savePaymentBtn:{ ar:'💾 حفظ إعدادات الدفع',   en:'💾 Save Payment Settings' },
+  generalSectionTitle:{ ar:'⚙️ إعدادات عامة',   en:'⚙️ General Settings' },
+  platformNameLbl:{ ar:'اسم المنصة',           en:'Platform Name' },
+  defaultCityLbl:{ ar:'المدينة الافتراضية',    en:'Default City' },
+  supportPhoneLbl:{ ar:'رقم الدعم',            en:'Support Number' },
+  minWalletLbl: { ar:'الحد الأدنى للمحفظة (د.ع)', en:'Minimum Wallet Balance (IQD)' },
+  saveSettingsBtn:{ ar:'حفظ الإعدادات',         en:'Save Settings' },
 
-  // â”€â”€ Ù…Ø±ÙƒØ² Ø§Ù„ØªØ­ÙƒÙ… â”€â”€
-  quickControlTitle:{ ar:'âš¡ ØªØ­ÙƒÙ… Ø³Ø±ÙŠØ¹',        en:'âš¡ Quick Control' },
-  bulkTechMgmtTitle:{ ar:'ðŸ‘· Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ÙÙ†ÙŠÙŠÙ† Ø§Ù„Ø¬Ù…Ø§Ø¹ÙŠØ©', en:'ðŸ‘· Bulk Technician Management' },
-  activateAllBtn:{ ar:'âœ… ØªÙØ¹ÙŠÙ„ ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',    en:'âœ… Activate All Technicians' },
-  deactivateAllBtn:{ ar:'ðŸ”’ ØªØ¹Ø·ÙŠÙ„ ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',  en:'ðŸ”’ Deactivate All Technicians' },
-  bulkChargeLbl:{ ar:'Ø´Ø­Ù† Ù…Ø­ÙØ¸Ø© ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',   en:'Charge All Technician Wallets' },
-  bulkChargeBtn:{ ar:'Ø´Ø­Ù† Ø§Ù„ÙƒÙ„',               en:'Charge All' },
-  bulkMsgLbl:   { ar:'Ø±Ø³Ø§Ù„Ø© Ù„ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',      en:'Message to All Technicians' },
-  bulkOrdersTitle:{ ar:'ðŸ“‹ Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø·Ù„Ø¨Ø§Øª',      en:'ðŸ“‹ Order Management' },
-  cancelPendingBtn:{ ar:'âœ• Ø¥Ù„ØºØ§Ø¡ Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø±', en:'âœ• Cancel Pending Orders' },
-  autoAssignBtn:{ ar:'ðŸ¤– ØªÙˆØ²ÙŠØ¹ ØªÙ„Ù‚Ø§Ø¦ÙŠ Ù„Ù„Ø·Ù„Ø¨Ø§Øª', en:'ðŸ¤– Auto-Assign Orders' },
-  bookingSettingsTitle:{ ar:'ðŸ“… Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø² Ø§Ù„Ù…Ø³Ø¨Ù‚', en:'ðŸ“… Booking Settings' },
-  maxDaysLbl:   { ar:'Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ Ù„Ù„Ø­Ø¬Ø² (Ø£ÙŠØ§Ù…)', en:'Max Booking Days' },
-  minHoursLbl:  { ar:'Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ø¯Ù†Ù‰ Ù‚Ø¨Ù„ Ø§Ù„Ù…ÙˆØ¹Ø¯ (Ø³Ø§Ø¹Ø§Øª)', en:'Min Hours Before Appointment' },
-  saveBookingBtn:{ ar:'Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø²',      en:'Save Booking Settings' },
-  packagesTitle:{ ar:'ðŸ“¦ Ø¨Ø§Ù‚Ø§Øª Ø§Ù„Ø®Ø¯Ù…Ø©',         en:'ðŸ“¦ Service Packages' },
-  addPackageBtn:{ ar:'+ Ø¥Ø¶Ø§ÙØ© Ø¨Ø§Ù‚Ø©',           en:'+ Add Package' },
-  couponsTitle: { ar:'ðŸŽŸï¸ ÙƒÙˆØ¯Ø§Øª Ø§Ù„Ø®ØµÙ…',         en:'ðŸŽŸï¸ Discount Coupons' },
-  couponCodeLbl:{ ar:'ÙƒÙˆØ¯ Ø§Ù„Ø®ØµÙ…',              en:'Coupon Code' },
-  discountPctLbl:{ ar:'Ù†Ø³Ø¨Ø© Ø§Ù„Ø®ØµÙ… (%)',        en:'Discount (%)' },
-  maxUseLbl:    { ar:'Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ Ù„Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',  en:'Max Uses' },
-  expiryLbl:    { ar:'ØªØ§Ø±ÙŠØ® Ø§Ù„Ø§Ù†ØªÙ‡Ø§Ø¡',         en:'Expiry Date' },
-  addCouponBtn: { ar:'+ Ø¥Ø¶Ø§ÙØ© ÙƒÙˆØ¯ Ø®ØµÙ…',        en:'+ Add Coupon' },
-  notifSectionTitle:{ ar:'ðŸ“¢ Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø¬Ù…Ø§Ø¹ÙŠØ©',   en:'ðŸ“¢ Bulk Notifications' },
-  notifTitleLbl:{ ar:'Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±',          en:'Notification Title' },
-  notifBodyLbl: { ar:'Ù†Øµ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±',             en:'Notification Body' },
-  sendAllBtn:   { ar:'ðŸ“¢ Ù„Ù„Ø¬Ù…ÙŠØ¹',               en:'ðŸ“¢ To Everyone' },
-  sendTechsBtn: { ar:'ðŸ‘· Ù„Ù„ÙÙ†ÙŠÙŠÙ†',              en:'ðŸ‘· To Technicians' },
-  sendCustsBtn: { ar:'ðŸ‘¤ Ù„Ù„Ø²Ø¨Ø§Ø¦Ù†',              en:'ðŸ‘¤ To Customers' },
-  notifHistoryTitle:{ ar:'ðŸ“‹ Ø³Ø¬Ù„ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ø§Ù„Ù…ÙØ±Ø³Ù„Ø©', en:'ðŸ“‹ Sent Notifications Log' },
+  // ── مركز التحكم ──
+  quickControlTitle:{ ar:'⚡ تحكم سريع',        en:'⚡ Quick Control' },
+  bulkTechMgmtTitle:{ ar:'👷 إدارة الفنيين الجماعية', en:'👷 Bulk Technician Management' },
+  activateAllBtn:{ ar:'✅ تفعيل كل الفنيين',    en:'✅ Activate All Technicians' },
+  deactivateAllBtn:{ ar:'🔒 تعطيل كل الفنيين',  en:'🔒 Deactivate All Technicians' },
+  bulkChargeLbl:{ ar:'شحن محفظة كل الفنيين',   en:'Charge All Technician Wallets' },
+  bulkChargeBtn:{ ar:'شحن الكل',               en:'Charge All' },
+  bulkMsgLbl:   { ar:'رسالة لكل الفنيين',      en:'Message to All Technicians' },
+  bulkOrdersTitle:{ ar:'📋 إدارة الطلبات',      en:'📋 Order Management' },
+  cancelPendingBtn:{ ar:'✕ إلغاء طلبات الانتظار', en:'✕ Cancel Pending Orders' },
+  autoAssignBtn:{ ar:'🤖 توزيع تلقائي للطلبات', en:'🤖 Auto-Assign Orders' },
+  bookingSettingsTitle:{ ar:'📅 إعدادات الحجز المسبق', en:'📅 Booking Settings' },
+  maxDaysLbl:   { ar:'الحد الأقصى للحجز (أيام)', en:'Max Booking Days' },
+  minHoursLbl:  { ar:'الحد الأدنى قبل الموعد (ساعات)', en:'Min Hours Before Appointment' },
+  saveBookingBtn:{ ar:'حفظ إعدادات الحجز',      en:'Save Booking Settings' },
+  packagesTitle:{ ar:'📦 باقات الخدمة',         en:'📦 Service Packages' },
+  addPackageBtn:{ ar:'+ إضافة باقة',           en:'+ Add Package' },
+  couponsTitle: { ar:'🎟️ كودات الخصم',         en:'🎟️ Discount Coupons' },
+  couponCodeLbl:{ ar:'كود الخصم',              en:'Coupon Code' },
+  discountPctLbl:{ ar:'نسبة الخصم (%)',        en:'Discount (%)' },
+  maxUseLbl:    { ar:'الحد الأقصى للاستخدام',  en:'Max Uses' },
+  expiryLbl:    { ar:'تاريخ الانتهاء',         en:'Expiry Date' },
+  addCouponBtn: { ar:'+ إضافة كود خصم',        en:'+ Add Coupon' },
+  notifSectionTitle:{ ar:'📢 إشعارات جماعية',   en:'📢 Bulk Notifications' },
+  notifTitleLbl:{ ar:'عنوان الإشعار',          en:'Notification Title' },
+  notifBodyLbl: { ar:'نص الإشعار',             en:'Notification Body' },
+  sendAllBtn:   { ar:'📢 للجميع',               en:'📢 To Everyone' },
+  sendTechsBtn: { ar:'👷 للفنيين',              en:'👷 To Technicians' },
+  sendCustsBtn: { ar:'👤 للزبائن',              en:'👤 To Customers' },
+  notifHistoryTitle:{ ar:'📋 سجل الإشعارات المُرسلة', en:'📋 Sent Notifications Log' },
 
-  // â”€â”€ Ø§Ù„Ù†ÙˆØ§ÙØ° Ø§Ù„Ù…Ù†Ø¨Ø«Ù‚Ø© â”€â”€
-  newOrderModalTitle:{ ar:'Ø·Ù„Ø¨ Ø¬Ø¯ÙŠØ¯',          en:'New Order' },
-  addTechModalTitle:{ ar:'Ø¥Ø¶Ø§ÙØ© ÙÙ†ÙŠ',          en:'Add Technician' },
-  orderTypeLbl: { ar:'Ù†ÙˆØ¹ Ø§Ù„Ø·Ù„Ø¨',              en:'Order Type' },
-  apptDatetimeLbl:{ ar:'ØªØ§Ø±ÙŠØ® ÙˆÙˆÙ‚Øª Ø§Ù„Ù…ÙˆØ¹Ø¯',    en:'Appointment Date & Time' },
-  custLbl:      { ar:'Ø§Ù„Ø²Ø¨ÙˆÙ†',                en:'Customer' },
-  custLocLbl:   { ar:'ðŸ“ Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø²Ø¨ÙˆÙ†',         en:'ðŸ“ Customer Location' },
-  serviceLbl:   { ar:'Ø§Ù„Ø®Ø¯Ù…Ø©',                en:'Service' },
-  assignedTechLbl:{ ar:'Ø§Ù„ÙÙ†ÙŠ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)',      en:'Technician (optional)' },
-  amountValLbl: { ar:'Ø§Ù„Ù‚ÙŠÙ…Ø© (Ø¯.Ø¹)',          en:'Amount (IQD)' },
-  paymentLbl:   { ar:'Ø§Ù„Ø¯ÙØ¹',                 en:'Payment' },
-  notesLbl:     { ar:'Ù…Ù„Ø§Ø­Ø¸Ø§Øª',                en:'Notes' },
-  createOrderBtn:{ ar:'Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø·Ù„Ø¨',           en:'Create Order' },
-  techSpecLbl:  { ar:'Ø§Ù„ØªØ®ØµØµ',                en:'Specialty' },
-  techCityLbl:  { ar:'Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©',                en:'City' },
-  techWalletLbl:{ ar:'Ø±ØµÙŠØ¯ Ø§Ù„Ù…Ø­ÙØ¸Ø© (Ø¯.Ø¹)',    en:'Wallet Balance (IQD)' }
+  // ── النوافذ المنبثقة ──
+  newOrderModalTitle:{ ar:'طلب جديد',          en:'New Order' },
+  addTechModalTitle:{ ar:'إضافة فني',          en:'Add Technician' },
+  orderTypeLbl: { ar:'نوع الطلب',              en:'Order Type' },
+  apptDatetimeLbl:{ ar:'تاريخ ووقت الموعد',    en:'Appointment Date & Time' },
+  custLbl:      { ar:'الزبون',                en:'Customer' },
+  custLocLbl:   { ar:'📍 موقع الزبون',         en:'📍 Customer Location' },
+  serviceLbl:   { ar:'الخدمة',                en:'Service' },
+  assignedTechLbl:{ ar:'الفني (اختياري)',      en:'Technician (optional)' },
+  amountValLbl: { ar:'القيمة (د.ع)',          en:'Amount (IQD)' },
+  paymentLbl:   { ar:'الدفع',                 en:'Payment' },
+  notesLbl:     { ar:'ملاحظات',                en:'Notes' },
+  createOrderBtn:{ ar:'إنشاء الطلب',           en:'Create Order' },
+  techSpecLbl:  { ar:'التخصص',                en:'Specialty' },
+  techCityLbl:  { ar:'المدينة',                en:'City' },
+  techWalletLbl:{ ar:'رصيد المحفظة (د.ع)',    en:'Wallet Balance (IQD)' }
 };
 
 function toggleLang(){
@@ -1110,29 +1110,29 @@ function applyLang(lang){
 }
 setTimeout(function(){ applyLang(currentLang); }, 0);
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // STATE
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 var allOrders=[], allTechs=[], allCustomers=[], allTransactions=[];
 var selectedOrder=null;
 var dashMap=null, mainMap=null, mapMarkers=[];
 var noType='now', _selCust=null;
-var SVC={electric:'âš¡ ÙƒÙ‡Ø±Ø¨Ø§Ø¡',plumb:'ðŸ”§ Ø³Ø¨Ø§ÙƒØ©',ac:'â„ï¸ ØªÙƒÙŠÙŠÙ',paint:'ðŸŽ¨ Ø¯Ù‡Ø§Ù†',carp:'ðŸªš Ù†Ø¬Ø§Ø±Ø©',clean:'ðŸ§¹ ØªÙ†Ø¸ÙŠÙ',tile:'ðŸªŸ Ø¨Ù„Ø§Ø·',other:'ðŸ”¨ Ø£Ø®Ø±Ù‰'};
+var SVC={electric:'⚡ كهرباء',plumb:'🔧 سباكة',ac:'❄️ تكييف',paint:'🎨 دهان',carp:'🪚 نجارة',clean:'🧹 تنظيف',tile:'🪟 بلاط',other:'🔨 أخرى'};
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // AUTH
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function doLogin(){
   var email=document.getElementById('a-email').value.trim();
   var pass=document.getElementById('a-pass').value;
   var btn=document.getElementById('a-btn');
   var err=document.getElementById('a-err');
-  if(!email||!pass){err.textContent='Ø£Ø¯Ø®Ù„ Ø§Ù„Ø¨Ø±ÙŠØ¯ ÙˆÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±';return;}
-  btn.disabled=true;btn.textContent='Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø¯Ø®ÙˆÙ„...';err.textContent='';
-  if(!FB_READY){err.textContent='Firebase ØºÙŠØ± Ù…ØªØµÙ„';btn.disabled=false;btn.textContent='Ø¯Ø®ÙˆÙ„';return;}
+  if(!email||!pass){err.textContent='أدخل البريد وكلمة المرور';return;}
+  btn.disabled=true;btn.textContent='جاري الدخول...';err.textContent='';
+  if(!FB_READY){err.textContent='Firebase غير متصل';btn.disabled=false;btn.textContent='دخول';return;}
   AUTH.signInWithEmailAndPassword(email,pass).catch(function(e){
-    err.textContent=e.code==='auth/wrong-password'?'ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ± Ø®Ø§Ø·Ø¦Ø©':e.code==='auth/user-not-found'?'Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… ØºÙŠØ± Ù…ÙˆØ¬ÙˆØ¯':(e.code==='auth/invalid-credential'||e.code==='auth/invalid-login-credentials')?'Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ Ø£Ùˆ ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ± ØºÙŠØ± ØµØ­ÙŠØ­Ø©':'Ø®Ø·Ø£: '+e.message;
-    btn.disabled=false;btn.textContent='Ø¯Ø®ÙˆÙ„';
+    err.textContent=e.code==='auth/wrong-password'?'كلمة المرور خاطئة':e.code==='auth/user-not-found'?'المستخدم غير موجود':(e.code==='auth/invalid-credential'||e.code==='auth/invalid-login-credentials')?'البريد الإلكتروني أو كلمة المرور غير صحيحة':'خطأ: '+e.message;
+    btn.disabled=false;btn.textContent='دخول';
   });
 }
 function doLogout(){AUTH.signOut();}
@@ -1141,7 +1141,7 @@ function showLoginError(msg){
   var err=document.getElementById('a-err');
   if(err) err.textContent=msg;
   var btn=document.getElementById('a-btn');
-  if(btn){btn.disabled=false;btn.textContent='Ø¯Ø®ÙˆÙ„';}
+  if(btn){btn.disabled=false;btn.textContent='دخول';}
 }
 
 function bootAdmin(){
@@ -1150,7 +1150,7 @@ function bootAdmin(){
   document.getElementById('auth').style.display='none';
   document.getElementById('sidebar').style.display='flex';
   document.getElementById('main').style.display='flex';
-  document.getElementById('user-name').textContent=user.email?.split('@')[0]||'Ù…Ø¯ÙŠØ±';
+  document.getElementById('user-name').textContent=user.email?.split('@')[0]||'مدير';
   document.getElementById('user-av').textContent=(user.email||'A')[0].toUpperCase();
   document.getElementById('top-date').textContent=new Date().toLocaleDateString('ar-IQ',{weekday:'short',year:'numeric',month:'long',day:'numeric'});
   initListeners();
@@ -1165,9 +1165,9 @@ function showScreen(id){
   document.getElementById('main').style.display='none';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // LISTENERS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function initListeners(){
   DB.collection('orders').orderBy('ts','desc').onSnapshot(function(snap){
     allOrders=snap.docs.map(function(d){return Object.assign({docId:d.id},d.data());});
@@ -1216,16 +1216,16 @@ function updateBadges(){
   document.getElementById('st-total').textContent=allOrders.length;
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // DASHBOARD
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderDash(){
   var done=allOrders.filter(function(o){return o.status==='done';});
   var rev=done.reduce(function(s,o){return s+(o.amount||0);},0);
   document.getElementById('st-rev').textContent=rev.toLocaleString('ar-IQ');
   var el=document.getElementById('dash-list');
   var recent=allOrders.slice(0,20);
-  if(!recent.length){el.innerHTML='<div class="empty"><div class="empty-ic">ðŸ“‹</div>Ù„Ø§ ØªÙˆØ¬Ø¯ Ø·Ù„Ø¨Ø§Øª</div>';return;}
+  if(!recent.length){el.innerHTML='<div class="empty"><div class="empty-ic">📋</div>لا توجد طلبات</div>';return;}
   el.innerHTML=recent.map(function(o){return orderRowHTML(o);}).join('');
 }
 
@@ -1233,24 +1233,24 @@ function orderRowHTML(o){
   var isBook=o.type==='book';
   return '<div class="orow'+(selectedOrder===o.docId?' on':'')+'" onclick="selectOrder(\''+o.docId+'\')">'+
     '<div class="or-top"><span class="or-id">'+esc(o.id||o.docId?.slice(0,8))+'</span><span class="or-time">'+timeSince(o.ts)+'</span></div>'+
-    '<div class="or-cust">'+esc(o.custName||o.custPhone||'â€”')+'</div>'+
+    '<div class="or-cust">'+esc(o.custName||o.custPhone||'—')+'</div>'+
     '<div class="or-sub">'+
-    '<span class="or-type '+(isBook?'type-book':'type-now')+'">'+(isBook?'ðŸ“… Ø­Ø¬Ø²':'âš¡ Ø¢Ù†ÙŠ')+'</span>'+
+    '<span class="or-type '+(isBook?'type-book':'type-now')+'">'+(isBook?'📅 حجز':'⚡ آني')+'</span>'+
     esc(o.serviceLabel||SVC[o.service]||'')+
-    ' Â· '+tagHTML(o.status)+
-    (o.techName?' Â· ðŸ‘· '+esc(o.techName):'')+
+    ' · '+tagHTML(o.status)+
+    (o.techName?' · 👷 '+esc(o.techName):'')+
     '</div></div>';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // ORDERS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderOrders(){
   var list=getFiltered();
-  document.getElementById('orders-count').textContent=list.length+' Ø·Ù„Ø¨';
-  document.getElementById('pend-count').textContent=list.filter(function(o){return o.status==='pending';}).length+' Ø§Ù†ØªØ¸Ø§Ø±';
+  document.getElementById('orders-count').textContent=list.length+' طلب';
+  document.getElementById('pend-count').textContent=list.filter(function(o){return o.status==='pending';}).length+' انتظار';
   var el=document.getElementById('orders-list');
-  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">ðŸ“‹</div>Ù„Ø§ ØªÙˆØ¬Ø¯ Ø·Ù„Ø¨Ø§Øª</div>';return;}
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">📋</div>لا توجد طلبات</div>';return;}
   el.innerHTML=list.map(function(o){return orderRowHTML(o);}).join('');
 }
 
@@ -1291,49 +1291,49 @@ function renderDetail(o){
   var tech=allTechs.find(function(t){return t.docId===o.techDocId;});
   el.innerHTML=
     '<div class="d-head">'+
-      '<div><div class="d-id">Ø·Ù„Ø¨ #'+esc(o.id||o.docId?.slice(0,12))+'</div>'+
+      '<div><div class="d-id">طلب #'+esc(o.id||o.docId?.slice(0,12))+'</div>'+
       '<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:1px">'+esc(o.dateStr||o.dateISO||'')+'</div></div>'+
       '<div class="d-tags">'+tagHTML(o.status)+
-      '<span class="chip chip-gold" style="font-size:10px">'+(isBook?'ðŸ“… Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚':'âš¡ Ø¢Ù†ÙŠ')+'</span></div>'+
+      '<span class="chip chip-gold" style="font-size:10px">'+(isBook?'📅 حجز مسبق':'⚡ آني')+'</span></div>'+
       '<div class="d-acts">'+
-      (o.status==='pending'?'<button class="dact dact-green" onclick="updStatus(\''+o.docId+'\',\'inprogress\')">â–¶ Ø¨Ø¯Ø¡</button>':'')+
-      (o.status==='inprogress'?'<button class="dact dact-gold" onclick="updStatus(\''+o.docId+'\',\'done\')">âœ… Ø¥ØªÙ…Ø§Ù…</button>':'')+
-      (o.status!=='done'&&o.status!=='cancelled'?'<button class="dact dact-red" onclick="updStatus(\''+o.docId+'\',\'cancelled\')">âœ• Ø¥Ù„ØºØ§Ø¡</button>':'')+
+      (o.status==='pending'?'<button class="dact dact-green" onclick="updStatus(\''+o.docId+'\',\'inprogress\')">▶ بدء</button>':'')+
+      (o.status==='inprogress'?'<button class="dact dact-gold" onclick="updStatus(\''+o.docId+'\',\'done\')">✅ إتمام</button>':'')+
+      (o.status!=='done'&&o.status!=='cancelled'?'<button class="dact dact-red" onclick="updStatus(\''+o.docId+'\',\'cancelled\')">✕ إلغاء</button>':'')+
       '</div></div>'+
     '<div class="d-body">'+
       '<div class="info-grid">'+
-        '<div class="ic"><div class="ic-lbl">Ø§Ù„Ø®Ø¯Ù…Ø©</div><div class="ic-val">'+esc(o.serviceLabel||SVC[o.service]||'â€”')+'</div></div>'+
-        '<div class="ic"><div class="ic-lbl">Ø§Ù„Ù‚ÙŠÙ…Ø©</div><div class="ic-val gold">'+(o.amount||0).toLocaleString('ar-IQ')+' Ø¯.Ø¹</div></div>'+
-        '<div class="ic"><div class="ic-lbl">Ø§Ù„Ø¹Ù…ÙˆÙ„Ø© '+(s.commission||10)+'%</div><div class="ic-val green">'+commission.toLocaleString('ar-IQ')+' Ø¯.Ø¹</div></div>'+
+        '<div class="ic"><div class="ic-lbl">الخدمة</div><div class="ic-val">'+esc(o.serviceLabel||SVC[o.service]||'—')+'</div></div>'+
+        '<div class="ic"><div class="ic-lbl">القيمة</div><div class="ic-val gold">'+(o.amount||0).toLocaleString('ar-IQ')+' د.ع</div></div>'+
+        '<div class="ic"><div class="ic-lbl">العمولة '+(s.commission||10)+'%</div><div class="ic-val green">'+commission.toLocaleString('ar-IQ')+' د.ع</div></div>'+
       '</div>'+
-      (isBook?'<div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 13px;margin-bottom:12px;font-size:13px;color:var(--blue)">ðŸ“… Ù…ÙˆØ¹Ø¯ Ø§Ù„Ø­Ø¬Ø²: '+esc((o.datetime||'â€”').replace('T',' '))+'</div>':'')+
-      '<div class="sec-title">Ø§Ù„Ø²Ø¨ÙˆÙ†</div>'+
+      (isBook?'<div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 13px;margin-bottom:12px;font-size:13px;color:var(--blue)">📅 موعد الحجز: '+esc((o.datetime||'—').replace('T',' '))+'</div>':'')+
+      '<div class="sec-title">الزبون</div>'+
       '<div class="person-card">'+
-        '<div class="pav pav-blue">ðŸ‘¤</div>'+
-        '<div><div class="p-name">'+esc(o.custName||'â€”')+'</div><div class="p-sub">'+esc(o.custPhone||'â€”')+'</div></div>'+
-        '<div class="p-acts">'+(o.custPhone?'<a href="tel:'+esc(o.custPhone)+'"><button class="dact dact-green" style="padding:4px 10px">ðŸ“ž</button></a>':'')+
+        '<div class="pav pav-blue">👤</div>'+
+        '<div><div class="p-name">'+esc(o.custName||'—')+'</div><div class="p-sub">'+esc(o.custPhone||'—')+'</div></div>'+
+        '<div class="p-acts">'+(o.custPhone?'<a href="tel:'+esc(o.custPhone)+'"><button class="dact dact-green" style="padding:4px 10px">📞</button></a>':'')+
         '</div></div>'+
       (o.techName?
-        '<div class="sec-title">Ø§Ù„ÙÙ†ÙŠ</div>'+
+        '<div class="sec-title">الفني</div>'+
         '<div class="person-card">'+
-          '<div class="pav pav-gold">ðŸ‘·</div>'+
-          '<div><div class="p-name">'+esc(o.techName||'â€”')+'</div><div class="p-sub">'+esc(tech?.phone||o.techPhone||'â€”')+'</div></div>'+
-          '<div class="p-acts">'+(tech?.phone||o.techPhone?'<a href="tel:'+esc(tech?.phone||o.techPhone)+'"><button class="dact dact-green" style="padding:4px 10px">ðŸ“ž</button></a>':'')+
+          '<div class="pav pav-gold">👷</div>'+
+          '<div><div class="p-name">'+esc(o.techName||'—')+'</div><div class="p-sub">'+esc(tech?.phone||o.techPhone||'—')+'</div></div>'+
+          '<div class="p-acts">'+(tech?.phone||o.techPhone?'<a href="tel:'+esc(tech?.phone||o.techPhone)+'"><button class="dact dact-green" style="padding:4px 10px">📞</button></a>':'')+
           '</div></div>':
-        '<div class="sec-title">ØªØ¹ÙŠÙŠÙ† ÙÙ†ÙŠ</div>'+
+        '<div class="sec-title">تعيين فني</div>'+
         '<div style="display:flex;gap:8px">'+
           '<select class="fs" id="assign-'+o.docId+'" style="flex:1">'+
-            '<option value="">â€” Ø§Ø®ØªØ± ÙÙ†ÙŠ â€”</option>'+
-            allTechs.filter(function(t){return t.status==='active';}).map(function(t){return '<option value="'+t.docId+'">'+esc(t.name)+' â€” '+esc(SVC[t.service||t.spec]||t.spec||'')+'</option>';}).join('')+
+            '<option value="">— اختر فني —</option>'+
+            allTechs.filter(function(t){return t.status==='active';}).map(function(t){return '<option value="'+t.docId+'">'+esc(t.name)+' — '+esc(SVC[t.service||t.spec]||t.spec||'')+'</option>';}).join('')+
           '</select>'+
-          '<button class="dact dact-gold" onclick="assignTech(\''+o.docId+'\')">ØªØ¹ÙŠÙŠÙ†</button>'+
+          '<button class="dact dact-gold" onclick="assignTech(\''+o.docId+'\')">تعيين</button>'+
         '</div>')+
-      (o.desc&&o.desc!=='â€”'?'<div class="sec-title">Ø§Ù„ÙˆØµÙ</div><div style="background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:11px;font-size:13px;color:var(--muted)">'+esc(o.desc)+'</div>':'')+
-      '<div class="sec-title">Ø§Ù„Ø³Ø¬Ù„ Ø§Ù„Ø²Ù…Ù†ÙŠ</div>'+
+      (o.desc&&o.desc!=='—'?'<div class="sec-title">الوصف</div><div style="background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:11px;font-size:13px;color:var(--muted)">'+esc(o.desc)+'</div>':'')+
+      '<div class="sec-title">السجل الزمني</div>'+
       '<div class="tl">'+
-        '<div class="tl-item"><div class="tl-dot done">âœ“</div><div><div class="tl-lbl">Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø·Ù„Ø¨</div><div class="tl-time">'+(o.dateStr||'')+'</div></div></div>'+
-        '<div class="tl-item"><div class="tl-dot '+((['inprogress','done'].includes(o.status))?'done':o.status==='pending'?'act':'')+'">'+((['inprogress','done'].includes(o.status))?'âœ“':'â³')+'</div><div><div class="tl-lbl">Ù‚Ø¨ÙˆÙ„ Ø§Ù„ÙÙ†ÙŠ</div><div class="tl-time">'+(o.acceptedAt?new Date(o.acceptedAt).toLocaleString('ar-IQ'):'â€”')+'</div></div></div>'+
-        '<div class="tl-item"><div class="tl-dot '+(o.status==='done'?'done':o.status==='inprogress'?'act':'')+'">'+(o.status==='done'?'âœ“':'')+'</div><div><div class="tl-lbl">Ø¥ØªÙ…Ø§Ù… Ø§Ù„Ø·Ù„Ø¨</div><div class="tl-time">'+(o.completedAt?new Date(o.completedAt).toLocaleString('ar-IQ'):'â€”')+'</div></div></div>'+
+        '<div class="tl-item"><div class="tl-dot done">✓</div><div><div class="tl-lbl">إنشاء الطلب</div><div class="tl-time">'+(o.dateStr||'')+'</div></div></div>'+
+        '<div class="tl-item"><div class="tl-dot '+((['inprogress','done'].includes(o.status))?'done':o.status==='pending'?'act':'')+'">'+((['inprogress','done'].includes(o.status))?'✓':'⏳')+'</div><div><div class="tl-lbl">قبول الفني</div><div class="tl-time">'+(o.acceptedAt?new Date(o.acceptedAt).toLocaleString('ar-IQ'):'—')+'</div></div></div>'+
+        '<div class="tl-item"><div class="tl-dot '+(o.status==='done'?'done':o.status==='inprogress'?'act':'')+'">'+(o.status==='done'?'✓':'')+'</div><div><div class="tl-lbl">إتمام الطلب</div><div class="tl-time">'+(o.completedAt?new Date(o.completedAt).toLocaleString('ar-IQ'):'—')+'</div></div></div>'+
       '</div>'+
     '</div>';
 
@@ -1345,43 +1345,43 @@ function renderDetail(o){
       var detailBody=el.querySelector('.d-body');
       if(detailBody) detailBody.insertBefore(mapEl,detailBody.querySelector('.sec-title:last-of-type'));
       var m=L.map(mapEl).setView([lat,lng],13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Â© OSM'}).addTo(m);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(m);
       var custIcon=L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#3b82f6;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>',iconSize:[14,14]});
-      L.marker([lat,lng],{icon:custIcon}).addTo(m).bindPopup('ðŸ“ Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø²Ø¨ÙˆÙ†').openPopup();
+      L.marker([lat,lng],{icon:custIcon}).addTo(m).bindPopup('📍 موقع الزبون').openPopup();
 
-      // Ø§Ø±Ø³Ù… Ù…Ø³Ø§Ø± Ø§Ù„ÙÙ†ÙŠ Ø§Ù„ÙØ¹Ù„ÙŠ Ø¥Ù† ÙˆÙØ¬Ø¯
-      // Ø§Ù„Ù„ÙˆÙ†: Ø°Ù‡Ø¨ÙŠ Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„ØªÙ†ÙÙŠØ° (Ø¬Ø§Ø±Ù)ØŒ Ø£Ø­Ù…Ø± Ø¨Ø¹Ø¯ Ø§Ù†ØªÙ‡Ø§Ø¡ Ø§Ù„Ø±Ø­Ù„Ø© (Ù…ÙƒØªÙ…Ù„/Ù…Ù„ØºÙŠ)
+      // ارسم مسار الفني الفعلي إن وُجد
+      // اللون: ذهبي أثناء التنفيذ (جارٍ)، أحمر بعد انتهاء الرحلة (مكتمل/ملغي)
       if(o.techPath && o.techPath.length){
         var points = o.techPath.map(function(p){return [p.lat,p.lng];});
         var isFinished = (o.status==='done' || o.status==='cancelled');
         var pathColor = isFinished ? '#ef4444' : '#f5a623';
         var polyline = L.polyline(points,{color:pathColor,weight:4,opacity:.85}).addTo(m);
         var startIcon=L.divIcon({className:'',html:'<div style="width:12px;height:12px;background:#10b981;border:2px solid #fff;border-radius:50%"></div>',iconSize:[12,12]});
-        L.marker(points[0],{icon:startIcon}).addTo(m).bindPopup('ðŸš€ Ø¨Ø¯Ø§ÙŠØ© Ø§Ù„Ù…Ø³Ø§Ø±');
+        L.marker(points[0],{icon:startIcon}).addTo(m).bindPopup('🚀 بداية المسار');
         if(isFinished && points.length>1){
           var endIcon=L.divIcon({className:'',html:'<div style="width:12px;height:12px;background:#ef4444;border:2px solid #fff;border-radius:50%"></div>',iconSize:[12,12]});
-          L.marker(points[points.length-1],{icon:endIcon}).addTo(m).bindPopup('ðŸ Ù†Ù‡Ø§ÙŠØ© Ø§Ù„Ù…Ø³Ø§Ø±');
+          L.marker(points[points.length-1],{icon:endIcon}).addTo(m).bindPopup('🏁 نهاية المسار');
         }
         var bounds = polyline.getBounds().extend([lat,lng]);
         m.fitBounds(bounds, {padding:[20,20]});
       }
-      // Ù…ÙˆÙ‚Ø¹ Ø§Ù„ÙÙ†ÙŠ Ø§Ù„Ø­Ø§Ù„ÙŠ (Ø¢Ø®Ø± Ù†Ù‚Ø·Ø© Ù…Ø¹Ø±ÙˆÙØ© Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„ØªÙ†ÙÙŠØ°)
+      // موقع الفني الحالي (آخر نقطة معروفة أثناء التنفيذ)
       if(o.techCurrentLat && o.status==='inprogress'){
         var techIcon=L.divIcon({className:'',html:'<div style="width:16px;height:16px;background:#f5a623;border:2px solid #fff;border-radius:50%;box-shadow:0 0 8px rgba(245,166,35,.6)"></div>',iconSize:[16,16]});
-        L.marker([o.techCurrentLat,o.techCurrentLng],{icon:techIcon}).addTo(m).bindPopup('ðŸ”§ Ø§Ù„ÙÙ†ÙŠ Ø§Ù„Ø¢Ù†');
+        L.marker([o.techCurrentLat,o.techCurrentLng],{icon:techIcon}).addTo(m).bindPopup('🔧 الفني الآن');
       }
     },300);
   }
 }
 
 async function updStatus(docId,status){
-  // Ø¹Ù†Ø¯ Ø§Ù„Ø¥ØªÙ…Ø§Ù…: Ø§Ø·Ù„Ø¨ Ù‚ÙŠÙ…Ø© Ø§Ù„Ø·Ù„Ø¨ Ø£ÙˆÙ„Ø§Ù‹ Ù„Ø¶Ù…Ø§Ù† Ø§Ø³ØªÙ‚Ø·Ø§Ø¹ Ø§Ù„Ø¹Ù…ÙˆÙ„Ø© Ø§Ù„ØµØ­ÙŠØ­Ø©
+  // عند الإتمام: اطلب قيمة الطلب أولاً لضمان استقطاع العمولة الصحيحة
   if(status==='done'){
     var order = allOrders.find(function(o){return o.docId===docId;});
     var currentAmt = order ? (order.amount||0) : 0;
-    var inputAmt = parseFloat(prompt('Ø£Ø¯Ø®Ù„ Ù‚ÙŠÙ…Ø© Ø§Ù„Ø·Ù„Ø¨ Ø§Ù„Ù†Ù‡Ø§Ø¦ÙŠØ© (Ø¯.Ø¹):', currentAmt||''));
+    var inputAmt = parseFloat(prompt('أدخل قيمة الطلب النهائية (د.ع):', currentAmt||''));
     if(!inputAmt || isNaN(inputAmt) || inputAmt<=0){
-      toast('ÙŠØ¬Ø¨ Ø¥Ø¯Ø®Ø§Ù„ Ù‚ÙŠÙ…Ø© ØµØ­ÙŠØ­Ø© Ù„Ù„Ø·Ù„Ø¨ Ù„Ø¥ØªÙ…Ø§Ù…Ù‡','err');
+      toast('يجب إدخال قيمة صحيحة للطلب لإتمامه','err');
       return;
     }
     var s = JSON.parse(localStorage.getItem('tl_settings')||'{}');
@@ -1392,7 +1392,7 @@ async function updStatus(docId,status){
         status:'done', amount:inputAmt, commission:commission,
         completedAt:new Date().toISOString()
       });
-      // Ø§Ø³ØªÙ‚Ø·Ø§Ø¹ Ø§Ù„Ø¹Ù…ÙˆÙ„Ø© Ù…Ù† Ù…Ø­ÙØ¸Ø© Ø§Ù„ÙÙ†ÙŠ
+      // استقطاع العمولة من محفظة الفني
       if(order && order.techDocId){
         var tech = allTechs.find(function(t){return t.docId===order.techDocId;});
         if(tech){
@@ -1401,24 +1401,24 @@ async function updStatus(docId,status){
             ordersCount:firebase.firestore.FieldValue.increment(1)
           });
           var newWallet = Math.max(0,(tech.wallet||0)-commission);
-          logTransaction('tech','deduct',order.techDocId,tech.name,tech.phone,commission,newWallet,'Ø¹Ù…ÙˆÙ„Ø© Ø·Ù„Ø¨ '+(order.id||docId));
+          logTransaction('tech','deduct',order.techDocId,tech.name,tech.phone,commission,newWallet,'عمولة طلب '+(order.id||docId));
         }
       }
-      toast('âœ… ØªÙ… Ø¥ØªÙ…Ø§Ù… Ø§Ù„Ø·Ù„Ø¨ â€” Ø¹Ù…ÙˆÙ„Ø© '+commission.toLocaleString('ar-IQ')+' Ø¯.Ø¹','ok');
-    }catch(e){ toast('Ø®Ø·Ø£: '+e.message,'err'); }
+      toast('✅ تم إتمام الطلب — عمولة '+commission.toLocaleString('ar-IQ')+' د.ع','ok');
+    }catch(e){ toast('خطأ: '+e.message,'err'); }
     return;
   }
 
   var data={status:status};
   try{
     await DB.collection('orders').doc(docId).update(data);
-    toast('âœ… ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø­Ø§Ù„Ø©','ok');
-  }catch(e){toast('Ø®Ø·Ø£: '+e.message,'err');}
+    toast('✅ تم تحديث الحالة','ok');
+  }catch(e){toast('خطأ: '+e.message,'err');}
 }
 
 async function assignTech(docId){
   var sel=document.getElementById('assign-'+docId);
-  if(!sel||!sel.value){toast('Ø§Ø®ØªØ± ÙÙ†ÙŠØ§Ù‹','err');return;}
+  if(!sel||!sel.value){toast('اختر فنياً','err');return;}
   var tech=allTechs.find(function(t){return t.docId===sel.value;});
   if(!tech)return;
   try{
@@ -1426,13 +1426,13 @@ async function assignTech(docId){
       techDocId:tech.docId,techName:tech.name,techPhone:tech.phone||'',
       status:'inprogress',acceptedAt:new Date().toISOString()
     });
-    toast('âœ… ØªÙ… ØªØ¹ÙŠÙŠÙ† Ø§Ù„ÙÙ†ÙŠ: '+tech.name,'ok');
-  }catch(e){toast('Ø®Ø·Ø£','err');}
+    toast('✅ تم تعيين الفني: '+tech.name,'ok');
+  }catch(e){toast('خطأ','err');}
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // TECHS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderTechs(){
   var q=val('tech-q').toLowerCase(),sf=val('tech-sf');
   var list=allTechs.filter(function(t){
@@ -1440,55 +1440,55 @@ function renderTechs(){
            (!sf||t.status===sf);
   });
   var el=document.getElementById('techs-body');
-  if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ic">ðŸ‘·</div>Ù„Ø§ ÙŠÙˆØ¬Ø¯ ÙÙ†ÙŠÙˆÙ†</div>';return;}
+  if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ic">👷</div>لا يوجد فنيون</div>';return;}
   el.innerHTML=list.map(function(t){
     var myOrds=allOrders.filter(function(o){return o.techDocId===t.docId;});
     var done=myOrds.filter(function(o){return o.status==='done';});
-    var ini=(t.name||'Ù').charAt(0);
+    var ini=(t.name||'ف').charAt(0);
     return '<div class="tc">'+
       '<div class="tc-top">'+
         '<div class="tc-av">'+esc(ini)+'</div>'+
-        '<div><div class="tc-name">'+esc(t.name)+'</div><div class="tc-spec">'+esc(SVC[t.service||t.spec]||t.spec||'â€”')+'</div></div>'+
+        '<div><div class="tc-name">'+esc(t.name)+'</div><div class="tc-spec">'+esc(SVC[t.service||t.spec]||t.spec||'—')+'</div></div>'+
         '<span style="margin-right:auto">'+statusTag(t.status)+'</span>'+
       '</div>'+
       '<div class="tc-stats">'+
-        '<div><div class="tc-sl">Ø§Ù„Ù…Ø­ÙØ¸Ø©</div><div class="tc-sv" style="color:var(--gold)">'+(t.wallet||0).toLocaleString('ar-IQ')+'</div></div>'+
-        '<div><div class="tc-sl">Ø§Ù„Ø·Ù„Ø¨Ø§Øª</div><div class="tc-sv">'+myOrds.length+' / âœ…'+done.length+'</div></div>'+
-        '<div><div class="tc-sl">Ø§Ù„Ø¬ÙˆØ§Ù„</div><div class="tc-sv" style="font-size:10px">'+esc(t.phone||'â€”')+'</div></div>'+
-        '<div><div class="tc-sl">Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©</div><div class="tc-sv" style="font-size:11px">'+esc(t.city||'â€”')+'</div></div>'+
+        '<div><div class="tc-sl">المحفظة</div><div class="tc-sv" style="color:var(--gold)">'+(t.wallet||0).toLocaleString('ar-IQ')+'</div></div>'+
+        '<div><div class="tc-sl">الطلبات</div><div class="tc-sv">'+myOrds.length+' / ✅'+done.length+'</div></div>'+
+        '<div><div class="tc-sl">الجوال</div><div class="tc-sv" style="font-size:10px">'+esc(t.phone||'—')+'</div></div>'+
+        '<div><div class="tc-sl">المدينة</div><div class="tc-sv" style="font-size:11px">'+esc(t.city||'—')+'</div></div>'+
       '</div>'+
       '<div class="tc-acts">'+
-      (t.status==='pending'?'<button class="tc-btn" style="background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)" onclick="techAct(\''+t.docId+'\',\'active\')">âœ… ØªÙØ¹ÙŠÙ„</button>':'')+
-      (t.status==='pending'?'<button class="tc-btn" style="background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)" onclick="techAct(\''+t.docId+'\',\'rejected\')">âœ• Ø±ÙØ¶</button>':'')+
-      (t.status==='active'?'<button class="tc-btn" style="background:var(--s2);border:1px solid var(--bd);color:var(--muted)" onclick="techAct(\''+t.docId+'\',\'blocked\')">ðŸ”’ ØªØ¹Ø·ÙŠÙ„</button>':'')+
-      (t.status==='blocked'?'<button class="tc-btn" style="background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)" onclick="techAct(\''+t.docId+'\',\'active\')">ðŸ”“ ØªÙØ¹ÙŠÙ„</button>':'')+
-      '<button class="tc-btn" style="background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.2)" onclick="chargeTech(\''+t.docId+'\',\''+esc(t.name)+'\')">ðŸ’° Ø´Ø­Ù†</button>'+
-      '<button class="tc-btn" style="background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2)" onclick="withdrawTech(\''+t.docId+'\',\''+esc(t.name)+'\')">âž– Ø³Ø­Ø¨</button>'+
-      '<button class="tc-btn" style="background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)" onclick="delTech(\''+t.docId+'\',\''+esc(t.name)+'\')">ðŸ—‘ï¸</button>'+
+      (t.status==='pending'?'<button class="tc-btn" style="background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)" onclick="techAct(\''+t.docId+'\',\'active\')">✅ تفعيل</button>':'')+
+      (t.status==='pending'?'<button class="tc-btn" style="background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)" onclick="techAct(\''+t.docId+'\',\'rejected\')">✕ رفض</button>':'')+
+      (t.status==='active'?'<button class="tc-btn" style="background:var(--s2);border:1px solid var(--bd);color:var(--muted)" onclick="techAct(\''+t.docId+'\',\'blocked\')">🔒 تعطيل</button>':'')+
+      (t.status==='blocked'?'<button class="tc-btn" style="background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)" onclick="techAct(\''+t.docId+'\',\'active\')">🔓 تفعيل</button>':'')+
+      '<button class="tc-btn" style="background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.2)" onclick="chargeTech(\''+t.docId+'\',\''+esc(t.name)+'\')">💰 شحن</button>'+
+      '<button class="tc-btn" style="background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2)" onclick="withdrawTech(\''+t.docId+'\',\''+esc(t.name)+'\')">➖ سحب</button>'+
+      '<button class="tc-btn" style="background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)" onclick="delTech(\''+t.docId+'\',\''+esc(t.name)+'\')">🗑️</button>'+
       '</div>'+
     '</div>';
   }).join('');
 }
 
 async function techAct(docId,status){
-  try{await DB.collection('techs').doc(docId).update({status:status});toast('âœ… ØªÙ… Ø§Ù„ØªØ­Ø¯ÙŠØ«','ok');}
-  catch(e){toast('Ø®Ø·Ø£','err');}
+  try{await DB.collection('techs').doc(docId).update({status:status});toast('✅ تم التحديث','ok');}
+  catch(e){toast('خطأ','err');}
 }
 
 async function delTech(docId,name){
-  if(!confirm('Ø­Ø°Ù Ø§Ù„ÙÙ†ÙŠ "'+name+'" Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹ØŸ'))return;
-  if(!confirm('ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°ÙØŸ'))return;
-  try{await DB.collection('techs').doc(docId).delete();toast('ðŸ—‘ï¸ ØªÙ… Ø§Ù„Ø­Ø°Ù','err');}
-  catch(e){toast('Ø®Ø·Ø£','err');}
+  if(!confirm('حذف الفني "'+name+'" نهائياً؟'))return;
+  if(!confirm('تأكيد الحذف؟'))return;
+  try{await DB.collection('techs').doc(docId).delete();toast('🗑️ تم الحذف','err');}
+  catch(e){toast('خطأ','err');}
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// TRANSACTIONS LOG (Ø³Ø¬Ù„ Ù…Ø±ÙƒØ²ÙŠ Ù„ÙƒÙ„ Ø¹Ù…Ù„ÙŠØ§Øª Ø§Ù„Ù…Ø­ÙØ¸Ø©)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
+// TRANSACTIONS LOG (سجل مركزي لكل عمليات المحفظة)
+// ══════════════════════════════════════
 function logTransaction(who, type, docId, name, phone, amount, balanceAfter, reason){
   if(!FB_READY) return;
   DB.collection('transactions').add({
-    who: who,          // 'customer' Ø£Ùˆ 'tech'
+    who: who,          // 'customer' أو 'tech'
     type: type,        // 'charge' | 'withdraw' | 'deduct'
     refId: docId,
     name: name||'',
@@ -1502,36 +1502,36 @@ function logTransaction(who, type, docId, name, phone, amount, balanceAfter, rea
 }
 
 function chargeTech(docId,name){
-  var amt=parseFloat(prompt('Ø´Ø­Ù† Ù…Ø­ÙØ¸Ø© '+name+'\nØ£Ø¯Ø®Ù„ Ø§Ù„Ù…Ø¨Ù„Øº Ø¨Ø§Ù„Ø¯ÙŠÙ†Ø§Ø± Ø§Ù„Ø¹Ø±Ø§Ù‚ÙŠ:'));
+  var amt=parseFloat(prompt('شحن محفظة '+name+'\nأدخل المبلغ بالدينار العراقي:'));
   if(!amt||isNaN(amt))return;
   var tech=allTechs.find(function(t){return t.docId===docId;});
   DB.collection('techs').doc(docId).update({wallet:firebase.firestore.FieldValue.increment(amt)}).then(function(){
     var newBal=+((tech?.wallet||0)+amt).toFixed(0);
-    toast('âœ… ØªÙ… Ø´Ø­Ù† '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹','ok');
+    toast('✅ تم شحن '+amt.toLocaleString('ar-IQ')+' د.ع','ok');
     logTransaction('tech','charge',docId,name,tech?.phone,amt,newBal);
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+  }).catch(function(){toast('خطأ','err');});
 }
 
 function withdrawTech(docId,name){
   var tech=allTechs.find(function(t){return t.docId===docId;});
   var currentWallet=tech?.wallet||0;
-  var amt=parseFloat(prompt('Ø³Ø­Ø¨ Ù…Ù† Ù…Ø­ÙØ¸Ø© '+name+' (Ø§Ù„Ø±ØµÙŠØ¯ Ø§Ù„Ø­Ø§Ù„ÙŠ: '+currentWallet.toLocaleString('ar-IQ')+' Ø¯.Ø¹)\nØ£Ø¯Ø®Ù„ Ø§Ù„Ù…Ø¨Ù„Øº Ø§Ù„Ù…Ø±Ø§Ø¯ Ø³Ø­Ø¨Ù‡:'));
+  var amt=parseFloat(prompt('سحب من محفظة '+name+' (الرصيد الحالي: '+currentWallet.toLocaleString('ar-IQ')+' د.ع)\nأدخل المبلغ المراد سحبه:'));
   if(!amt||isNaN(amt)||amt<=0)return;
-  if(amt>currentWallet){ toast('Ø§Ù„Ù…Ø¨Ù„Øº Ø£ÙƒØ¨Ø± Ù…Ù† Ø§Ù„Ø±ØµÙŠØ¯ Ø§Ù„Ù…ØªØ§Ø­','err'); return; }
+  if(amt>currentWallet){ toast('المبلغ أكبر من الرصيد المتاح','err'); return; }
   DB.collection('techs').doc(docId).update({wallet:firebase.firestore.FieldValue.increment(-amt)}).then(function(){
     var newBal=+(currentWallet-amt).toFixed(0);
-    toast('âœ… ØªÙ… Ø³Ø­Ø¨ '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹ Ù…Ù† '+name,'ok');
+    toast('✅ تم سحب '+amt.toLocaleString('ar-IQ')+' د.ع من '+name,'ok');
     logTransaction('tech','withdraw',docId,name,tech?.phone,amt,newBal);
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+  }).catch(function(){toast('خطأ','err');});
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // CUSTOMERS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderCustomers(){
   var q=val('cust-q').toLowerCase();
 
-  // Ø§Ø¨Ù†Ù Ø®Ø±ÙŠØ·Ø© Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª Ù…Ù† Ø§Ù„Ø·Ù„Ø¨Ø§Øª (ØªØ¹Ù…Ù„ Ø­ØªÙ‰ Ù„Ùˆ Ù„Ù… ÙŠÙƒÙ† Ù‡Ù†Ø§Ùƒ ÙˆØ«ÙŠÙ‚Ø© Firebase Ù„Ù„Ø²Ø¨ÙˆÙ†)
+  // ابنِ خريطة إحصائيات من الطلبات (تعمل حتى لو لم يكن هناك وثيقة Firebase للزبون)
   var orderStats={};
   allOrders.forEach(function(o){
     var ph=o.custPhone||'';
@@ -1541,7 +1541,7 @@ function renderCustomers(){
     if(o.status==='done') orderStats[ph].done++;
   });
 
-  // Ø§Ø¨Ø¯Ø£ Ù…Ù† ÙˆØ«Ø§Ø¦Ù‚ Firebase Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ© (ØªØ­ÙˆÙŠ wallet Ùˆstatus)ØŒ ÙˆØ£Ø¶Ù Ù…Ù† Ù„Ø§ ÙˆØ«ÙŠÙ‚Ø© Ù„Ù‡ Ù…Ù† Ø§Ù„Ø·Ù„Ø¨Ø§Øª ÙÙ‚Ø·
+  // ابدأ من وثائق Firebase الحقيقية (تحوي wallet وstatus)، وأضف من لا وثيقة له من الطلبات فقط
   var byPhone={};
   allCustomers.forEach(function(c){
     byPhone[c.phone]={docId:c.docId,name:c.name||c.phone,phone:c.phone,wallet:c.wallet||0,status:c.status||'active',fromDB:true};
@@ -1557,88 +1557,88 @@ function renderCustomers(){
   }).filter(function(c){return !q||(c.name||'').toLowerCase().includes(q)||c.phone.includes(q);});
 
   var el=document.getElementById('custs-body');
-  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">ðŸ‘¤</div>Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ø²Ø¨Ø§Ø¦Ù†</div>';return;}
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">👤</div>لا يوجد زبائن</div>';return;}
 
   el.innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">'+
   list.map(function(c){
     var isBlocked = c.status==='blocked';
     return '<div style="background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:13px'+(isBlocked?';opacity:.6':'')+'">'+
       '<div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">'+
-        '<div class="pav pav-blue" style="width:36px;height:36px;font-size:12px">'+esc((c.name||'Ø²').charAt(0))+'</div>'+
-        '<div style="flex:1"><div style="font-size:13px;font-weight:700">'+esc(c.name)+(isBlocked?' <span class="tag tag-canc" style="font-size:9px">Ù…ÙˆÙ‚ÙˆÙ</span>':'')+'</div><div style="font-size:11px;color:var(--muted)">'+esc(c.phone)+'</div></div>'+
+        '<div class="pav pav-blue" style="width:36px;height:36px;font-size:12px">'+esc((c.name||'ز').charAt(0))+'</div>'+
+        '<div style="flex:1"><div style="font-size:13px;font-weight:700">'+esc(c.name)+(isBlocked?' <span class="tag tag-canc" style="font-size:9px">موقوف</span>':'')+'</div><div style="font-size:11px;color:var(--muted)">'+esc(c.phone)+'</div></div>'+
       '</div>'+
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">'+
-        '<div style="background:var(--s2);border-radius:6px;padding:7px"><div style="font-size:10px;color:var(--muted)">Ø§Ù„Ø·Ù„Ø¨Ø§Øª</div><div style="font-size:14px;font-weight:700">'+c.orders+'</div></div>'+
-        '<div style="background:var(--s2);border-radius:6px;padding:7px"><div style="font-size:10px;color:var(--muted)">Ù…ÙƒØªÙ…Ù„Ø©</div><div style="font-size:14px;font-weight:700;color:var(--green)">'+c.done+'</div></div>'+
+        '<div style="background:var(--s2);border-radius:6px;padding:7px"><div style="font-size:10px;color:var(--muted)">الطلبات</div><div style="font-size:14px;font-weight:700">'+c.orders+'</div></div>'+
+        '<div style="background:var(--s2);border-radius:6px;padding:7px"><div style="font-size:10px;color:var(--muted)">مكتملة</div><div style="font-size:14px;font-weight:700;color:var(--green)">'+c.done+'</div></div>'+
       '</div>'+
       '<div style="background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:6px;padding:7px;margin-bottom:8px">'+
-        '<div style="font-size:10px;color:var(--muted)">Ø±ØµÙŠØ¯ Ø§Ù„Ù…Ø­ÙØ¸Ø©</div><div style="font-size:14px;font-weight:700;color:var(--gold)">'+(c.wallet||0).toLocaleString('ar-IQ')+' Ø¯.Ø¹</div>'+
+        '<div style="font-size:10px;color:var(--muted)">رصيد المحفظة</div><div style="font-size:14px;font-weight:700;color:var(--gold)">'+(c.wallet||0).toLocaleString('ar-IQ')+' د.ع</div>'+
       '</div>'+
       (c.docId ? (
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">'+
-        '<button class="tc-btn" style="background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" onclick="chargeCustBtn(this)">ðŸ’° Ø´Ø­Ù†</button>'+
-        '<button class="tc-btn" style="background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" data-wallet="'+(c.wallet||0)+'" onclick="withdrawCustBtn(this)">âž– Ø³Ø­Ø¨</button>'+
+        '<button class="tc-btn" style="background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" onclick="chargeCustBtn(this)">💰 شحن</button>'+
+        '<button class="tc-btn" style="background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" data-wallet="'+(c.wallet||0)+'" onclick="withdrawCustBtn(this)">➖ سحب</button>'+
       '</div>'+
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'+
         (isBlocked?
-          '<button class="tc-btn" style="background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)" data-cust="'+c.docId+'" onclick="toggleCustBtn(this,\'active\')">âœ… ØªÙØ¹ÙŠÙ„</button>':
-          '<button class="tc-btn" style="background:var(--s2);border:1px solid var(--bd);color:var(--muted)" data-cust="'+c.docId+'" onclick="toggleCustBtn(this,\'blocked\')">ðŸ”’ Ø¥ÙŠÙ‚Ø§Ù</button>')+
-        '<button class="tc-btn" style="background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" onclick="delCustBtn(this)">ðŸ—‘ï¸ Ø­Ø°Ù</button>'+
+          '<button class="tc-btn" style="background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)" data-cust="'+c.docId+'" onclick="toggleCustBtn(this,\'active\')">✅ تفعيل</button>':
+          '<button class="tc-btn" style="background:var(--s2);border:1px solid var(--bd);color:var(--muted)" data-cust="'+c.docId+'" onclick="toggleCustBtn(this,\'blocked\')">🔒 إيقاف</button>')+
+        '<button class="tc-btn" style="background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)" data-cust="'+c.docId+'" data-name="'+esc(c.name)+'" onclick="delCustBtn(this)">🗑️ حذف</button>'+
       '</div>'
-      ) : '<div style="font-size:10px;color:var(--muted);text-align:center;padding:6px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¥Ø¯Ø§Ø±Ø© â€” Ù„Ù… ÙŠÙÙ†Ø´Ø¦ Ø­Ø³Ø§Ø¨Ø§Ù‹ Ø¨Ø¹Ø¯</div>')+
-      (c.phone?'<a href="tel:'+esc(c.phone)+'" style="display:block;margin-top:8px"><button class="fbtn fbtn-out" style="width:100%;justify-content:center;font-size:11px">ðŸ“ž Ø§ØªØµØ§Ù„</button></a>':'')+
+      ) : '<div style="font-size:10px;color:var(--muted);text-align:center;padding:6px">لا توجد إدارة — لم يُنشئ حساباً بعد</div>')+
+      (c.phone?'<a href="tel:'+esc(c.phone)+'" style="display:block;margin-top:8px"><button class="fbtn fbtn-out" style="width:100%;justify-content:center;font-size:11px">📞 اتصال</button></a>':'')+
     '</div>';
   }).join('')+'</div>';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // CUSTOMER MANAGEMENT
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function chargeCustBtn(btn){
   var docId=btn.getAttribute('data-cust'), name=btn.getAttribute('data-name');
-  var amt=parseFloat(prompt('Ø´Ø­Ù† Ù…Ø­ÙØ¸Ø© '+name+'\nØ£Ø¯Ø®Ù„ Ø§Ù„Ù…Ø¨Ù„Øº (Ø¯.Ø¹):'));
+  var amt=parseFloat(prompt('شحن محفظة '+name+'\nأدخل المبلغ (د.ع):'));
   if(!amt||isNaN(amt)||amt<=0) return;
   var cust=allCustomers.find(function(c){return c.docId===docId;});
   DB.collection('customers').doc(docId).update({wallet:firebase.firestore.FieldValue.increment(amt)}).then(function(){
     var newBal=+((cust?.wallet||0)+amt).toFixed(0);
-    toast('âœ… ØªÙ… Ø´Ø­Ù† '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹ Ù„Ù€'+name,'ok');
+    toast('✅ تم شحن '+amt.toLocaleString('ar-IQ')+' د.ع لـ'+name,'ok');
     logTransaction('customer','charge',docId,name,cust?.phone,amt,newBal);
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+  }).catch(function(){toast('خطأ','err');});
 }
 
 function withdrawCustBtn(btn){
   var docId=btn.getAttribute('data-cust'), name=btn.getAttribute('data-name');
   var currentWallet=parseFloat(btn.getAttribute('data-wallet'))||0;
-  var amt=parseFloat(prompt('Ø³Ø­Ø¨ Ù…Ù† Ù…Ø­ÙØ¸Ø© '+name+' (Ø§Ù„Ø±ØµÙŠØ¯ Ø§Ù„Ø­Ø§Ù„ÙŠ: '+currentWallet.toLocaleString('ar-IQ')+' Ø¯.Ø¹)\nØ£Ø¯Ø®Ù„ Ø§Ù„Ù…Ø¨Ù„Øº Ø§Ù„Ù…Ø±Ø§Ø¯ Ø³Ø­Ø¨Ù‡:'));
+  var amt=parseFloat(prompt('سحب من محفظة '+name+' (الرصيد الحالي: '+currentWallet.toLocaleString('ar-IQ')+' د.ع)\nأدخل المبلغ المراد سحبه:'));
   if(!amt||isNaN(amt)||amt<=0) return;
-  if(amt>currentWallet){ toast('Ø§Ù„Ù…Ø¨Ù„Øº Ø£ÙƒØ¨Ø± Ù…Ù† Ø§Ù„Ø±ØµÙŠØ¯ Ø§Ù„Ù…ØªØ§Ø­','err'); return; }
+  if(amt>currentWallet){ toast('المبلغ أكبر من الرصيد المتاح','err'); return; }
   var cust=allCustomers.find(function(c){return c.docId===docId;});
   DB.collection('customers').doc(docId).update({wallet:firebase.firestore.FieldValue.increment(-amt)}).then(function(){
     var newBal=+(currentWallet-amt).toFixed(0);
-    toast('âœ… ØªÙ… Ø³Ø­Ø¨ '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹ Ù…Ù† '+name,'ok');
+    toast('✅ تم سحب '+amt.toLocaleString('ar-IQ')+' د.ع من '+name,'ok');
     logTransaction('customer','withdraw',docId,name,cust?.phone,amt,newBal);
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+  }).catch(function(){toast('خطأ','err');});
 }
 
 function toggleCustBtn(btn, newStatus){
   var docId=btn.getAttribute('data-cust');
   DB.collection('customers').doc(docId).update({status:newStatus}).then(function(){
-    toast(newStatus==='active'?'âœ… ØªÙ… ØªÙØ¹ÙŠÙ„ Ø§Ù„Ø­Ø³Ø§Ø¨':'ðŸ”’ ØªÙ… Ø¥ÙŠÙ‚Ø§Ù Ø§Ù„Ø­Ø³Ø§Ø¨', newStatus==='active'?'ok':'err');
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+    toast(newStatus==='active'?'✅ تم تفعيل الحساب':'🔒 تم إيقاف الحساب', newStatus==='active'?'ok':'err');
+  }).catch(function(){toast('خطأ','err');});
 }
 
 function delCustBtn(btn){
   var docId=btn.getAttribute('data-cust'), name=btn.getAttribute('data-name');
-  if(!confirm('Ø­Ø°Ù Ø§Ù„Ø²Ø¨ÙˆÙ† "'+name+'" Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹ØŸ\nÙ„Ù† ÙŠØªÙ…ÙƒÙ† Ù…Ù† ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„ Ù„Ø­Ø³Ø§Ø¨Ù‡ Ø§Ù„Ù‚Ø¯ÙŠÙ….'))return;
-  if(!confirm('ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù Ø§Ù„Ù†Ù‡Ø§Ø¦ÙŠØŸ'))return;
+  if(!confirm('حذف الزبون "'+name+'" نهائياً؟\nلن يتمكن من تسجيل الدخول لحسابه القديم.'))return;
+  if(!confirm('تأكيد الحذف النهائي؟'))return;
   DB.collection('customers').doc(docId).delete().then(function(){
-    toast('ðŸ—‘ï¸ ØªÙ… Ø­Ø°Ù Ø§Ù„Ø²Ø¨ÙˆÙ†','err');
-  }).catch(function(){toast('Ø®Ø·Ø£','err');});
+    toast('🗑️ تم حذف الزبون','err');
+  }).catch(function(){toast('خطأ','err');});
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // FINANCE
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderFinance(){
   var done=allOrders.filter(function(o){return o.status==='done';});
   var rev=done.reduce(function(s,o){return s+(o.amount||0);},0);
@@ -1654,40 +1654,40 @@ async function deductWallet(){
   var techId=val('fin-tech');
   var amt=parseFloat(document.getElementById('fin-amt').value);
   var reason=val('fin-reason');
-  if(!techId||!amt){toast('Ø§Ø®ØªØ± Ø§Ù„ÙÙ†ÙŠ ÙˆØ£Ø¯Ø®Ù„ Ø§Ù„Ù…Ø¨Ù„Øº','err');return;}
+  if(!techId||!amt){toast('اختر الفني وأدخل المبلغ','err');return;}
   var tech=allTechs.find(function(t){return t.docId===techId;});
   if(!tech)return;
-  if((tech.wallet||0)-amt<0){toast('Ø±ØµÙŠØ¯ Ø§Ù„ÙÙ†ÙŠ ØºÙŠØ± ÙƒØ§ÙÙ','err');return;}
+  if((tech.wallet||0)-amt<0){toast('رصيد الفني غير كافٍ','err');return;}
   try{
     await DB.collection('techs').doc(techId).update({wallet:firebase.firestore.FieldValue.increment(-amt)});
     var newBal=+((tech.wallet||0)-amt).toFixed(0);
     document.getElementById('fin-amt').value='';
     document.getElementById('fin-reason').value='';
-    toast('âœ… ØªÙ… Ø§Ø³ØªÙ‚Ø·Ø§Ø¹ '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹ Ù…Ù† '+tech.name,'ok');
+    toast('✅ تم استقطاع '+amt.toLocaleString('ar-IQ')+' د.ع من '+tech.name,'ok');
     logTransaction('tech','deduct',techId,tech.name,tech.phone,amt,newBal,reason);
-  }catch(e){toast('Ø®Ø·Ø£','err');}
+  }catch(e){toast('خطأ','err');}
 }
 
 function populateSelects(){
   var nt=document.getElementById('no-tech');
   if(nt){
-    nt.innerHTML='<option value="">â€” Ø¨Ø¯ÙˆÙ† ØªØ¹ÙŠÙŠÙ† â€”</option>';
+    nt.innerHTML='<option value="">— بدون تعيين —</option>';
     allTechs.filter(function(t){return t.status==='active';}).forEach(function(t){
-      nt.innerHTML+='<option value="'+t.docId+'">'+t.name+' â€” '+(SVC[t.service||t.spec]||t.spec||'')+'</option>';
+      nt.innerHTML+='<option value="'+t.docId+'">'+t.name+' — '+(SVC[t.service||t.spec]||t.spec||'')+'</option>';
     });
   }
   var ft=document.getElementById('fin-tech');
   if(ft){
-    ft.innerHTML='<option value="">â€” Ø§Ø®ØªØ± ÙÙ†ÙŠ â€”</option>';
+    ft.innerHTML='<option value="">— اختر فني —</option>';
     allTechs.forEach(function(t){
-      ft.innerHTML+='<option value="'+t.docId+'">'+t.name+' ('+( t.wallet||0).toLocaleString('ar-IQ')+' Ø¯.Ø¹)</option>';
+      ft.innerHTML+='<option value="'+t.docId+'">'+t.name+' ('+( t.wallet||0).toLocaleString('ar-IQ')+' د.ع)</option>';
     });
   }
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // NEW ORDER
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function setNoType(type){
   noType=type;
   document.getElementById('no-type-now').style.cssText=type==='now'?
@@ -1716,17 +1716,17 @@ function filterNoCust(){
 }
 
 function selCust(name,phone){
-  document.getElementById('no-cust').value=name+' â€” '+phone;
+  document.getElementById('no-cust').value=name+' — '+phone;
   document.getElementById('no-cust-dd').style.display='none';
   _selCust={name:name,phone:phone};
 }
 
 async function createOrder(){
   var custRaw=val('no-cust');
-  if(!custRaw){toast('Ø£Ø¯Ø®Ù„ Ø§Ø³Ù… Ø§Ù„Ø²Ø¨ÙˆÙ†','err');return;}
+  if(!custRaw){toast('أدخل اسم الزبون','err');return;}
   var service=val('no-service');
-  if(!service){toast('Ø§Ø®ØªØ± Ù†ÙˆØ¹ Ø§Ù„Ø®Ø¯Ù…Ø©','err');return;}
-  if(noType==='book'&&!val('no-datetime')){toast('Ø­Ø¯Ø¯ ØªØ§Ø±ÙŠØ® Ø§Ù„Ù…ÙˆØ¹Ø¯','err');return;}
+  if(!service){toast('اختر نوع الخدمة','err');return;}
+  if(noType==='book'&&!val('no-datetime')){toast('حدد تاريخ الموعد','err');return;}
   var techId=val('no-tech');
   var amount=parseFloat(document.getElementById('no-amount').value)||0;
   var tech=techId?allTechs.find(function(t){return t.docId===techId;}):null;
@@ -1734,14 +1734,14 @@ async function createOrder(){
   var order={
     id:'ORD-'+Math.random().toString(36).substr(2,6).toUpperCase(),
     type:noType,
-    typLabel:noType==='now'?'Ø·Ù„Ø¨ Ø¢Ù†ÙŠ':'Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚',
+    typLabel:noType==='now'?'طلب آني':'حجز مسبق',
     custName:_selCust?.name||custRaw,
     custPhone:_selCust?.phone||custRaw,
     service:service,serviceLabel:SVC[service]||service,
     techDocId:techId||'',techName:tech?.name||'',techPhone:tech?.phone||'',
     amount:amount,commission:Math.round(amount*0.1),
     pay:val('no-pay'),
-    desc:val('no-desc')||'â€”',
+    desc:val('no-desc')||'—',
     status:techId?'inprogress':'pending',
     datetime:noType==='book'?val('no-datetime'):now.toISOString().slice(0,16),
     dateISO:now.toISOString().slice(0,10),dateStr:now.toLocaleDateString('ar-IQ'),
@@ -1754,57 +1754,57 @@ async function createOrder(){
     ['no-cust','no-amount','no-desc','no-loc-search'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
     _selCust=null;setNoType('now');
     noOrderLat=null; noOrderLng=null;
-    toast('âœ… ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø·Ù„Ø¨ '+order.id,'ok');
-  }catch(e){toast('Ø®Ø·Ø£: '+e.message,'err');}
+    toast('✅ تم إنشاء الطلب '+order.id,'ok');
+  }catch(e){toast('خطأ: '+e.message,'err');}
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // ADD TECH
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 async function addTech(){
-  var name=val('at-name'),phone=val('at-phone'),spec=val('at-spec'),city=val('at-city')||'Ø¨ØºØ¯Ø§Ø¯';
+  var name=val('at-name'),phone=val('at-phone'),spec=val('at-spec'),city=val('at-city')||'بغداد';
   var wallet=parseFloat(document.getElementById('at-wallet').value)||0;
-  if(!name||!phone){toast('Ø£Ø¯Ø®Ù„ Ø§Ù„Ø§Ø³Ù… ÙˆØ§Ù„Ø¬ÙˆØ§Ù„','err');return;}
+  if(!name||!phone){toast('أدخل الاسم والجوال','err');return;}
   var fullPhone='+964'+(phone.startsWith('0')?phone.slice(1):phone);
   try{
     await DB.collection('techs').add({name:name,phone:fullPhone,service:spec,spec:spec,city:city,wallet:wallet,status:'active',ordersCount:0,createdAt:new Date().toISOString()});
     closeModal('add-tech-modal');
     ['at-name','at-phone','at-city'].forEach(function(id){document.getElementById(id).value='';});
     document.getElementById('at-wallet').value='0';
-    toast('âœ… ØªÙ… Ø¥Ø¶Ø§ÙØ© Ø§Ù„ÙÙ†ÙŠ: '+name,'ok');
-  }catch(e){toast('Ø®Ø·Ø£: '+e.message,'err');}
+    toast('✅ تم إضافة الفني: '+name,'ok');
+  }catch(e){toast('خطأ: '+e.message,'err');}
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // ALERTS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderAlerts(){
   var pending=allOrders.filter(function(o){return o.status==='pending';});
   var el=document.getElementById('alerts-list');
-  if(!pending.length){el.innerHTML='<div class="empty"><div class="empty-ic">ðŸ””</div>Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙ†Ø¨ÙŠÙ‡Ø§Øª</div>';return;}
+  if(!pending.length){el.innerHTML='<div class="empty"><div class="empty-ic">🔔</div>لا توجد تنبيهات</div>';return;}
   el.innerHTML=pending.map(function(o){
     var isBook=o.type==='book';
     return '<div style="background:var(--s1);border:1px solid rgba(249,115,22,.2);border-radius:10px;padding:12px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px">'+
-      '<div style="font-size:20px">'+(isBook?'ðŸ“…':'âš¡')+'</div>'+
+      '<div style="font-size:20px">'+(isBook?'📅':'⚡')+'</div>'+
       '<div style="flex:1">'+
-        '<div style="font-size:13px;font-weight:700">'+(isBook?'Ø­Ø¬Ø² Ù…Ø³Ø¨Ù‚':'Ø·Ù„Ø¨ Ø¢Ù†ÙŠ')+' â€” '+esc(o.serviceLabel||SVC[o.service]||'')+'</div>'+
-        '<div style="font-size:11px;color:var(--muted)">Ø§Ù„Ø²Ø¨ÙˆÙ†: '+esc(o.custName||o.custPhone||'â€”')+' Â· '+timeSince(o.ts)+'</div>'+
-        (isBook?'<div style="font-size:11px;color:var(--blue)">ðŸ“… '+esc(o.datetime?.replace('T',' '))+'</div>':'')+
+        '<div style="font-size:13px;font-weight:700">'+(isBook?'حجز مسبق':'طلب آني')+' — '+esc(o.serviceLabel||SVC[o.service]||'')+'</div>'+
+        '<div style="font-size:11px;color:var(--muted)">الزبون: '+esc(o.custName||o.custPhone||'—')+' · '+timeSince(o.ts)+'</div>'+
+        (isBook?'<div style="font-size:11px;color:var(--blue)">📅 '+esc(o.datetime?.replace('T',' '))+'</div>':'')+
       '</div>'+
-      '<button class="dact dact-gold" style="font-size:11px;padding:4px 10px" onclick="go(\'orders\',document.querySelector(\'.nav-item:nth-child(5)\'));selectOrder(\''+o.docId+'\')">Ø¹Ø±Ø¶</button>'+
+      '<button class="dact dact-gold" style="font-size:11px;padding:4px 10px" onclick="go(\'orders\',document.querySelector(\'.nav-item:nth-child(5)\'));selectOrder(\''+o.docId+'\')">عرض</button>'+
     '</div>';
   }).join('');
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // MAPS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function initDashMap(){
   if(dashMap)return;
   var el=document.getElementById('dash-map');
   if(!el||el.offsetHeight<10)return;
   dashMap=L.map(el,{zoomControl:false}).setView([33.33,44.44],11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Â© OSM'}).addTo(dashMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(dashMap);
   updateMapMarkers();
 }
 
@@ -1813,7 +1813,7 @@ function initMainMap(){
   var el=document.getElementById('main-map');
   if(!el)return;
   mainMap=L.map(el).setView([33.33,44.44],11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Â© OSM'}).addTo(mainMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(mainMap);
   updateMapMarkers();
 }
 
@@ -1832,10 +1832,10 @@ function updateMapMarkers(){
   });
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // NAV
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-var pageTitles={dash:'Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…',orders:'Ø§Ù„Ø·Ù„Ø¨Ø§Øª','map-page':'Ø§Ù„Ø®Ø±ÙŠØ·Ø©',alerts:'Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§Øª',techs:'Ø§Ù„ÙÙ†ÙŠÙˆÙ†',customers:'Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†',finance:'Ø§Ù„Ù…Ø§Ù„ÙŠØ©',reports:'Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±',chats:'Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª',settings:'Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª',control:'Ù…Ø±ÙƒØ² Ø§Ù„ØªØ­ÙƒÙ…',ratings:'Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª',transactions:'Ø§Ù„Ù…Ù†Ø§Ù‚Ù„Ø§Øª'};
+// ══════════════════════════════════════
+var pageTitles={dash:'لوحة التحكم',orders:'الطلبات','map-page':'الخريطة',alerts:'التنبيهات',techs:'الفنيون',customers:'الزبائن',finance:'المالية',reports:'التقارير',chats:'المحادثات',settings:'الإعدادات',control:'مركز التحكم',ratings:'التقييمات',transactions:'المناقلات'};
 function go(page,el){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('on');});
@@ -1861,9 +1861,9 @@ function toggleSidebar(force){
   if(ov) ov.classList.toggle('on', open);
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // MODALS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 var noOrderMap = null, noOrderMarker = null, noOrderLat = null, noOrderLng = null;
 
 function openNewOrderModal(){
@@ -1873,7 +1873,7 @@ function openNewOrderModal(){
   document.getElementById('new-order-modal').classList.add('on');
   noOrderLat = null; noOrderLng = null;
   document.getElementById('no-loc-search').value='';
-  document.getElementById('no-loc-status').textContent='Ø§Ø¶ØºØ· Ø¹Ù„Ù‰ Ø§Ù„Ø®Ø±ÙŠØ·Ø© Ø£Ùˆ Ø§Ø¨Ø­Ø« Ù„ØªØ­Ø¯ÙŠØ¯ Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø²Ø¨ÙˆÙ†';
+  document.getElementById('no-loc-status').textContent='اضغط على الخريطة أو ابحث لتحديد موقع الزبون';
   setTimeout(initNoOrderMap, 250);
 }
 
@@ -1882,7 +1882,7 @@ function initNoOrderMap(){
   if(!el) return;
   if(noOrderMap){ noOrderMap.remove(); noOrderMap=null; noOrderMarker=null; }
   noOrderMap = L.map(el).setView([33.3152,44.3661],11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Â© OSM'}).addTo(noOrderMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(noOrderMap);
   noOrderMap.on('click', function(e){
     setNoOrderLocation(e.latlng.lat, e.latlng.lng, null);
   });
@@ -1894,7 +1894,7 @@ function setNoOrderLocation(lat, lng, label){
   if(noOrderMarker){ noOrderMap.removeLayer(noOrderMarker); }
   noOrderMarker = L.marker([lat,lng]).addTo(noOrderMap);
   noOrderMap.setView([lat,lng], 15);
-  document.getElementById('no-loc-status').innerHTML = 'âœ… '+(label?('<b>'+label+'</b>'):'ØªÙ… ØªØ­Ø¯ÙŠØ¯ Ø§Ù„Ù…ÙˆÙ‚Ø¹')+' â€” <span style="font-family:var(--mono);color:var(--muted)">'+lat.toFixed(5)+', '+lng.toFixed(5)+'</span>';
+  document.getElementById('no-loc-status').innerHTML = '✅ '+(label?('<b>'+label+'</b>'):'تم تحديد الموقع')+' — <span style="font-family:var(--mono);color:var(--muted)">'+lat.toFixed(5)+', '+lng.toFixed(5)+'</span>';
 }
 
 var locSearchTimeout = null;
@@ -1903,24 +1903,24 @@ function searchLocation(query){
   var dd = document.getElementById('no-loc-dd');
   if(!query || query.trim().length < 3){ dd.style.display='none'; return; }
   locSearchTimeout = setTimeout(function(){
-    // Ø¨Ø­Ø« Ø¹Ø¨Ø± Nominatim (OpenStreetMap) â€” Ù…Ø¬Ø§Ù†ÙŠ Ø¨Ø¯ÙˆÙ† Ù…ÙØªØ§Ø­ API
-    var q = encodeURIComponent(query + ' Ø§Ù„Ø¹Ø±Ø§Ù‚');
+    // بحث عبر Nominatim (OpenStreetMap) — مجاني بدون مفتاح API
+    var q = encodeURIComponent(query + ' العراق');
     fetch('https://nominatim.openstreetmap.org/search?format=json&q='+q+'&limit=6&accept-language=ar')
       .then(function(r){ return r.json(); })
       .then(function(results){
         if(!results.length){
-          dd.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--muted)">Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬</div>';
+          dd.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--muted)">لا توجد نتائج</div>';
           dd.style.display='block';
           return;
         }
         dd.innerHTML = results.map(function(r){
           var name = r.display_name;
           var safeName = name.replace(/'/g,"&#39;").replace(/"/g,"&quot;");
-          return '<div data-lat="'+r.lat+'" data-lng="'+r.lon+'" data-name="'+safeName+'" onclick="selectLocationBtn(this)" style="padding:9px 11px;cursor:pointer;font-size:12px;border-bottom:1px solid var(--bd)">ðŸ“ '+name+'</div>';
+          return '<div data-lat="'+r.lat+'" data-lng="'+r.lon+'" data-name="'+safeName+'" onclick="selectLocationBtn(this)" style="padding:9px 11px;cursor:pointer;font-size:12px;border-bottom:1px solid var(--bd)">📍 '+name+'</div>';
         }).join('');
         dd.style.display='block';
       }).catch(function(){
-        dd.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--red)">ØªØ¹Ø°Ø± Ø§Ù„Ø¨Ø­Ø« â€” ØªØ­Ù‚Ù‚ Ù…Ù† Ø§Ù„Ø§ØªØµØ§Ù„</div>';
+        dd.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--red)">تعذر البحث — تحقق من الاتصال</div>';
         dd.style.display='block';
       });
   }, 500);
@@ -1945,35 +1945,35 @@ document.addEventListener('click',function(e){
   if(dd&&!e.target.closest('#no-cust')&&!e.target.closest('#no-cust-dd'))dd.style.display='none';
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // HELPERS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function tagHTML(status){
   var map={pending:'tag-pend',inprogress:'tag-prog',done:'tag-done',cancelled:'tag-canc'};
-  var lbl={pending:'Ø§Ù†ØªØ¸Ø§Ø±',inprogress:'Ø¬Ø§Ø±Ù',done:'Ù…ÙƒØªÙ…Ù„',cancelled:'Ù…Ù„ØºÙŠ'};
+  var lbl={pending:'انتظار',inprogress:'جارٍ',done:'مكتمل',cancelled:'ملغي'};
   return '<span class="tag '+(map[status]||'')+'"><span class="tdot"></span>'+(lbl[status]||status)+'</span>';
 }
 
 function statusTag(status){
   var map={active:'tag-done',pending:'tag-pend',blocked:'tag-canc',rejected:'tag-canc'};
-  var lbl={active:'Ù…ÙØ¹Ù‘Ù„',pending:'Ø§Ù†ØªØ¸Ø§Ø±',blocked:'Ù…ÙˆÙ‚ÙˆÙ',rejected:'Ù…Ø±ÙÙˆØ¶'};
+  var lbl={active:'مفعّل',pending:'انتظار',blocked:'موقوف',rejected:'مرفوض'};
   return '<span class="tag '+(map[status]||'')+'"><span class="tdot"></span>'+(lbl[status]||status)+'</span>';
 }
 
 function timeSince(ts){
   if(!ts)return '';
   var s=Math.floor((Date.now()-ts)/1000);
-  if(s<60)return 'Ø§Ù„Ø¢Ù†';if(s<3600)return Math.floor(s/60)+' Ø¯';if(s<86400)return Math.floor(s/3600)+' Ø³';return Math.floor(s/86400)+' ÙŠÙˆÙ…';
+  if(s<60)return 'الآن';if(s<3600)return Math.floor(s/60)+' د';if(s<86400)return Math.floor(s/3600)+' س';return Math.floor(s/86400)+' يوم';
 }
 
 function val(id){return(document.getElementById(id)?.value||'');}
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // SETTINGS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
+// ══════════════════════════════════════
 // REPORTS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderReports(){
   var now = new Date();
   var todayStr = now.toISOString().slice(0,10);
@@ -1988,12 +1988,12 @@ function renderReports(){
   document.getElementById('r-week').textContent  = weekOrds.length;
   document.getElementById('r-month').textContent = monthOrds.length;
 
-  // Ù…ØªÙˆØ³Ø· Ø§Ù„ØªÙ‚ÙŠÙŠÙ…
+  // متوسط التقييم
   var rated = allOrders.filter(function(o){ return o.rating; });
   var avg = rated.length ? (rated.reduce(function(s,o){return s+(o.rating||0);},0)/rated.length).toFixed(1) : '0.0';
   document.getElementById('r-rating').textContent = avg;
 
-  // Ø£ÙØ¶Ù„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†
+  // أفضل الفنيين
   var techStats = {};
   allOrders.filter(function(o){return o.status==='done'&&o.techName;}).forEach(function(o){
     if(!techStats[o.techName]) techStats[o.techName]={name:o.techName,orders:0,rev:0,rating:[]};
@@ -2004,19 +2004,19 @@ function renderReports(){
   var topTechs = Object.values(techStats).sort(function(a,b){return b.orders-a.orders;}).slice(0,5);
   var ttEl = document.getElementById('top-techs');
   if(ttEl) ttEl.innerHTML = topTechs.length ? topTechs.map(function(t,i){
-    var avgR = t.rating.length ? (t.rating.reduce(function(s,r){return s+r;},0)/t.rating.length).toFixed(1) : 'â€”';
+    var avgR = t.rating.length ? (t.rating.reduce(function(s,r){return s+r;},0)/t.rating.length).toFixed(1) : '—';
     return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd)">'+
       '<span style="font-size:16px;font-weight:900;color:var(--gold);width:20px">'+(i+1)+'</span>'+
       '<div style="flex:1"><div style="font-size:12px;font-weight:700">'+t.name+'</div>'+
-      '<div style="font-size:11px;color:var(--muted)">'+t.orders+' Ø·Ù„Ø¨ Â· '+t.rev.toLocaleString('ar-IQ')+' Ø¯.Ø¹</div></div>'+
-      '<span style="font-size:11px;color:var(--gold)">â­'+avgR+'</span>'+
+      '<div style="font-size:11px;color:var(--muted)">'+t.orders+' طلب · '+t.rev.toLocaleString('ar-IQ')+' د.ع</div></div>'+
+      '<span style="font-size:11px;color:var(--gold)">⭐'+avgR+'</span>'+
     '</div>';
-  }).join('') : '<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª</div>';
+  }).join('') : '<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px">لا توجد بيانات</div>';
 
-  // Ø£ÙƒØ«Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø·Ù„Ø¨Ø§Ù‹
+  // أكثر الخدمات طلباً
   var svcStats = {};
   allOrders.forEach(function(o){
-    var s = o.serviceLabel||o.service||'Ø£Ø®Ø±Ù‰';
+    var s = o.serviceLabel||o.service||'أخرى';
     svcStats[s] = (svcStats[s]||0)+1;
   });
   var topSvc = Object.entries(svcStats).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
@@ -2034,7 +2034,7 @@ function renderReports(){
     '</div>';
   }).join('');
 
-  // Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯Ø§Øª Ø§Ù„ÙŠÙˆÙ…ÙŠØ© Ø¢Ø®Ø± 7 Ø£ÙŠØ§Ù…
+  // الإيرادات اليومية آخر 7 أيام
   var days = [];
   for(var i=6;i>=0;i--){
     var d = new Date(now-i*86400000);
@@ -2055,9 +2055,9 @@ function renderReports(){
   }).join('');
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // CHATS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 var adminChatUnsub = null;
 var currentAdminChat = null;
 
@@ -2066,7 +2066,7 @@ function renderChatOrders(){
   var el = document.getElementById('chat-orders-list');
   if(!el) return;
   if(!active.length){
-    el.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ø­Ø§Ø¯Ø«Ø§Øª Ù†Ø´Ø·Ø©</div>';
+    el.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px">لا توجد محادثات نشطة</div>';
     return;
   }
   el.innerHTML = '';
@@ -2076,8 +2076,8 @@ function renderChatOrders(){
     div.onmouseover = function(){ this.style.background='var(--s2)'; };
     div.onmouseout = function(){ this.style.background=''; };
     div.onclick = function(){ openAdminChat(o.docId, o.custName||'', o.techName||''); };
-    div.innerHTML = '<div style="font-size:12px;font-weight:700">'+(o.custName||o.custPhone||'â€”')+' â†” '+(o.techName||'ÙÙ†ÙŠ')+'</div>'+
-      '<div style="font-size:11px;color:var(--muted)">'+(o.serviceLabel||o.service||'â€”')+' Â· '+(o.id||'')+'</div>';
+    div.innerHTML = '<div style="font-size:12px;font-weight:700">'+(o.custName||o.custPhone||'—')+' ↔ '+(o.techName||'فني')+'</div>'+
+      '<div style="font-size:11px;color:var(--muted)">'+(o.serviceLabel||o.service||'—')+' · '+(o.id||'')+'</div>';
     el.appendChild(div);
   });
 }
@@ -2087,12 +2087,12 @@ function openAdminChat(orderId, custName, techName){
   var panel = document.getElementById('admin-chat-panel');
   panel.innerHTML =
     '<div style="padding:12px 14px;border-bottom:1px solid var(--bd);background:var(--s1);font-size:13px;font-weight:700">'+
-      esc(custName||'â€”')+' â†” '+esc(techName||'ÙÙ†ÙŠ')+
+      esc(custName||'—')+' ↔ '+esc(techName||'فني')+
     '</div>'+
     '<div id="admin-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--bg)"></div>'+
     '<div style="padding:10px;border-top:1px solid var(--bd);display:flex;gap:8px">'+
-      '<input id="admin-chat-inp" placeholder="Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„Ø©..." style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;color:var(--text);font-family:Cairo,sans-serif;font-size:13px;outline:none" onkeydown="if(event.key==\'Enter\')sendAdminMsg()">'+
-      '<button onclick="sendAdminMsg()" style="background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:8px;padding:8px 14px;color:#07090f;font-size:16px;cursor:pointer">âž¤</button>'+
+      '<input id="admin-chat-inp" placeholder="اكتب رسالة..." style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;color:var(--text);font-family:Cairo,sans-serif;font-size:13px;outline:none" onkeydown="if(event.key==\'Enter\')sendAdminMsg()">'+
+      '<button onclick="sendAdminMsg()" style="background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:8px;padding:8px 14px;color:#07090f;font-size:16px;cursor:pointer">➤</button>'+
     '</div>';
 
   if(!FB_READY) return;
@@ -2102,7 +2102,7 @@ function openAdminChat(orderId, custName, techName){
     .onSnapshot(function(snap){
       var el = document.getElementById('admin-msgs');
       if(!el) return;
-      if(snap.empty){ el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø±Ø³Ø§Ø¦Ù„</div>'; return; }
+      if(snap.empty){ el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">لا توجد رسائل</div>'; return; }
       el.innerHTML = snap.docs.map(function(d){
         var m = d.data();
         var color = m.sender==='cust'?'var(--blue)':m.sender==='tech'?'var(--green)':'var(--gold)';
@@ -2122,19 +2122,19 @@ function sendAdminMsg(){
   DB.collection('chats').doc(currentAdminChat).collection('messages').add({
     text: text,
     sender: 'admin',
-    senderName: 'Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©',
+    senderName: 'الإدارة',
     ts: Date.now()
   });
   inp.value = '';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // CONTROL CENTER
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 var systemState = {orders:true,reg:true,cust:true,chat:true,rating:true,wallet:true};
 
 function loadControlState(){
-  // Ø±Ø³Ù… Ø³Ø±ÙŠØ¹ Ù…Ù† Ø§Ù„ÙƒØ§Ø´ Ø§Ù„Ù…Ø­Ù„ÙŠ Ø£ÙˆÙ„Ø§Ù‹
+  // رسم سريع من الكاش المحلي أولاً
   var cached = JSON.parse(localStorage.getItem('tl_system_state')||'{}');
   Object.assign(systemState, cached);
   Object.keys(systemState).forEach(function(key){
@@ -2157,72 +2157,72 @@ function toggleSystem(key){
   localStorage.setItem('tl_system_state', JSON.stringify(systemState));
   if(FB_READY) DB.collection('settings').doc('system').set(systemState, {merge:true});
   updateToggleUI(key, systemState[key]);
-  toast((systemState[key]?'âœ… ØªÙ… ØªÙØ¹ÙŠÙ„ ':'ðŸ”´ ØªÙ… ØªØ¹Ø·ÙŠÙ„ ')+getSystemName(key), systemState[key]?'ok':'err');
+  toast((systemState[key]?'✅ تم تفعيل ':'🔴 تم تعطيل ')+getSystemName(key), systemState[key]?'ok':'err');
 }
 
 function updateToggleUI(key, state){
   var el = document.getElementById('ctrl-'+key);
   var lbl = document.getElementById('ctrl-'+key+'-lbl');
-  if(el) el.textContent = state ? 'ðŸŸ¢' : 'ðŸ”´';
-  if(lbl) lbl.textContent = state ? 'Ù…ÙØ¹Ù‘Ù„' : 'Ù…Ø¹Ø·Ù‘Ù„';
+  if(el) el.textContent = state ? '🟢' : '🔴';
+  if(lbl) lbl.textContent = state ? 'مفعّل' : 'معطّل';
 }
 
 function getSystemName(key){
-  var names={orders:'Ø§Ø³ØªÙ‚Ø¨Ø§Ù„ Ø§Ù„Ø·Ù„Ø¨Ø§Øª',reg:'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†',cust:'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†',chat:'Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª',rating:'Ø§Ù„ØªÙ‚ÙŠÙŠÙ…Ø§Øª',wallet:'Ø§Ù„Ù…Ø­ÙØ¸Ø©'};
+  var names={orders:'استقبال الطلبات',reg:'تسجيل الفنيين',cust:'تسجيل الزبائن',chat:'المحادثات',rating:'التقييمات',wallet:'المحفظة'};
   return names[key]||key;
 }
 
 async function bulkTechs(status){
-  if(!confirm('Ù‡Ù„ ØªØ±ÙŠØ¯ '+(status==='active'?'ØªÙØ¹ÙŠÙ„':'ØªØ¹Ø·ÙŠÙ„')+' Ø¬Ù…ÙŠØ¹ Ø§Ù„ÙÙ†ÙŠÙŠÙ†ØŸ')) return;
+  if(!confirm('هل تريد '+(status==='active'?'تفعيل':'تعطيل')+' جميع الفنيين؟')) return;
   var batch = DB.batch();
   allTechs.forEach(function(t){
     batch.update(DB.collection('techs').doc(t.docId), {status:status});
   });
-  try{ await batch.commit(); toast('âœ… ØªÙ… ØªØ­Ø¯ÙŠØ« ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†','ok'); }
-  catch(e){ toast('Ø®Ø·Ø£: '+e.message,'err'); }
+  try{ await batch.commit(); toast('✅ تم تحديث كل الفنيين','ok'); }
+  catch(e){ toast('خطأ: '+e.message,'err'); }
 }
 
 async function bulkCharge(){
   var amt = parseFloat(document.getElementById('bulk-charge').value);
-  if(!amt||isNaN(amt)){ toast('Ø£Ø¯Ø®Ù„ Ù…Ø¨Ù„ØºØ§Ù‹ ØµØ­ÙŠØ­Ø§Ù‹','err'); return; }
-  if(!confirm('Ø´Ø­Ù† '+amt.toLocaleString('ar-IQ')+' Ø¯.Ø¹ Ù„ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ† ('+allTechs.length+' ÙÙ†ÙŠ)ØŸ')) return;
+  if(!amt||isNaN(amt)){ toast('أدخل مبلغاً صحيحاً','err'); return; }
+  if(!confirm('شحن '+amt.toLocaleString('ar-IQ')+' د.ع لكل الفنيين ('+allTechs.length+' فني)؟')) return;
   var batch = DB.batch();
   allTechs.forEach(function(t){
     batch.update(DB.collection('techs').doc(t.docId), {wallet: firebase.firestore.FieldValue.increment(amt)});
   });
-  try{ await batch.commit(); document.getElementById('bulk-charge').value=''; toast('âœ… ØªÙ… Ø´Ø­Ù† Ù…Ø­Ø§ÙØ¸ ÙƒÙ„ Ø§Ù„ÙÙ†ÙŠÙŠÙ†','ok'); }
-  catch(e){ toast('Ø®Ø·Ø£: '+e.message,'err'); }
+  try{ await batch.commit(); document.getElementById('bulk-charge').value=''; toast('✅ تم شحن محافظ كل الفنيين','ok'); }
+  catch(e){ toast('خطأ: '+e.message,'err'); }
 }
 
 async function sendBulkMsg(target){
   var msg = document.getElementById('bulk-msg').value.trim();
-  if(!msg){ toast('Ø£Ø¯Ø®Ù„ Ù†Øµ Ø§Ù„Ø±Ø³Ø§Ù„Ø©','err'); return; }
+  if(!msg){ toast('أدخل نص الرسالة','err'); return; }
   var col = target==='techs' ? 'techs' : 'customers';
   await DB.collection('notifications').add({
     target: target, message: msg, ts: Date.now(),
     createdAt: new Date().toISOString()
   });
   document.getElementById('bulk-msg').value='';
-  toast('âœ… ØªÙ… Ø¥Ø±Ø³Ø§Ù„ Ø§Ù„Ø±Ø³Ø§Ù„Ø©','ok');
+  toast('✅ تم إرسال الرسالة','ok');
 }
 
 async function bulkOrders(status){
   var pending = allOrders.filter(function(o){return o.status==='pending';});
-  if(!pending.length){ toast('Ù„Ø§ ØªÙˆØ¬Ø¯ Ø·Ù„Ø¨Ø§Øª Ù…Ø¹Ù„Ù‚Ø©',''); return; }
-  if(!confirm('Ø¥Ù„ØºØ§Ø¡ '+pending.length+' Ø·Ù„Ø¨ Ù…Ø¹Ù„Ù‚ØŸ')) return;
+  if(!pending.length){ toast('لا توجد طلبات معلقة',''); return; }
+  if(!confirm('إلغاء '+pending.length+' طلب معلق؟')) return;
   var batch = DB.batch();
   pending.forEach(function(o){
     batch.update(DB.collection('orders').doc(o.docId), {status:'cancelled'});
   });
-  try{ await batch.commit(); toast('âœ… ØªÙ… Ø¥Ù„ØºØ§Ø¡ Ø§Ù„Ø·Ù„Ø¨Ø§Øª Ø§Ù„Ù…Ø¹Ù„Ù‚Ø©','ok'); }
-  catch(e){ toast('Ø®Ø·Ø£','err'); }
+  try{ await batch.commit(); toast('✅ تم إلغاء الطلبات المعلقة','ok'); }
+  catch(e){ toast('خطأ','err'); }
 }
 
 async function autoAssignOrders(){
   var pending = allOrders.filter(function(o){return o.status==='pending';});
   var activeTechs = allTechs.filter(function(t){return t.status==='active';});
-  if(!pending.length){ toast('Ù„Ø§ ØªÙˆØ¬Ø¯ Ø·Ù„Ø¨Ø§Øª Ù…Ø¹Ù„Ù‚Ø©',''); return; }
-  if(!activeTechs.length){ toast('Ù„Ø§ ÙŠÙˆØ¬Ø¯ ÙÙ†ÙŠÙˆÙ† Ù…ØªØ§Ø­ÙˆÙ†','err'); return; }
+  if(!pending.length){ toast('لا توجد طلبات معلقة',''); return; }
+  if(!activeTechs.length){ toast('لا يوجد فنيون متاحون','err'); return; }
   var batch = DB.batch();
   pending.forEach(function(o, i){
     var tech = activeTechs[i % activeTechs.length];
@@ -2231,8 +2231,8 @@ async function autoAssignOrders(){
       status: 'inprogress', acceptedAt: new Date().toISOString()
     });
   });
-  try{ await batch.commit(); toast('âœ… ØªÙ… ØªÙˆØ²ÙŠØ¹ '+pending.length+' Ø·Ù„Ø¨ ØªÙ„Ù‚Ø§Ø¦ÙŠØ§Ù‹','ok'); }
-  catch(e){ toast('Ø®Ø·Ø£','err'); }
+  try{ await batch.commit(); toast('✅ تم توزيع '+pending.length+' طلب تلقائياً','ok'); }
+  catch(e){ toast('خطأ','err'); }
 }
 
 function saveBookingSettings(){
@@ -2241,13 +2241,13 @@ function saveBookingSettings(){
   s.minHours = parseInt(val('s-min-hours'))||2;
   localStorage.setItem('tl_settings', JSON.stringify(s));
   if(FB_READY) DB.collection('settings').doc('config').set({booking:{maxDays:s.maxDays,minHours:s.minHours}},{merge:true});
-  toast('âœ… ØªÙ… Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø­Ø¬Ø²','ok');
+  toast('✅ تم حفظ إعدادات الحجز','ok');
 }
 
 // PACKAGES
 var packages = [];
 function loadPackages(){
-  // Ø±Ø³Ù… Ø³Ø±ÙŠØ¹ Ù…Ù† Ø§Ù„ÙƒØ§Ø´ Ø§Ù„Ù…Ø­Ù„ÙŠ Ø£ÙˆÙ„Ø§Ù‹
+  // رسم سريع من الكاش المحلي أولاً
   packages = JSON.parse(localStorage.getItem('tl_packages')||'[]');
   renderPackages();
   DB.collection('settings').doc('packages').get().then(function(doc){
@@ -2259,23 +2259,23 @@ function loadPackages(){
 function renderPackages(){
   var el = document.getElementById('packages-list');
   if(!el) return;
-  if(!packages.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨Ø§Ù‚Ø§Øª</div>'; return; }
+  if(!packages.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px">لا توجد باقات</div>'; return; }
   el.innerHTML = packages.map(function(p,i){
     return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)">'+
-      '<div><div style="font-size:13px;font-weight:700">'+esc(p.name)+'</div><div style="font-size:11px;color:var(--muted)">'+esc(p.desc)+' Â· '+(p.price||0).toLocaleString('ar-IQ')+' Ø¯.Ø¹</div></div>'+
-      '<button onclick="delPackage('+i+')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">ðŸ—‘ï¸</button>'+
+      '<div><div style="font-size:13px;font-weight:700">'+esc(p.name)+'</div><div style="font-size:11px;color:var(--muted)">'+esc(p.desc)+' · '+(p.price||0).toLocaleString('ar-IQ')+' د.ع</div></div>'+
+      '<button onclick="delPackage('+i+')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑️</button>'+
     '</div>';
   }).join('');
 }
 function addPackage(){
   var name=val('pkg-name'),price=parseFloat(val('pkg-price'))||0,desc=val('pkg-desc');
-  if(!name){ toast('Ø£Ø¯Ø®Ù„ Ø§Ø³Ù… Ø§Ù„Ø¨Ø§Ù‚Ø©','err'); return; }
+  if(!name){ toast('أدخل اسم الباقة','err'); return; }
   packages.push({name:name,price:price,desc:desc});
   localStorage.setItem('tl_packages',JSON.stringify(packages));
   if(FB_READY) DB.collection('settings').doc('packages').set({list:packages},{merge:true});
   ['pkg-name','pkg-price','pkg-desc'].forEach(function(id){document.getElementById(id).value='';});
   renderPackages();
-  toast('âœ… ØªÙ… Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¨Ø§Ù‚Ø©','ok');
+  toast('✅ تم إضافة الباقة','ok');
 }
 function delPackage(i){
   packages.splice(i,1);
@@ -2296,19 +2296,19 @@ function loadCoupons(){
 function renderCoupons(){
   var el = document.getElementById('coupons-list');
   if(!el) return;
-  if(!coupons.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Ù„Ø§ ØªÙˆØ¬Ø¯ ÙƒÙˆØ¯Ø§Øª Ø®ØµÙ…</div>'; return; }
+  if(!coupons.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px">لا توجد كودات خصم</div>'; return; }
   el.innerHTML = coupons.map(function(c){
     var isActive = c.active !== false;
     return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)">'+
       '<div>'+
         '<span style="font-family:var(--mono);font-weight:700;color:var(--gold)">'+esc(c.code)+'</span>'+
-        ' â€” Ø®ØµÙ… '+esc(c.discount)+'%'+
-        ' '+(isActive?'<span class="tag tag-done" style="font-size:9px">Ù…ÙØ¹Ù‘Ù„</span>':'<span class="tag tag-canc" style="font-size:9px">Ù…Ø¹Ø·Ù‘Ù„</span>')+
-        '<div style="font-size:11px;color:var(--muted)">Ø§Ø³ØªÙØ®Ø¯Ù… '+(c.used||0)+' / '+(c.maxUse||'âˆž')+' Â· ÙŠÙ†ØªÙ‡ÙŠ '+esc(c.expiry||'â€”')+'</div>'+
+        ' — خصم '+esc(c.discount)+'%'+
+        ' '+(isActive?'<span class="tag tag-done" style="font-size:9px">مفعّل</span>':'<span class="tag tag-canc" style="font-size:9px">معطّل</span>')+
+        '<div style="font-size:11px;color:var(--muted)">استُخدم '+(c.used||0)+' / '+(c.maxUse||'∞')+' · ينتهي '+esc(c.expiry||'—')+'</div>'+
       '</div>'+
       '<div style="display:flex;gap:6px">'+
-        '<button data-coupon="'+c.docId+'" data-active="'+(isActive?'1':'0')+'" onclick="toggleCouponBtn(this)" style="background:none;border:1px solid var(--bd);border-radius:5px;color:'+(isActive?'var(--green)':'var(--muted)')+';cursor:pointer;font-size:11px;padding:4px 8px">'+(isActive?'ØªØ¹Ø·ÙŠÙ„':'ØªÙØ¹ÙŠÙ„')+'</button>'+
-        '<button data-coupon="'+c.docId+'" onclick="delCouponBtn(this)" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">ðŸ—‘ï¸</button>'+
+        '<button data-coupon="'+c.docId+'" data-active="'+(isActive?'1':'0')+'" onclick="toggleCouponBtn(this)" style="background:none;border:1px solid var(--bd);border-radius:5px;color:'+(isActive?'var(--green)':'var(--muted)')+';cursor:pointer;font-size:11px;padding:4px 8px">'+(isActive?'تعطيل':'تفعيل')+'</button>'+
+        '<button data-coupon="'+c.docId+'" onclick="delCouponBtn(this)" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑️</button>'+
       '</div>'+
     '</div>';
   }).join('');
@@ -2324,41 +2324,41 @@ async function toggleCoupon(docId, newState){
   try{
     await DB.collection('coupons').doc(docId).update({active:newState});
     loadCoupons();
-    toast(newState?'âœ… ØªÙ… ØªÙØ¹ÙŠÙ„ Ø§Ù„ÙƒÙˆØ¯':'ðŸ”´ ØªÙ… ØªØ¹Ø·ÙŠÙ„ Ø§Ù„ÙƒÙˆØ¯', newState?'ok':'err');
-  }catch(e){ toast('Ø®Ø·Ø£','err'); }
+    toast(newState?'✅ تم تفعيل الكود':'🔴 تم تعطيل الكود', newState?'ok':'err');
+  }catch(e){ toast('خطأ','err'); }
 }
 async function addCoupon(){
   var code=val('coup-code').toUpperCase(),pct=parseFloat(val('coup-pct'))||0,max=parseInt(val('coup-max'))||100,exp=val('coup-exp');
-  if(!code||!pct){ toast('Ø£Ø¯Ø®Ù„ Ø§Ù„ÙƒÙˆØ¯ ÙˆÙ†Ø³Ø¨Ø© Ø§Ù„Ø®ØµÙ…','err'); return; }
+  if(!code||!pct){ toast('أدخل الكود ونسبة الخصم','err'); return; }
   var data={code:code,discount:pct,maxUse:max,expiry:exp,used:0,active:true,createdAt:new Date().toISOString()};
   try{
     await DB.collection('coupons').add(data);
     ['coup-code','coup-pct','coup-max','coup-exp'].forEach(function(id){document.getElementById(id).value='';});
     loadCoupons();
-    toast('âœ… ØªÙ… Ø¥Ø¶Ø§ÙØ© ÙƒÙˆØ¯ Ø§Ù„Ø®ØµÙ…: '+code,'ok');
-  }catch(e){ toast('Ø®Ø·Ø£','err'); }
+    toast('✅ تم إضافة كود الخصم: '+code,'ok');
+  }catch(e){ toast('خطأ','err'); }
 }
 function delCouponBtn(btn){
   delCoupon(btn.getAttribute('data-coupon'));
 }
 
 async function delCoupon(docId){
-  if(!confirm('Ø­Ø°Ù ÙƒÙˆØ¯ Ø§Ù„Ø®ØµÙ…ØŸ')) return;
-  try{ await DB.collection('coupons').doc(docId).delete(); loadCoupons(); toast('ØªÙ… Ø§Ù„Ø­Ø°Ù','ok'); }
-  catch(e){ toast('Ø®Ø·Ø£','err'); }
+  if(!confirm('حذف كود الخصم؟')) return;
+  try{ await DB.collection('coupons').doc(docId).delete(); loadCoupons(); toast('تم الحذف','ok'); }
+  catch(e){ toast('خطأ','err'); }
 }
 
 // NOTIFICATIONS
 async function sendNotif(target){
   var title=val('notif-title'),body=document.getElementById('notif-body')?.value.trim();
-  if(!title||!body){ toast('Ø£Ø¯Ø®Ù„ Ø§Ù„Ø¹Ù†ÙˆØ§Ù† ÙˆØ§Ù„Ù†Øµ','err'); return; }
+  if(!title||!body){ toast('أدخل العنوان والنص','err'); return; }
   try{
     await DB.collection('notifications').add({title:title,body:body,target:target,ts:Date.now(),createdAt:new Date().toISOString()});
     document.getElementById('notif-title').value='';
     document.getElementById('notif-body').value='';
-    toast('âœ… ØªÙ… Ø¥Ø±Ø³Ø§Ù„ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø± Ù„Ù„Ù€'+(target==='all'?'Ø¬Ù…ÙŠØ¹':target==='techs'?'ÙÙ†ÙŠÙŠÙ†':'Ø²Ø¨Ø§Ø¦Ù†'),'ok');
+    toast('✅ تم إرسال الإشعار للـ'+(target==='all'?'جميع':target==='techs'?'فنيين':'زبائن'),'ok');
     loadNotifHistory();
-  }catch(e){ toast('Ø®Ø·Ø£','err'); }
+  }catch(e){ toast('خطأ','err'); }
 }
 
 function loadNotifHistory(){
@@ -2377,13 +2377,13 @@ function loadNotifHistory(){
 function renderNotifHistory(notifs){
   var el = document.getElementById('notif-history-list');
   if(!el) return;
-  if(!notifs.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:14px">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¥Ø´Ø¹Ø§Ø±Ø§Øª Ù…ÙØ±Ø³Ù„Ø© Ø¨Ø¹Ø¯</div>'; return; }
-  var targetLbl={all:'Ø§Ù„Ø¬Ù…ÙŠØ¹',techs:'Ø§Ù„ÙÙ†ÙŠÙˆÙ†',custs:'Ø§Ù„Ø²Ø¨Ø§Ø¦Ù†'};
+  if(!notifs.length){ el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:14px">لا توجد إشعارات مُرسلة بعد</div>'; return; }
+  var targetLbl={all:'الجميع',techs:'الفنيون',custs:'الزبائن'};
   el.innerHTML = notifs.map(function(n){
     var timeStr = n.ts ? new Date(n.ts).toLocaleString('ar-IQ') : '';
     return '<div style="padding:9px 0;border-bottom:1px solid var(--bd)">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">'+
-        '<span style="font-size:13px;font-weight:700">'+esc(n.title||'â€”')+'</span>'+
+        '<span style="font-size:13px;font-weight:700">'+esc(n.title||'—')+'</span>'+
         '<span class="chip chip-blue" style="font-size:9px">'+esc(targetLbl[n.target]||n.target)+'</span>'+
       '</div>'+
       '<div style="font-size:12px;color:var(--muted)">'+esc(n.body||'')+'</div>'+
@@ -2392,9 +2392,9 @@ function renderNotifHistory(notifs){
   }).join('');
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // RATINGS MONITORING
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderRatingsPage(){
   var from = val('rt-from'), to = val('rt-to'), techQ = val('rt-tech').toLowerCase(), stars = val('rt-stars');
   var rated = allOrders.filter(function(o){ return o.rating; });
@@ -2417,14 +2417,14 @@ function renderRatingsPage(){
 
   var el = document.getElementById('ratings-list');
   if(!filtered.length){
-    el.innerHTML = '<div class="empty"><div class="empty-ic">â­</div>Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙ‚ÙŠÙŠÙ…Ø§Øª Ù…Ø·Ø§Ø¨Ù‚Ø©</div>';
+    el.innerHTML = '<div class="empty"><div class="empty-ic">⭐</div>لا توجد تقييمات مطابقة</div>';
     return;
   }
 
   filtered.sort(function(a,b){ return (b.completedAt||'').localeCompare(a.completedAt||''); });
 
   el.innerHTML = filtered.map(function(o){
-    var stars = 'â­'.repeat(o.rating) + 'â˜†'.repeat(5-o.rating);
+    var stars = '⭐'.repeat(o.rating) + '☆'.repeat(5-o.rating);
     var dateStr = o.completedAt ? new Date(o.completedAt).toLocaleString('ar-IQ') : (o.dateStr||'');
     return '<div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:10px">'+
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'+
@@ -2435,11 +2435,11 @@ function renderRatingsPage(){
         '<span class="chip chip-gold" style="font-size:10px">'+esc(o.id||'')+'</span>'+
       '</div>'+
       '<div style="display:flex;gap:16px;font-size:12px;color:var(--muted);margin-bottom:8px">'+
-        '<span>ðŸ‘· '+esc(o.techName||'â€”')+'</span>'+
-        '<span>ðŸ‘¤ '+esc(o.custName||o.custPhone||'â€”')+'</span>'+
-        '<span>ðŸ”§ '+esc(o.serviceLabel||o.service||'â€”')+'</span>'+
+        '<span>👷 '+esc(o.techName||'—')+'</span>'+
+        '<span>👤 '+esc(o.custName||o.custPhone||'—')+'</span>'+
+        '<span>🔧 '+esc(o.serviceLabel||o.service||'—')+'</span>'+
       '</div>'+
-      (o.ratingComment?'<div style="background:var(--s2);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:6px">ðŸ’¬ "'+esc(o.ratingComment)+'"</div>':'')+
+      (o.ratingComment?'<div style="background:var(--s2);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:6px">💬 "'+esc(o.ratingComment)+'"</div>':'')+
       '<div style="font-size:10px;color:var(--muted)">'+dateStr+'</div>'+
     '</div>';
   }).join('');
@@ -2450,12 +2450,12 @@ function clearRatingsFilter(){
   renderRatingsPage();
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 // TRANSACTIONS PAGE
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════
 function renderTransactions(){
   var el = document.getElementById('transactions-list');
-  if(!el) return; // Ø§Ù„ØµÙØ­Ø© Ù‚Ø¯ Ù„Ø§ ØªÙƒÙˆÙ† Ù…ÙØªÙˆØ­Ø© Ø¨Ø¹Ø¯
+  if(!el) return; // الصفحة قد لا تكون مفتوحة بعد
 
   var who = val('tx-who'), type = val('tx-type'), from = val('tx-from'), to = val('tx-to');
   var nameQ = val('tx-name').toLowerCase(), phoneQ = val('tx-phone');
@@ -2480,33 +2480,33 @@ function renderTransactions(){
   document.getElementById('tx-total-deduct').textContent = totalDeduct.toLocaleString('ar-IQ');
 
   if(!filtered.length){
-    el.innerHTML = '<div class="empty"><div class="empty-ic">ðŸ”„</div>Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù†Ø§Ù‚Ù„Ø§Øª Ù…Ø·Ø§Ø¨Ù‚Ø©</div>';
+    el.innerHTML = '<div class="empty"><div class="empty-ic">🔄</div>لا توجد مناقلات مطابقة</div>';
     return;
   }
 
-  var typeLbl = {charge:'Ø´Ø­Ù†',withdraw:'Ø³Ø­Ø¨',deduct:'Ø§Ø³ØªÙ‚Ø·Ø§Ø¹'};
+  var typeLbl = {charge:'شحن',withdraw:'سحب',deduct:'استقطاع'};
   var typeColor = {charge:'var(--green)',withdraw:'var(--orange)',deduct:'var(--red)'};
-  var typeIcon = {charge:'ðŸ’°',withdraw:'âž–',deduct:'ðŸ”»'};
-  var whoLbl = {customer:'ðŸ‘¤ Ø²Ø¨ÙˆÙ†',tech:'ðŸ‘· ÙÙ†ÙŠ'};
+  var typeIcon = {charge:'💰',withdraw:'➖',deduct:'🔻'};
+  var whoLbl = {customer:'👤 زبون',tech:'👷 فني'};
 
   el.innerHTML = filtered.map(function(tx){
     var timeStr = tx.ts ? new Date(tx.ts).toLocaleString('ar-IQ') : '';
     return '<div style="background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px">'+
-      '<div style="font-size:22px">'+(typeIcon[tx.type]||'ðŸ”„')+'</div>'+
+      '<div style="font-size:22px">'+(typeIcon[tx.type]||'🔄')+'</div>'+
       '<div style="flex:1">'+
         '<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">'+
-          '<span style="font-size:13px;font-weight:700">'+esc(tx.name||'â€”')+'</span>'+
+          '<span style="font-size:13px;font-weight:700">'+esc(tx.name||'—')+'</span>'+
           '<span class="chip chip-blue" style="font-size:9px">'+esc(whoLbl[tx.who]||tx.who)+'</span>'+
         '</div>'+
-        '<div style="font-size:11px;color:var(--muted)">'+esc(tx.phone||'')+' Â· '+timeStr+
-          (tx.reason?' Â· ðŸ“ '+esc(tx.reason):'')+
+        '<div style="font-size:11px;color:var(--muted)">'+esc(tx.phone||'')+' · '+timeStr+
+          (tx.reason?' · 📝 '+esc(tx.reason):'')+
         '</div>'+
       '</div>'+
       '<div style="text-align:left">'+
         '<div style="font-size:15px;font-weight:800;color:'+(typeColor[tx.type]||'var(--muted)')+'">'+
-          (tx.type==='charge'?'+':'-')+(tx.amount||0).toLocaleString('ar-IQ')+' Ø¯.Ø¹'+
+          (tx.type==='charge'?'+':'-')+(tx.amount||0).toLocaleString('ar-IQ')+' د.ع'+
         '</div>'+
-        '<div style="font-size:10px;color:var(--muted)">Ø§Ù„Ø±ØµÙŠØ¯ Ø¨Ø¹Ø¯Ù‡Ø§: '+(tx.balanceAfter||0).toLocaleString('ar-IQ')+'</div>'+
+        '<div style="font-size:10px;color:var(--muted)">الرصيد بعدها: '+(tx.balanceAfter||0).toLocaleString('ar-IQ')+'</div>'+
       '</div>'+
     '</div>';
   }).join('');
@@ -2518,7 +2518,7 @@ function clearTxFilter(){
 }
 
 function loadSettings(){
-  // Ø±Ø³Ù… Ø³Ø±ÙŠØ¹ Ù…Ù† Ø§Ù„ÙƒØ§Ø´ Ø§Ù„Ù…Ø­Ù„ÙŠ Ø£ÙˆÙ„Ø§Ù‹ Ù„Ø¶Ù…Ø§Ù† Ø§Ø³ØªØ¬Ø§Ø¨Ø© ÙÙˆØ±ÙŠØ© Ù„Ù„ÙˆØ§Ø¬Ù‡Ø©
+  // رسم سريع من الكاش المحلي أولاً لضمان استجابة فورية للواجهة
   applySettingsToUI(JSON.parse(localStorage.getItem('tl_settings')||'{}'));
   DB.collection('settings').doc('config').get().then(function(doc){
     var s = doc.exists ? doc.data() : {};
@@ -2544,9 +2544,9 @@ function applySettingsToUI(s){
   toggleProviderFields();
   if(s.provider && s.provider!=='none'){
     document.getElementById('api-status-dot').style.background='var(--green)';
-    document.getElementById('api-status-txt').textContent='Ù…Ø±Ø¨ÙˆØ· Ø¨Ù€ '+(s.provider==='both'?'ZainCash + FastPay':s.provider==='zaincash'?'ZainCash':'FastPay');
+    document.getElementById('api-status-txt').textContent='مربوط بـ '+(s.provider==='both'?'ZainCash + FastPay':s.provider==='zaincash'?'ZainCash':'FastPay');
   }
-  // Ø£Ø³Ø¹Ø§Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª
+  // أسعار الخدمات
   var prices = s.prices || {};
   ['electric','plumb','ac','paint','carp','clean','tile','other'].forEach(function(svc){
     var el = document.getElementById('p-'+svc);
@@ -2558,9 +2558,9 @@ function saveCommission(){
   var s = JSON.parse(localStorage.getItem('tl_settings')||'{}');
   s.commission = parseFloat(val('s-commission'))||10;
   localStorage.setItem('tl_settings', JSON.stringify(s));
-  // Ø­ÙØ¸ ÙÙŠ Firebase
+  // حفظ في Firebase
   if(FB_READY) DB.collection('settings').doc('config').set({commission:s.commission},{merge:true});
-  toast('âœ… ØªÙ… Ø­ÙØ¸ Ù†Ø³Ø¨Ø© Ø§Ù„Ø¹Ù…ÙˆÙ„Ø©: '+s.commission+'%','ok');
+  toast('✅ تم حفظ نسبة العمولة: '+s.commission+'%','ok');
 }
 
 function savePrices(){
@@ -2570,9 +2570,9 @@ function savePrices(){
     s.prices[svc] = parseFloat(document.getElementById('p-'+svc)?.value)||0;
   });
   localStorage.setItem('tl_settings', JSON.stringify(s));
-  // Ø­ÙØ¸ ÙÙŠ Firebase
+  // حفظ في Firebase
   if(FB_READY) DB.collection('settings').doc('config').set({prices:s.prices},{merge:true});
-  toast('âœ… ØªÙ… Ø­ÙØ¸ Ø£Ø³Ø¹Ø§Ø± Ø§Ù„Ø®Ø¯Ù…Ø§Øª','ok');
+  toast('✅ تم حفظ أسعار الخدمات','ok');
 }
 
 function toggleProviderFields(){
@@ -2588,25 +2588,25 @@ function testPaymentConnection(){
   var dot = document.getElementById('api-status-dot');
   var txt = document.getElementById('api-status-txt');
   if(provider==='none'){
-    dot.style.background='var(--muted)'; txt.textContent='Ù„Ù… ÙŠØªÙ… Ø§Ø®ØªÙŠØ§Ø± Ù…Ø²ÙˆÙ‘Ø¯ Ø¯ÙØ¹';
-    toast('Ø§Ø®ØªØ± Ù…Ø²ÙˆÙ‘Ø¯ Ø§Ù„Ø¯ÙØ¹ Ø£ÙˆÙ„Ø§Ù‹','err');
+    dot.style.background='var(--muted)'; txt.textContent='لم يتم اختيار مزوّد دفع';
+    toast('اختر مزوّد الدفع أولاً','err');
     return;
   }
   var hasKeys = false;
   if(provider==='zaincash'||provider==='both') hasKeys = !!val('s-zaincash') && !!val('s-zc-merchant');
   if(provider==='fastpay') hasKeys = !!val('s-fastpay') && !!val('s-fp-code');
   if(!hasKeys){
-    dot.style.background='var(--red)'; txt.textContent='Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ ØºÙŠØ± Ù…ÙƒØªÙ…Ù„Ø©';
-    toast('Ø£Ø¯Ø®Ù„ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…ÙØ§ØªÙŠØ­ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø© Ø£ÙˆÙ„Ø§Ù‹','err');
+    dot.style.background='var(--red)'; txt.textContent='بيانات الاعتماد غير مكتملة';
+    toast('أدخل جميع المفاتيح المطلوبة أولاً','err');
     return;
   }
-  // Ù…Ø­Ø§ÙƒØ§Ø© Ø§Ø®ØªØ¨Ø§Ø± Ø§Ù„Ø§ØªØµØ§Ù„ (Ø³ÙŠØªÙ… Ø§Ø³ØªØ¨Ø¯Ø§Ù„Ù‡ Ø¨Ø·Ù„Ø¨ API Ø­Ù‚ÙŠÙ‚ÙŠ Ø¹Ù†Ø¯ Ø§Ù„ØªÙØ¹ÙŠÙ„ Ø§Ù„ÙƒØ§Ù…Ù„)
-  dot.style.background='var(--gold)'; txt.textContent='Ø¬Ø§Ø±Ù Ø§Ù„Ø§Ø®ØªØ¨Ø§Ø±...';
-  toast('ðŸ”Œ Ø¬Ø§Ø±Ù Ø§Ø®ØªØ¨Ø§Ø± Ø§Ù„Ø§ØªØµØ§Ù„...','');
+  // محاكاة اختبار الاتصال (سيتم استبداله بطلب API حقيقي عند التفعيل الكامل)
+  dot.style.background='var(--gold)'; txt.textContent='جارِ الاختبار...';
+  toast('🔌 جارِ اختبار الاتصال...','');
   setTimeout(function(){
     dot.style.background='var(--green)';
-    txt.textContent='âœ… Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª ØµØ­ÙŠØ­Ø© Ø§Ù„ØµÙŠØºØ© (Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø§ØªØµØ§Ù„ Ø§Ù„ÙØ¹Ù„ÙŠ Ø¨Ø§Ù„Ø¨ÙˆØ§Ø¨Ø© Ø¨Ø¹Ø¯)';
-    toast('âœ… Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª ØµØ­ÙŠØ­Ø© Ø§Ù„ØµÙŠØºØ© â€” Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø§ØªØµØ§Ù„ Ø§Ù„ÙØ¹Ù„ÙŠ Ø¨Ø¹Ø¯','ok');
+    txt.textContent='✅ الإعدادات صحيحة الصيغة (لم يتم الاتصال الفعلي بالبوابة بعد)';
+    toast('✅ الإعدادات صحيحة الصيغة — لم يتم الاتصال الفعلي بعد','ok');
   }, 1200);
 }
 
@@ -2626,7 +2626,7 @@ function savePayment(){
       fastpay:s.fastpay, fpCode:s.fpCode, walletNum:s.walletNum, enabled: s.provider!=='none'
     }
   },{merge:true});
-  toast('âœ… ØªÙ… Ø­ÙØ¸ Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø¯ÙØ¹','ok');
+  toast('✅ تم حفظ إعدادات الدفع','ok');
 }
 
 function saveSettings(){
@@ -2638,18 +2638,18 @@ function saveSettings(){
   localStorage.setItem('tl_settings', JSON.stringify(s));
   if(FB_READY) DB.collection('settings').doc('config').set({name:s.name,city:s.city,support:s.support,minWallet:s.minWallet},{merge:true});
   applyPlatformName(s.name);
-  toast('âœ… ØªÙ… Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª â€” Ø§Ø³Ù… Ø§Ù„Ù…Ù†ØµØ©: '+s.name,'ok');
+  toast('✅ تم حفظ الإعدادات — اسم المنصة: '+s.name,'ok');
 }
 
 function applyPlatformName(name){
   if(!name) return;
-  // Ø­Ø¯Ù‘Ø« ÙƒÙ„ Ø§Ù„Ù†ØµÙˆØµ Ø§Ù„ØªÙŠ ØªØ­Ù…Ù„ "TechLink" ÙÙŠ Ø§Ù„ÙˆØ§Ø¬Ù‡Ø©
+  // حدّث كل النصوص التي تحمل "TechLink" في الواجهة
   document.querySelectorAll('.logo-txt, .auth-logo-txt, .topbar-title').forEach(function(el){
     if(el.innerHTML.indexOf('Tech') > -1){
       el.innerHTML = el.innerHTML.replace(/Tech<span>Link<\/span>|TechLink/g, name);
     }
   });
-  document.title = name + ' â€” Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…';
+  document.title = name + ' — لوحة التحكم';
 }
 
 function toast(msg,type){
